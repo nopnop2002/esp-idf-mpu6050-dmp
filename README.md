@@ -1,5 +1,5 @@
 # esp-idf-mpu6050-dmp
-A demo showing the mpu6050 pose in 3D using esp-idf.
+A demo showing the pose of the mpu6050 in 3D using esp-idf.
 
 https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation
 
