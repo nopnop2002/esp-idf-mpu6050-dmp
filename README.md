@@ -73,6 +73,7 @@ ZGyroOffset = 17
 
 # Install a 3D viewer   
 I used pyteapot.py.   
+It works as a UDP display server.   
 This is a great application.   
 
 ```
