@@ -74,6 +74,14 @@ ZGyroOffset = 17
 # Install a 3D viewer   
 I used pyteapot.py.   
 It works as a UDP display server.   
+```
++-------------+     +-------------+     +-------------+
+|     IMU     | i2c |    ESP32    | UDP | pyteapot.py |
+|             |---->|             |---->|             |
+|             |     |             |     |             |
++-------------+     +-------------+     +-------------+
+```
+
 This is a great application.   
 
 ```
