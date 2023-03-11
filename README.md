@@ -72,7 +72,10 @@ YGyroOffset = 27
 ZGyroOffset = 17   
 
 
-# Install a 3D viewer
+# Install a 3D viewer   
+I used pyteapot.py.   
+This is a great application.   
+
 ```
 $ sudo apt install python3-pip python3-setuptools
 $ python3 -m pip install -U pip
