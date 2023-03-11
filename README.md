@@ -1,5 +1,5 @@
 # esp-idf-mpu6050-dmp
-Demo that uses esp-idf to display mpu6050 pose information in 3D.   
+A demo showing the mpu6050 pose in 3D using esp-idf.
 
 https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation
 
@@ -47,7 +47,8 @@ idf.py menuconfig
 idf.py flash
 ```
 
-More details on configuration can be found here.
+More details on configuration can be found [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/IMU_Zero).   
+![config-MPU6050_DMP6-2](https://user-images.githubusercontent.com/6020549/224453337-8529aa7f-76dd-4b70-9bff-a43888973534.jpg)).
 
 It will take a few minutes for the calibration to complete.   
 The serial monitor should show results similar to the following.   
@@ -113,7 +114,9 @@ idf.py menuconfig
 idf.py flash
 ```
 
-More details on configuration can be found here.
+More details on configuration can be found [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/MPU6050_DMP6).
 
+
+The posture of your sensor is displayed.   
 ![pyteapot_2023-03-11_09-11-46](https://user-images.githubusercontent.com/6020549/224452173-2350704d-1fc4-4a12-8324-434c11f62c52.png)
 
