@@ -25,7 +25,8 @@ ESP-IDF V4.4/V5.0.
 ESP-IDF V5 is required when using ESP32-C2.   
 
 # Hardware requirements
-MPU6050/MPU6500/MPU9250 MotionTracking device.   
+MotionTracking device with DMP function.   
+MPU6050/MPU6500/MPU9225/MPU9250 are abailable.   
 
 # Wireing
 |MPU6050||ESP32|ESP32-S2/S3|ESP32-C2/C3||
