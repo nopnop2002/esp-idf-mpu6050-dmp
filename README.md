@@ -3,11 +3,14 @@ Demo that uses esp-idf to display mpu6050 pose information in 3D.
 
 https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation
 
-
-# overview
 MPU6050 has an internal processing function called DMP (Digital Motion Processor).   
 You can use this to get Euler angles.   
 Euler angles are roll, pitch and yaw.   
+View Roll, Pitch and Yaw using a 3D viewer.   
+![a-Pitch-yaw-and-roll-angles-of-an-aircraft-with-body-orientation-O-u-v-original](https://user-images.githubusercontent.com/6020549/224452743-d4cf419d-f936-4e46-9ece-a12f21bf2e32.jpg)
+
+
+# Installation overview
 
 - Perform a calibration of your sensor.   
 
@@ -46,9 +49,9 @@ idf.py flash
 
 More details on configuration can be found here.
 
-It will take a few minutes for the calibration to complete.
-The serial monitor should show results similar to the following.
-If -- done -- is displayed, it is completed.
+It will take a few minutes for the calibration to complete.   
+The serial monitor should show results similar to the following.   
+If -- done -- is displayed, it is completed.   
 
 ```
 ....................    XAccel                  YAccel                          ZAccel                  XGyro                   YGyro                   ZGyro
@@ -58,15 +61,15 @@ If -- done -- is displayed, it is completed.
 -------------- done --------------
 ```
 
-The last line is your offset value.
-We need 6 values XAccelOffset, YAccelOffset, ZAccelOffset, XGyroOffset, YGyroOffset, ZGyroOffset. In this example:
+The last line is your offset value.   
+We need 6 values XAccelOffset, YAccelOffset, ZAccelOffset, XGyroOffset, YGyroOffset, ZGyroOffset. In this example:   
 
-XAccelOffset = -2889
-YAccelOffset = -444
-ZAccelOffset = 698
-XGyroOffset = 149
-YGyroOffset = 27
-ZGyroOffset = 17
+XAccelOffset = -2889   
+YAccelOffset = -444   
+ZAccelOffset = 698   
+XGyroOffset = 149   
+YGyroOffset = 27   
+ZGyroOffset = 17   
 
 
 # Install a 3D viewer
