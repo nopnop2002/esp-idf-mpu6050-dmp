@@ -47,7 +47,7 @@ idf.py menuconfig
 idf.py flash
 ```
 
-More details on configuration can be found [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/IMU_Zero).   
+More details on configuration is [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/IMU_Zero).   
 
 It will take a few minutes for the calibration to complete.   
 The serial monitor should show results similar to the following.   
@@ -116,7 +116,7 @@ idf.py menuconfig
 idf.py flash
 ```
 
-More details on configuration can be found [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/MPU6050_DMP6).
+More details on configuration is [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/MPU6050_DMP6).
 
 
 The posture of your sensor is displayed.   
