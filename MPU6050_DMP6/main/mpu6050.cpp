@@ -161,8 +161,6 @@ void mpu6050(void *pvParameters){
 	mpu.setXGyroOffset(149);
 	mpu.setYGyroOffset(27);
 	mpu.setZGyroOffset(17);
-	mpu.CalibrateAccel(6);
-	mpu.CalibrateGyro(6);
 
 	// Calibration Time: generate offsets and calibrate our MPU6050
 	mpu.CalibrateAccel(6);
