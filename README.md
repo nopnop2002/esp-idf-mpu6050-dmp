@@ -1,14 +1,12 @@
 # esp-idf-mpu6050-dmp
 A demo showing the pose of the mpu6050 in 3D using esp-idf.
 
-https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation
-
 MPU6050 has an internal processing function called DMP (Digital Motion Processor).   
 You can use this to get Euler angles.   
 Euler angles are roll, pitch and yaw.   
-View Roll, Pitch and Yaw using a 3D viewer.   
 ![a-Pitch-yaw-and-roll-angles-of-an-aircraft-with-body-orientation-O-u-v-original](https://user-images.githubusercontent.com/6020549/224452743-d4cf419d-f936-4e46-9ece-a12f21bf2e32.jpg)
 
+View roll, pitch and yaw with [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation) 3D viewer.   
 
 # Installation overview
 
