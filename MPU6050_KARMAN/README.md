@@ -3,6 +3,8 @@ This demo shows roll and pitch angles in 3D without using a DMP.
 Calculate roll and pitch using the very famous KalmanFilter.   
 Since the MPU6050 does not have a magnetic sensor, yaw cannot be calculated.   
 No drift occurs at rest.   
+I used [this](https://github.com/TKJElectronics/KalmanFilter) library.   
+
 
 # Configuration
 
