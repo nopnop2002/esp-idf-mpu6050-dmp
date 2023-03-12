@@ -143,6 +143,7 @@ void mpu6050(void *pvParameters){
 	// Initialize mpu6050
 	mpu.initialize();
 
+#if 0
 	// Get Device ID
 	uint8_t DeviceID = mpu.getDeviceID();
 	ESP_LOGI(TAG, "DeviceID=0x%x", DeviceID);
@@ -150,6 +151,7 @@ void mpu6050(void *pvParameters){
 		ESP_LOGE(TAG, "MPU6050 not found");
 		vTaskDelete(NULL);
 	}
+#endif
 
 	// Initialize DMP
 	devStatus = mpu.dmpInitialize();
