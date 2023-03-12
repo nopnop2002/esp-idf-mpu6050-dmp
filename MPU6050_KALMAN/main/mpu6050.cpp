@@ -68,6 +68,10 @@ static const char *TAG = "MPU";
 #define RESTRICT_PITCH // Comment out to restrict roll to ±90deg instead
 #define RAD_TO_DEG (180.0/PI)
 
+// Arduino macro
+#define micros() (unsigned long) (esp_timer_get_time())
+#define delay(ms) esp_rom_delay_us(ms*1000)
+
 MPU6050 mpu;
 Kalman kalmanX; // Create the Kalman instances
 Kalman kalmanY;
@@ -77,9 +81,37 @@ int16_t raw_ax, raw_ay, raw_az;
 int16_t raw_gx, raw_gy, raw_gz;
 double accX, accY, accZ;
 double gyroX, gyroY, gyroZ;
+
+double roll, pitch; // Roll and pitch are calculated using the accelerometer
+
 double gyroXangle, gyroYangle; // Angle calculate using the gyro only
 double compAngleX, compAngleY; // Calculated angle using a complementary filter
 double kalAngleX, kalAngleY; // Calculated angle using a Kalman filter
+
+void updateMPU6050() {
+	// Read raw data from imu. Units don't care.
+	mpu.getMotion6(&raw_ax, &raw_ay, &raw_az, &raw_gx, &raw_gy, &raw_gz);
+	accX = raw_ax;
+	accY = raw_ay;
+	accZ = raw_az;
+	gyroX = raw_gx;
+	gyroY = raw_gy;
+	gyroZ = raw_gz;
+}
+
+void updatePitchRoll() {
+	// Source: http://www.freescale.com/files/sensors/doc/app_note/AN3461.pdf eq. 25 and eq. 26
+	// atan2 outputs the value of -πto π(radians) - see http://en.wikipedia.org/wiki/Atan2
+	// It is then converted from radians to degrees
+#ifdef RESTRICT_PITCH // Eq. 25 and 26
+	roll = atan2(accY, accZ) * RAD_TO_DEG;
+	pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
+#else // Eq. 28 and 29
+	roll = atan(accY / sqrt(accX * accX + accZ * accZ)) * RAD_TO_DEG;
+	pitch = atan2(-accX, accZ) * RAD_TO_DEG;
+#endif
+}
+
 
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
@@ -119,62 +151,34 @@ void mpu6050(void *pvParameters){
 	// Set Gyro Full Scale Range to ±250deg/s
 	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0);
 
-	mpu.getMotion6(&raw_ax, &raw_ay, &raw_az, &raw_gx, &raw_gy, &raw_gz);
-	accX = raw_ax;
-	accY = raw_ay;
-	accZ = raw_az;
-	gyroX = raw_gx;
-	gyroY = raw_gy;
-	gyroZ = raw_gz;
 
-#ifdef RESTRICT_PITCH // Eq. 25 and 26
-	double roll  = atan2(accY, accZ) * RAD_TO_DEG;
-	double pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
-#else // Eq. 28 and 29
-	double roll  = atan(accY / sqrt(accX * accX + accZ * accZ)) * RAD_TO_DEG;
-	double pitch = atan2(-accX, accZ) * RAD_TO_DEG;
-#endif
+	/* Set Kalman and gyro starting angle */
+	updateMPU6050();
+	updatePitchRoll();
 
-
-	kalmanX.setAngle(roll); // Set starting angle
-	kalmanY.setAngle(pitch);
+	kalmanX.setAngle(roll); // First set roll starting angle
 	gyroXangle = roll;
-	gyroYangle = pitch;
 	compAngleX = roll;
+
+	kalmanY.setAngle(pitch); // Then pitch
+	gyroYangle = pitch;
 	compAngleY = pitch;
 
 	int elasped = 0;
 	uint32_t timer = micros();
-	kalmanY.setQangle(0.0);
 
 	bool initialized = false;
 	double initial_roll = 0.0;
 	double initial_pitch = 0.0;
 
 	while(1){
-		mpu.getMotion6(&raw_ax, &raw_ay, &raw_az, &raw_gx, &raw_gy, &raw_gz);
-
-		accX = raw_ax;
-		accY = raw_ay;
-		accZ = raw_az;
-		gyroX = raw_gx;
-		gyroY = raw_gy;
-		gyroZ = raw_gz;
+		updateMPU6050();
 
 		double dt = (double)(micros() - timer) / 1000000; // Calculate delta time
 		timer = micros();
 
-		// Source: http://www.freescale.com/files/sensors/doc/app_note/AN3461.pdf eq. 25 and eq. 26
-		// atan2 outputs the value of -π to π (radians) - see http://en.wikipedia.org/wiki/Atan2
-		// It is then converted from radians to degrees
-#ifdef RESTRICT_PITCH // Eq. 25 and 26
-		double roll  = atan2(accY, accZ) * RAD_TO_DEG;
-		double pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
-#else // Eq. 28 and 29
-		double roll  = atan(accY / sqrt(accX * accX + accZ * accZ)) * RAD_TO_DEG;
-		double pitch = atan2(-accX, accZ) * RAD_TO_DEG;
-#endif
-
+		/* Roll and pitch estimation */
+		updatePitchRoll();
 		double gyroXrate = gyroX / 131.0; // Convert to deg/s
 		double gyroYrate = gyroY / 131.0; // Convert to deg/s
 
@@ -187,10 +191,11 @@ void mpu6050(void *pvParameters){
 			kalAngleX = roll;
 			gyroXangle = roll;
 		} else
-		kalAngleX = kalmanX.getAngle(roll, gyroXrate, dt); // Calculate the angle using a Kalman filter
+			kalAngleX = kalmanX.getAngle(roll, gyroXrate, dt); // Calculate the angle using a Kalman filter
+	
 
 		if (abs(kalAngleX) > 90)
-		gyroYrate = -gyroYrate; // Invert rate, so it fits the restriced accelerometer reading
+			gyroYrate = -gyroYrate; // Invert rate, so it fits the restriced accelerometer reading
 		kalAngleY = kalmanY.getAngle(pitch, gyroYrate, dt);
 #else
 		// This fixes the transition problem when the accelerometer angle jumps between -180 and 180 degrees
@@ -200,29 +205,30 @@ void mpu6050(void *pvParameters){
 			kalAngleY = pitch;
 			gyroYangle = pitch;
 		} else
-		kalAngleY = kalmanY.getAngle(pitch, gyroYrate, dt); // Calculate the angle using a Kalman filter
+			kalAngleY = kalmanY.getAngle(pitch, gyroYrate, dt); // Calculate the angle using a Kalman filter
 
 		if (abs(kalAngleY) > 90)
-		gyroXrate = -gyroXrate; // Invert rate, so it fits the restriced accelerometer reading
+			gyroXrate = -gyroXrate; // Invert rate, so it fits the restriced accelerometer reading
 		kalAngleX = kalmanX.getAngle(roll, gyroXrate, dt); // Calculate the angle using a Kalman filter
 #endif
 
+		/* Estimate angles using gyro only */
 		gyroXangle += gyroXrate * dt; // Calculate gyro angle without any filter
 		gyroYangle += gyroYrate * dt;
 		//gyroXangle += kalmanX.getRate() * dt; // Calculate gyro angle using the unbiased rate
 		//gyroYangle += kalmanY.getRate() * dt;
 
+		/* Estimate angles using complimentary filter */
 		compAngleX = 0.93 * (compAngleX + gyroXrate * dt) + 0.07 * roll; // Calculate the angle using a Complimentary filter
 		compAngleY = 0.93 * (compAngleY + gyroYrate * dt) + 0.07 * pitch;
 
 		// Reset the gyro angle when it has drifted too much
-		if (gyroXangle < -180 || gyroXangle > 180)
-		gyroXangle = kalAngleX;
-		if (gyroYangle < -180 || gyroYangle > 180)
-		gyroYangle = kalAngleY;
+		if (gyroXangle < -180 || gyroXangle > 180) gyroXangle = kalAngleX;
+		if (gyroYangle < -180 || gyroYangle > 180) gyroYangle = kalAngleY;
 
-		/* Print Data */
+		/* Print Data every 10 times */
 		if (elasped > 10) {
+			// Set the first data
 			if (!initialized) {
 				initial_roll = roll;
 				initial_pitch = pitch;
@@ -247,6 +253,7 @@ void mpu6050(void *pvParameters){
 			printf("\n");
 #endif
 
+			/* Send packet */
 			float _roll = roll-initial_roll;
 			float _pitch = pitch-initial_pitch;
 			printf("_roll:%f _pitch=%f\n", _roll, _pitch);
