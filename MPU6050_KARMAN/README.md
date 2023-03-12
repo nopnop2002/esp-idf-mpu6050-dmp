@@ -4,7 +4,7 @@ Calculate roll and pitch using the very famous KalmanFilter.
 Since the MPU6050 does not have a magnetic sensor, yaw cannot be calculated.   
 No drift occurs at rest.   
 I used [this](https://github.com/TKJElectronics/KalmanFilter) library.   
-
+I used [this](https://github.com/TKJElectronics/Example-Sketch-for-IMU-including-Kalman-filter/tree/master/IMU/MPU6050) as a reference.   
 
 # Configuration
 
