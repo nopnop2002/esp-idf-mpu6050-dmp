@@ -25,15 +25,16 @@ ESP-IDF V5 is required when using ESP32-C2.
 # Hardware requirements
 MotionTracking device with DMP function.   
 MPU6000/6050/6500/6555/9225/9250/9255 are abailable.   
-|Device|Reg#117|magnetometer|
-|:-:|:-:|:-:|
-|MPU6000|0x68||
-|MPU6050|0x68||
-|MPU6500|0x70||
-|MPU6555|0x7C||
-|MPU9225|0x73|AK8963|
-|MPU9250|0x71|AK8963|
-|MPU9255|0x73|AK8963|
+|Device|Reg#117|sensors|Compass|
+|:-:|:-:|:-:|:-:|
+|MPU6000|0x68|Gyro/Accel||
+|MPU6050|0x68|Gyro/Accel||
+|MPU6500|0x70|Gyro/Accel||
+|MPU6555|0x7C|Gyro/Accel||
+|MPU9150|0x68|Gyro/Accel/Compass|AK8963|
+|MPU9225|0x73|Gyro/Accel/Compass|AK8963|
+|MPU9250|0x71|Gyro/Accel/Compass|AK8963|
+|MPU9255|0x73|Gyro/Accel/Compass|AK8963|
 
 # Wireing
 |MPU6050||ESP32|ESP32-S2/S3|ESP32-C2/C3||
