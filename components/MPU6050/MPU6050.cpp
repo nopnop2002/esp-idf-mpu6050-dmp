@@ -3366,6 +3366,7 @@ void MPU6050_Base::PID(uint8_t ReadAddress, float kP,float kI, uint8_t Loops){
 			} else Data = round((ITerm[i]) / 4);
 			I2Cdev::writeWords(devAddr, SaveAddress + (i * shift), 1, (uint16_t *)&Data, wireObj);
 		}
+		vTaskDelay(1);
 	}
 	resetFIFO();
 	resetDMP();
