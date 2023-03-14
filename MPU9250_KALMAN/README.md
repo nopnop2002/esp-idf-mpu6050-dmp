@@ -1,5 +1,5 @@
 # MPU9250_KALMAN
-This demo shows roll and pitch angles in 3D without using a DMP.   
+This demo shows roll, pitch and yaw angles in 3D without using a DMP.   
 Calculate roll, pitch and yaw using the very famous KalmanFilter.   
 I used [this](https://github.com/TKJElectronics/KalmanFilter) library.   
 I used [this](https://github.com/TKJElectronics/Example-Sketch-for-IMU-including-Kalman-filter/tree/master/IMU/MPU6050) as a reference.   
