@@ -102,7 +102,7 @@ double kalAngleX, kalAngleY, kalAngleZ; // Calculated angle using a Kalman filte
 uint8_t MagAdjustmentValue[3];
 float magCalibration[3];
 
-bool getMagRaw(int *mx, int *my, int *mz) {
+bool getMagRaw(int16_t *mx, int16_t *my, int16_t *mz) {
 	uint8_t rawData[7];
 	for (int i=0;i<7;i++) {
 		uint8_t reg = i + 0x03;
@@ -124,7 +124,7 @@ bool getMagRaw(int *mx, int *my, int *mz) {
 	return true;
 }
 
-bool getMagData(int *mx, int *my, int *mz) {
+bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 	ESP_LOGD(TAG, "mag.getDeviceID()=0x%x", mag.getDeviceID());
 	if (mag.getDeviceID() != 0x48) {
 		ESP_LOGE(TAG, "*****AK8963 connection lost*****");
@@ -178,53 +178,11 @@ void updateMPU6050() {
 }
 
 void updateAK8963() {
-	static bool initialize = true;
-	int mx, my, mz;
-	static float sumMagDataX[10];
-	static float sumMagDataY[10];
-	static float sumMagDataZ[10];
-
-	if (initialize) {
-		int dataCount = 0;
-		while(1) {
-			// Read raw data from mag. Units don't care.
-			if (getMagData(&mx, &my, &mz)) {
-				sumMagDataX[dataCount] = mx;
-				sumMagDataY[dataCount] = my;
-				sumMagDataZ[dataCount] = mz;
-				dataCount++;
-				if (dataCount == 10) break;
-			}
-			vTaskDelay(1);
-		}
-		initialize = false;
-	}
-
-	// Average of 10 data
+	int16_t mx, my, mz;
 	if (getMagData(&mx, &my, &mz)) {
-		ESP_LOGD(TAG, "mx=%d my=%d mz=%d", mx, my, mz);
-		float totalX = 0.0;
-		float totalY = 0.0;
-		float totalZ = 0.0;
-		for (int i=0;i<10;i++) {
-			totalX = totalX + sumMagDataX[i];
-			totalY = totalY + sumMagDataY[i];
-			totalZ = totalZ + sumMagDataZ[i];
-		}
-
-		ESP_LOGD(TAG, "total=%f %f %f", totalX, totalY, totalZ);
-		magX = totalX / 10.0;
-		magY = totalY / 10.0;
-		magZ = totalZ / 10.0;
-		ESP_LOGD(TAG, "mag=%f %f %f", magX, magY, magZ);
-		for (int i=1;i<10;i++) {
-			sumMagDataX[i-1] = sumMagDataX[i];
-			sumMagDataY[i-1] = sumMagDataY[i];
-			sumMagDataZ[i-1] = sumMagDataZ[i];
-		}
-		sumMagDataX[9] = mx;
-		sumMagDataY[9] = my;
-		sumMagDataZ[9] = mz;
+		magX = mx;
+		magY = my;
+		magZ = mz;
 	}
 }
 
