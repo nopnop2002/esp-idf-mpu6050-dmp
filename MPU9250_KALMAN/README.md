@@ -13,8 +13,8 @@ I used [this](https://github.com/TKJElectronics/Example-Sketch-for-IMU-including
 Value after 10 minutes at rest.   
 - DMP
 ```
-I (600053) IMU: roll:-0.003362 pitch:0.174831 yaw:-2.203673
-I (600153) IMU: roll:-0.003362 pitch:0.174831 yaw:-2.203673
+I (600093) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
+I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
 - KALMAN Filter
