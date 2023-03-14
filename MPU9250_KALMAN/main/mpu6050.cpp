@@ -97,8 +97,8 @@ double gyroXangle, gyroYangle, gyroZangle; // Angle calculate using the gyro onl
 double compAngleX, compAngleY, compAngleZ; // Calculated angle using a complementary filter
 double kalAngleX, kalAngleY, kalAngleZ; // Calculated angle using a Kalman filter
 
-/* MAG Data */
-// Value from Fuse ROM
+// MAG Data Sensitivity adjustment data
+// Sensitivity adjustment data for each axis is stored to fuse ROM on shipment.
 uint8_t MagAdjustmentValue[3];
 float magCalibration[3];
 
@@ -178,11 +178,17 @@ void updateMPU6050() {
 }
 
 void updateAK8963() {
+	// Read raw data from mag. Units don't care.
 	int16_t mx, my, mz;
 	if (getMagData(&mx, &my, &mz)) {
-		magX = mx;
-		magY = my;
-		magZ = mz;
+		//magX = mx;
+		//magY = my;
+		//magZ = mz;
+		// adjust sensitivity
+		// from datasheet 8.3.11
+		magX = mx * magCalibration[0];
+		magY = my * magCalibration[1];
+		magZ = mz * magCalibration[2];
 	}
 }
 
@@ -288,9 +294,11 @@ void mpu6050(void *pvParameters){
 	MagAdjustmentValue[2] = mag.getAdjustmentZ();
 	ESP_LOGI(TAG, "MagAdjustmentValue: %x %x %x", MagAdjustmentValue[0], MagAdjustmentValue[1], MagAdjustmentValue[2]);
 
+	// Calculate sensitivity
+	// from datasheet 8.3.11
 	for (int i=0;i<3;i++) {
 		magCalibration[i] = (float)(MagAdjustmentValue[i] - 128)/256.0f + 1.0f;
-		printf("magCalibration[%d]=%f\n",i, magCalibration[i]);
+		ESP_LOGI(TAG, "magCalibration[%d]=%f",i, magCalibration[i]);
 	}
 
 	// Goto Powerdown Mode
