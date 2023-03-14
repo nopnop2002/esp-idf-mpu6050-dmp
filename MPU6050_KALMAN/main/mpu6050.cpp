@@ -256,7 +256,7 @@ void mpu6050(void *pvParameters){
 			/* Send packet */
 			float _roll = roll-initial_roll;
 			float _pitch = pitch-initial_pitch;
-			printf("_roll:%f _pitch=%f\n", _roll, _pitch);
+			ESP_LOGI(TAG, "roll:%f pitch=%f", _roll, _pitch);
 
 			POSE_t pose;
 			pose.roll = _roll;
