@@ -17,13 +17,13 @@ But this sample doesn't use DMP, just 9DoF data.
 
 # Drift comparison using MPU9250
 Value after 10 minutes at rest.   
-- DMP
+- When using DMP
 ```
 I (600093) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
-- KALMAN Filter
+- When using KALMAN Filter
 ```
 I (600025) MPU: roll:0.008345 pitch=-0.230621 yaw=1.071427
 I (600145) MPU: roll:0.071426 pitch=0.014303 yaw=-0.710934
