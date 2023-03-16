@@ -6,6 +6,11 @@ No drift occurs at rest.
 I used [this](https://github.com/TKJElectronics/KalmanFilter) library.   
 I used [this](https://github.com/TKJElectronics/Example-Sketch-for-IMU-including-Kalman-filter/tree/master/IMU/MPU6050) as a reference.   
 
+# Hardware requirements
+MPU6000/6050/6500/6555 6DoF MotionTracking device.   
+They have an internal processing function called DMP (Digital Motion Processor).   
+But this sample doesn't use DMP, just 6DoF data.   
+
 # Configuration
 
 ![config-MPU6050_DMP6-1](https://user-images.githubusercontent.com/6020549/224453334-ad69a635-0767-4d94-8193-c11160b10eb7.jpg)
