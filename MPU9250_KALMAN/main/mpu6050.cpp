@@ -117,10 +117,16 @@ bool getMagRaw(int16_t *mx, int16_t *my, int16_t *mz) {
 		return false;
 	}
 
+#if 0
 	*mx = ((int16_t)rawData[0] << 8) | rawData[1];
 	*my = ((int16_t)rawData[2] << 8) | rawData[3];
 	*mz = ((int16_t)rawData[4] << 8) | rawData[5];
-	ESP_LOGD(TAG, "mx=%d my=%d mz=%d", *mx, *my, *mz);
+#else
+	*mx = ((int16_t)rawData[1] << 8) | rawData[0];
+	*my = ((int16_t)rawData[3] << 8) | rawData[2];
+	*mz = ((int16_t)rawData[5] << 8) | rawData[4];
+#endif
+	ESP_LOGD(TAG, "mx=0x%x my=0x%x mz=0x%x", *mx, *my, *mz);
 	return true;
 }
 
@@ -181,6 +187,7 @@ void updateAK8963() {
 	// Read raw data from mag. Units don't care.
 	int16_t mx, my, mz;
 	if (getMagData(&mx, &my, &mz)) {
+		ESP_LOGD(TAG, "mag=%d %d %d", mx, my, mz);
 		//magX = mx;
 		//magY = my;
 		//magZ = mz;
@@ -189,6 +196,7 @@ void updateAK8963() {
 		magX = mx * magCalibration[0];
 		magY = my * magCalibration[1];
 		magZ = mz * magCalibration[2];
+		ESP_LOGD(TAG, "mag=%f %f %f", magX, magY, magZ);
 	}
 }
 
@@ -316,6 +324,7 @@ void mpu6050(void *pvParameters){
 	// 0x0?:14 bit output 0.60 uT/LSB --> 1 = 0.60uT
 	// 0x1?:16 bit output 0.15 uT/LSB --> 1 = 0.15uT
 	mag.setMode(0x16);
+	//mag.setMode(0x06);
 
 
 	/* Set Kalman and gyro starting angle */

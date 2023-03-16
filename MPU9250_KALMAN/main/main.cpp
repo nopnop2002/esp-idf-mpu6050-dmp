@@ -26,8 +26,10 @@ void udp_trans(void *pvParameters);
 
 void app_main(void)
 {
+	// Initialize WiFi
 	start_wifi();
 
+	// Initialize i2c
 	i2c_config_t conf;
 	conf.mode = I2C_MODE_MASTER;
 	conf.sda_io_num = (gpio_num_t)CONFIG_GPIO_SDA;
@@ -38,15 +40,12 @@ void app_main(void)
 	ESP_ERROR_CHECK(i2c_param_config(I2C_NUM_0, &conf));
 	ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, I2C_MODE_MASTER, 0, 0, 0));
 
-	/* Create Queue */
+	// Create Queue
 	xQueueTrans = xQueueCreate(10, sizeof(POSE_t));
 	configASSERT( xQueueTrans );
 
+	// Start task
 	vTaskDelay(500/portTICK_PERIOD_MS);
 	xTaskCreate(&mpu6050, "IMU", 1024*8, NULL, 5, NULL);
 	xTaskCreate(&udp_trans, "TRANS", 1024*2, NULL, 5, NULL);
-
-	while(1) {
-		vTaskDelay(100);
-	}
 }
