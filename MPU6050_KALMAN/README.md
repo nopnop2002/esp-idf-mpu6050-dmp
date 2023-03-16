@@ -18,13 +18,13 @@ But this sample doesn't use DMP, just 6DoF data.
 
 # Drift comparison using MPU6050
 Value after 10 minutes at rest.   
-- DMP
+- When using DMP
 ```
 I (600093) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
-- KALMAN Filter
+- When using KALMAN Filter
 ```
 I (600117) MPU: roll:-0.028039 pitch=-0.056162
 I (600237) MPU: roll:-0.028626 pitch=-0.027323
