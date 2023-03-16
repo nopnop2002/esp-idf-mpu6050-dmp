@@ -16,7 +16,7 @@ But this sample doesn't use DMP, just 9DoF data.
 ![config-MPU6050_DMP6-2](https://user-images.githubusercontent.com/6020549/224453337-8529aa7f-76dd-4b70-9bff-a43888973534.jpg)
 
 # Display roll, pitch and yaw in 3D
-Use [this}(https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation).   
+Use [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation).   
 
 # Drift comparison using MPU9250
 Value after 10 minutes at rest.   
