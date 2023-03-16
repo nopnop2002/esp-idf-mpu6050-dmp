@@ -4,6 +4,12 @@ Calculate roll, pitch and yaw using the very famous KalmanFilter.
 I used [this](https://github.com/TKJElectronics/KalmanFilter) library.   
 I used [this](https://github.com/TKJElectronics/Example-Sketch-for-IMU-including-Kalman-filter/tree/master/IMU/MPU6050_HMC5883L) as a reference.   
 
+# Hardware requirements
+MPU9150/9150/9225/9250/9255 9DoF MotionTracking device.   
+These are package that integrates the MPU6515 and a chip (AK8963) with a 3-axis magnetic sensor.   
+They have an internal processing function called DMP (Digital Motion Processor).   
+But this sample doesn't use DMP, just 9DoF data.   
+
 # Configuration
 
 ![config-MPU6050_DMP6-1](https://user-images.githubusercontent.com/6020549/224453334-ad69a635-0767-4d94-8193-c11160b10eb7.jpg)
