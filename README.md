@@ -142,6 +142,6 @@ The posture of your sensor is displayed.
 ![pyteapot_2023-03-11_09-11-46](https://user-images.githubusercontent.com/6020549/224452173-2350704d-1fc4-4a12-8324-434c11f62c52.png)
 
 
-# Using KALMAN Filter
-You can use KALMAN filters instead of DMP.   
-DMP estimates Euler angle inside the device, whereas KALMAN filters estimate Euler angle purely in software.   
+# Using IMU Filter
+You can use Kanman and Madgwick filters instead of DMP.   
+DMP estimates Euler angle inside the device, whereas filters estimate Euler angle purely in software.   
