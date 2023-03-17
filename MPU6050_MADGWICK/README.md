@@ -30,9 +30,8 @@ I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
 - When using Madgwick Filter
-It takes at least 4 seconds for the estimate to stabilize.   
-Slight YAW drift will occur.   
+The yaw estimate is useless.   
 ```
-I (600047) MPU: roll:-0.210738 pitch=-0.519232 yaw=1.319016
-I (600167) MPU: roll:-0.118261 pitch=-0.724355 yaw=1.318314
+I (600057) MPU: roll:-0.139635 pitch=-0.201925 yaw=-157.518829
+I (600177) MPU: roll:-0.194135 pitch=-0.134018 yaw=-157.696198
 ```
