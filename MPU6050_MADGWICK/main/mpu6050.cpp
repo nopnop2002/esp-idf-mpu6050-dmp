@@ -98,9 +98,9 @@ void _getMotion6(float *_ax, float *_ay, float *_az, float *_gx, float *_gy, flo
 
 	// Convert relative degree per second to absolute radian per second
 #if 1
-	*_gx = ((float)gx / gyro_sensitivity);
-	*_gy = ((float)gy / gyro_sensitivity);
-	*_gz = ((float)gz / gyro_sensitivity);
+	*_gx = (float)gx / gyro_sensitivity;
+	*_gy = (float)gy / gyro_sensitivity;
+	*_gz = (float)gz / gyro_sensitivity;
 #else
 	*_gx = (float)gx;
 	*_gy = (float)gy;
@@ -137,14 +137,14 @@ void mpu6050(void *pvParameters){
 	// Get Accelerometer Scale Range
 	ESP_LOGI(TAG, "getFullScaleAccelRange()=%d", mpu.getFullScaleAccelRange());
 	// Set Accelerometer Full Scale Range to ±2g
-	if (mpu.getFullScaleAccelRange() != 0) mpu.setFullScaleAccelRange(0);
-	accel_sensitivity = 16384.0;
+	if (mpu.getFullScaleAccelRange() != 0) mpu.setFullScaleAccelRange(0); // -2 --> +2[g]
+	accel_sensitivity = 16384.0; // g
 
 	// Get Gyro Scale Range
 	ESP_LOGI(TAG, "getFullScaleGyroRange()=%d", mpu.getFullScaleGyroRange());
 	// Set Gyro Full Scale Range to ±250deg/s
-	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0);
-	gyro_sensitivity = 131.0;
+	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0); // -250 --> +250[Deg/Sec]
+	gyro_sensitivity = 131.0; // Deg/Sec
 
 	double last_time_ = TimeToSec();
 	int elasped = 0;
@@ -162,6 +162,7 @@ void mpu6050(void *pvParameters){
 		float ax, ay, az;
 		float gx, gy, gz;
 		_getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+		ESP_LOGD(TAG, "accel=%f %f %f gyro=%f %f %f", ax, ay, az, gx, gy, gz);
 
 		// Get the elapsed time from the previous
 		float dt = (TimeToSec() - last_time_);
@@ -195,7 +196,8 @@ void mpu6050(void *pvParameters){
 			POSE_t pose;
 			pose.roll = _roll;
 			pose.pitch = _pitch;
-			pose.yaw = _yaw;
+			//pose.yaw = _yaw;
+			pose.yaw = 0.0;
 			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
 				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
 			}
