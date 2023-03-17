@@ -5,7 +5,8 @@ I based [this](https://github.com/arduino-libraries/MadgwickAHRS) library.
 I used [this](https://github.com/arduino-libraries/MadgwickAHRS/blob/master/examples/Visualize101/Visualize101.ino) as a reference.   
 
 # Change from original library
-The time difference used for estimation was changed to a parameter.   
+In the ESP-IDF environment, it is difficult to acquire data from sensors at regular intervals.   
+Therefore, the time difference used for estimation was changed to a parameter.   
 
 # Hardware requirements
 MPU9150/9225/9250/9255PU9250 9DoF MotionTracking device.   
