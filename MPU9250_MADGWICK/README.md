@@ -20,7 +20,7 @@ But this sample doesn't use DMP, just 9DoF data.
 # Display roll and pitch in 3D
 Use [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation).   
 
-# Drift comparison using MPU6050
+# Drift comparison using MPU9250
 Value after 10 minutes at rest.   
 - When using DMP   
 ```
