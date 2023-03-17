@@ -22,13 +22,13 @@ Use [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-r
 
 # Drift comparison using MPU6050
 Value after 10 minutes at rest.   
-- When using DMP
+- When using DMP   
 ```
 I (600093) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
-- When using Madgwick Filter
+- When using Madgwick Filter   
 It takes at least 4 seconds for the estimate to stabilize.   
 Slight YAW drift will occur.   
 ```
