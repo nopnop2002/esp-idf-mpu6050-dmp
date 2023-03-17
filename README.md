@@ -144,4 +144,4 @@ The posture of your sensor is displayed.
 
 # Using IMU Filter
 You can use Kanman and Madgwick filters instead of DMP.   
-DMP estimates Euler angle inside the device, whereas filters estimate Euler angle purely in software.   
+DMP estimates Euler angles in-device, whereas these filters estimate Euler angles purely in software.   
