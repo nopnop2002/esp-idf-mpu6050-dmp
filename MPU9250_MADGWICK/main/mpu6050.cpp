@@ -44,17 +44,19 @@ THE SOFTWARE.
 
 #include "math.h"
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <freertos/queue.h>
-#include <esp_log.h>
-#include <esp_err.h>
-#include <esp_timer.h>
-#include <driver/i2c.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "freertos/message_buffer.h"
+#include "esp_log.h"
+#include "esp_err.h"
+#include "driver/i2c.h"
+#include "cJSON.h"
 
 #include "parameter.h"
 
 extern QueueHandle_t xQueueTrans;
+extern MessageBufferHandle_t xMessageBufferToClient;
 
 static const char *TAG = "MPU";
 
@@ -289,6 +291,7 @@ void mpu6050(void *pvParameters){
 
 	float roll = 0.0, pitch = 0.0, yaw = 0.0;
 	float _roll = 0.0, _pitch = 0.0, _yaw = 0.0;
+	int counter = 0;
 	while(1){
 		// Get scaled value
 		float ax, ay, az;
@@ -338,7 +341,7 @@ void mpu6050(void *pvParameters){
 			ESP_LOGD(TAG, "roll=%f pitch=%f yaw=%f", roll, pitch, yaw);
 			ESP_LOGI(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 
-			/* Send packet */
+			// Send UDP packet
 			POSE_t pose;
 			pose.roll = _roll;
 			pose.pitch = _pitch;
@@ -346,6 +349,27 @@ void mpu6050(void *pvParameters){
 			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
 				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
 			}
+
+			// Send WEB request
+            counter++;
+            if (counter == 10) {
+                cJSON *request;
+                request = cJSON_CreateObject();
+                cJSON_AddStringToObject(request, "id", "data-request");
+                cJSON_AddNumberToObject(request, "roll", _roll);
+                cJSON_AddNumberToObject(request, "pitch", _pitch);
+                cJSON_AddNumberToObject(request, "yaw", _yaw);
+                char *my_json_string = cJSON_Print(request);
+                ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
+                size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
+                if (xBytesSent != strlen(my_json_string)) {
+                    ESP_LOGE(TAG, "xMessageBufferSend fail");
+                }
+                cJSON_Delete(request);
+                cJSON_free(my_json_string);
+                counter = 0;
+            }
+
 			vTaskDelay(1);
 			elasped = 0;
 		}

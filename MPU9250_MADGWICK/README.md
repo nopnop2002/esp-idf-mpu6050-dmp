@@ -13,6 +13,15 @@ MPU9150/9225/9250/9255PU9250 9DoF MotionTracking device.
 They have an internal processing function called DMP (Digital Motion Processor).   
 But this sample doesn't use DMP, just 9DoF data.   
 
+# Get Euler angles from MPU and display them in 3D
+```
+cd esp-idf-mpu6050-dmp/MPU9250_MADGWICK
+git clone https://github.com/Molorius/esp32-websocket components/websocket
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py menuconfig
+idf.py flash
+```
+
 # Configuration
 
 ![config-MPU6050_DMP6-1](https://user-images.githubusercontent.com/6020549/224453334-ad69a635-0767-4d94-8193-c11160b10eb7.jpg)
@@ -20,6 +29,23 @@ But this sample doesn't use DMP, just 9DoF data.
 
 # Display roll and pitch in 3D
 Use [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation).   
+
+# View Euler angles with built-in web server   
+ESP32 acts as a web server.   
+I used [this](https://github.com/Molorius/esp32-websocket) component.   
+This component can communicate directly with the browser.   
+It's a great job.   
+Enter the following in the address bar of your web browser.   
+```
+http:://{IP of ESP32}/
+or
+http://esp32.local/
+```
+
+![browser](https://user-images.githubusercontent.com/6020549/226087870-f06e17b6-44f4-4889-a179-0bb6b2723386.JPG)
+
+WEB pages are stored in the html folder.   
+You can change it as you like.   
 
 # Drift comparison using MPU9250
 Value after 10 minutes at rest.   
