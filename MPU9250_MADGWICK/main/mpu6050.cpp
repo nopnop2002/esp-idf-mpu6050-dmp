@@ -69,7 +69,7 @@ static const char *TAG = "MPU";
 // Source: https://github.com/arduino-libraries/MadgwickAHRS
 #include "MadgwickAHRS.h"
 
-#define RAD_TO_DEG (180.0/PI)
+#define RAD_TO_DEG (180.0/M_PI)
 #define DEG_TO_RAD 0.0174533
 
 #define MPU_ADDRESS 0x68
