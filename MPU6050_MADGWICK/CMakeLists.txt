@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 3.5)
 
 set(EXTRA_COMPONENT_DIRS ../components/I2Cdev 
                          ../components/MPU6050 
-                         ../components/MadgwickAHRS)
+                         ../components/MadgwickAHRS
+                         ../components/websocket)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(MPU6050_MADGWICK)
