@@ -160,5 +160,5 @@ WEB pages are stored in the html folder.
 You can change it as you like.   
 
 # Using IMU Filter
-You can use Kanman and Madgwick filters instead of DMP.   
+You can use Kalman and Madgwick filters instead of DMP.   
 DMP estimates Euler angles in-device, whereas these filters estimate Euler angles purely in software.   
