@@ -44,16 +44,19 @@ THE SOFTWARE.
 
 #include "math.h"
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <freertos/queue.h>
-#include <esp_log.h>
-#include <esp_err.h>
-#include <driver/i2c.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "freertos/message_buffer.h"
+#include "esp_log.h"
+#include "esp_err.h"
+#include "driver/i2c.h"
+#include "cJSON.h"
 
 #include "parameter.h"
 
 extern QueueHandle_t xQueueTrans;
+extern MessageBufferHandle_t xMessageBufferToClient;
 
 static const char *TAG = "MPU";
 
@@ -66,7 +69,8 @@ static const char *TAG = "MPU";
 #include "Kalman.h"
 
 #define RESTRICT_PITCH // Comment out to restrict roll to ±90deg instead
-#define RAD_TO_DEG (180.0/PI)
+#define RAD_TO_DEG (180.0/M_PI)
+#define DEG_TO_RAD 0.0174533
 
 // Arduino macro
 #define micros() (unsigned long) (esp_timer_get_time())
@@ -117,16 +121,6 @@ void mpu6050(void *pvParameters){
 	// Initialize mpu6050
 	mpu.initialize();
 
-#if 0
-	// Get Device ID
-	uint8_t DeviceID = mpu.getDeviceID();
-	ESP_LOGI(TAG, "DeviceID=0x%x", DeviceID);
-	if (DeviceID != 0x34) {
-		ESP_LOGE(TAG, "MPU6050 not found");
-		vTaskDelete(NULL);
-	}
-#endif
-
 	// Get the sample rate
 	ESP_LOGI(TAG, "getRate()=%d", mpu.getRate());
 	// Set the sample rate to 8kHz
@@ -171,6 +165,7 @@ void mpu6050(void *pvParameters){
 	double initial_roll = 0.0;
 	double initial_pitch = 0.0;
 
+	int counter = 0;
 	while(1){
 		updateMPU6050();
 
@@ -253,7 +248,7 @@ void mpu6050(void *pvParameters){
 			printf("\n");
 #endif
 
-			/* Send packet */
+			// Send UDP packet
 			float _roll = roll-initial_roll;
 			float _pitch = pitch-initial_pitch;
 			ESP_LOGI(TAG, "roll:%f pitch=%f", _roll, _pitch);
@@ -265,6 +260,27 @@ void mpu6050(void *pvParameters){
 			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
 				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
 			}
+
+			// Send WEB request
+			counter++;
+			if (counter == 10) {
+				cJSON *request;
+				request = cJSON_CreateObject();
+				cJSON_AddStringToObject(request, "id", "data-request");
+				cJSON_AddNumberToObject(request, "roll", _roll);
+				cJSON_AddNumberToObject(request, "pitch", _pitch);
+				cJSON_AddNumberToObject(request, "yaw", 0.0);
+				char *my_json_string = cJSON_Print(request);
+				ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
+				size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
+				if (xBytesSent != strlen(my_json_string)) {
+					ESP_LOGE(TAG, "xMessageBufferSend fail");
+				}
+				cJSON_Delete(request);
+				cJSON_free(my_json_string);
+				counter = 0;
+			}
+
 			vTaskDelay(1);
 			elasped = 0;
 		}
