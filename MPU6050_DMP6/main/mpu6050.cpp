@@ -100,9 +100,6 @@ void getQuaternion() {
 void getEuler() {
 	mpu.dmpGetQuaternion(&q, fifoBuffer);
 	mpu.dmpGetEuler(euler, &q);
-#if 0
-	float rad2deg = 180/M_PI;
-#endif
 	printf("euler psi:%6.2f theta:%6.2f phi:%6.2f\n", euler[0] * RAD_TO_DEG, euler[1] * RAD_TO_DEG, euler[2] * RAD_TO_DEG);
 }
 
@@ -112,26 +109,13 @@ void getYawPitchRoll() {
 	mpu.dmpGetGravity(&gravity, &q);
 	mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
 #if 0
-	float _rad2deg = 180/M_PI;
-#endif
-#if 0
 	float _roll = ypr[2] * RAD_TO_DEG;
 	float _pitch = ypr[1] * RAD_TO_DEG;
 	float _yaw = ypr[0] * RAD_TO_DEG;
+	ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",_roll, _pitch, _yaw);
 #endif
 	//printf("ypr roll:%3.1f pitch:%3.1f yaw:%3.1f\n",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
-	//ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",_roll, _pitch, _yaw);
 	ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
-
-#if 0
-	POSE_t pose;
-	pose.roll = _roll;
-	pose.pitch = _pitch;
-	pose.yaw = _yaw;
-	if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
-		ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
-	}
-#endif
 }
 
 // display real acceleration, adjusted to remove gravity
@@ -192,7 +176,6 @@ void mpu6050(void *pvParameters){
 	mpu.CalibrateGyro(6);
 	mpu.setDMPEnabled(true);
 
-	int counter = 0;
 	while(1){
 		if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) { // Get the Latest packet
 			getYawPitchRoll();
@@ -210,24 +193,20 @@ void mpu6050(void *pvParameters){
 			}
 
 			// Send WEB request
-			counter++;
-			if (counter == 10) {
-				cJSON *request;
-				request = cJSON_CreateObject();
-				cJSON_AddStringToObject(request, "id", "data-request");
-				cJSON_AddNumberToObject(request, "roll", _roll);
-				cJSON_AddNumberToObject(request, "pitch", _pitch);
-				cJSON_AddNumberToObject(request, "yaw", _yaw);
-				char *my_json_string = cJSON_Print(request);
-				ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
-				size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
-				if (xBytesSent != strlen(my_json_string)) {
-					ESP_LOGE(TAG, "xMessageBufferSend fail");
-				}
-				cJSON_Delete(request);
-				cJSON_free(my_json_string);
-				counter = 0;
+			cJSON *request;
+			request = cJSON_CreateObject();
+			cJSON_AddStringToObject(request, "id", "data-request");
+			cJSON_AddNumberToObject(request, "roll", _roll);
+			cJSON_AddNumberToObject(request, "pitch", _pitch);
+			cJSON_AddNumberToObject(request, "yaw", _yaw);
+			char *my_json_string = cJSON_Print(request);
+			ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
+			size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
+			if (xBytesSent != strlen(my_json_string)) {
+				ESP_LOGE(TAG, "xMessageBufferSend fail");
 			}
+			cJSON_Delete(request);
+			cJSON_free(my_json_string);
 
 			//getQuaternion();
 			//getEuler();
