@@ -10,10 +10,9 @@ MPU6000/6050/6500/6555 6DoF MotionTracking device.
 They have an internal processing function called DMP (Digital Motion Processor).   
 But this sample doesn't use DMP, just 6DoF data.   
 
-# Get Euler angles from MPU and display them in 3D
+# Get Euler angles from MPU
 ```
 cd esp-idf-mpu6050-dmp/MPU9250_KALMAN
-git clone https://github.com/Molorius/esp32-websocket components/websocket
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
 idf.py flash
@@ -23,9 +22,6 @@ idf.py flash
 
 ![config-MPU6050_DMP6-1](https://user-images.githubusercontent.com/6020549/224453334-ad69a635-0767-4d94-8193-c11160b10eb7.jpg)
 ![config-MPU6050_DMP6-2](https://user-images.githubusercontent.com/6020549/224453337-8529aa7f-76dd-4b70-9bff-a43888973534.jpg)
-
-# View Euler angles in 3D
-Use [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation).   
 
 # View Euler angles with built-in web server   
 ESP32 acts as a web server.   
@@ -39,7 +35,35 @@ or
 http://esp32.local/
 ```
 
-![browser-roll-pitch](https://user-images.githubusercontent.com/6020549/226090764-983cf7f6-6bbf-45cd-9065-8cb053a00138.JPG)
+![browser-roll-pitch](https://user-images.githubusercontent.com/6020549/226145934-2023dddd-b447-49e3-9091-720fd9707cbc.JPG)
+
+# View Euler angles using PyTeapot   
+You can view Euler angles using [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation) tool.   
+It works as a UDP display server.   
+This is a great application.   
+
+```
++-------------+     +-------------+     +-------------+
+|     IMU     | i2c |    ESP32    | UDP | pyteapot.py |
+|             |---->|             |---->|             |
+|             |     |             |     |             |
++-------------+     +-------------+     +-------------+
+```
+
+### Installation
+```
+$ sudo apt install python3-pip python3-setuptools
+$ python3 -m pip install -U pip
+$ python3 -m pip install pygame
+$ python3 -m pip install PyOpenGL PyOpenGL_accelerate
+$ git clone https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation
+$ cd PyTeapot-Quaternion-Euler-cube-rotation
+$ python3 pyteapot.py
+```
+
+The posture of your sensor is displayed.   
+![pyteapot_2023-03-11_09-11-46](https://user-images.githubusercontent.com/6020549/224452173-2350704d-1fc4-4a12-8324-434c11f62c52.png)
+
 
 # Drift comparison using MPU6050
 Value after 10 minutes at rest.   

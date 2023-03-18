@@ -4,7 +4,10 @@ var websocket = new WebSocket('ws://'+location.hostname+'/');
 var meter1 = 0;
 var meter2 = 0;
 var meter3 = 0;
-
+var roll = 0.0;
+var yaw = 0.0;
+var pitch = 0.0;
+var deg2rad = 0.0174533;
 
 function sendText(name) {
 	console.log('sendText');
@@ -64,20 +67,23 @@ websocket.onmessage = function(evt) {
 
 		case 'DATA':
 			console.log("DATA values[1]=" + values[1]);
-			var voltage1 = parseInt(values[1], 10);
-			gauge1.value = voltage1;
+			var val1 = parseInt(values[1], 10);
+			gauge1.value = val1;
 			gauge1.update({ valueText: values[1] });
+			roll = val1 * deg2rad;
 			if (meter2) {
 				console.log("DATA values[2]=" + values[2]);
-				var voltage2 = parseInt(values[2], 10);
-				gauge2.value = voltage2;
+				var val2 = parseInt(values[2], 10);
+				gauge2.value = val2;
 				gauge2.update({ valueText: values[2] });
+				pitch = val2 * deg2rad;
 			}
 			if (meter3) {
 				console.log("DATA values[3]=" + values[3]);
-				var voltage3 = parseInt(values[3], 10);
-				gauge3.value = voltage3;
+				var val3 = parseInt(values[3], 10);
+				gauge3.value = val3;
 				gauge3.update({ valueText: values[3] });
+				yaw = val3 * deg2rad * -1.0;
 			}
 			break;
 
