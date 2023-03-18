@@ -130,6 +130,7 @@ vi mpu6050.cpp
 I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6050/examples/MPU6050_DMP6).
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_DMP6
+git clone https://github.com/Molorius/esp32-websocket components/websocket
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
 idf.py flash
@@ -141,6 +142,22 @@ More details on configuration is [here](https://github.com/nopnop2002/esp-idf-mp
 The posture of your sensor is displayed.   
 ![pyteapot_2023-03-11_09-11-46](https://user-images.githubusercontent.com/6020549/224452173-2350704d-1fc4-4a12-8324-434c11f62c52.png)
 
+# View Euler angles with built-in web server   
+ESP32 acts as a web server.   
+I used [this](https://github.com/Molorius/esp32-websocket) component.   
+This component can communicate directly with the browser.   
+It's a great job.   
+Enter the following in the address bar of your web browser.   
+```
+http:://{IP of ESP32}/
+or
+http://esp32.local/
+```
+
+![browser](https://user-images.githubusercontent.com/6020549/226087870-f06e17b6-44f4-4889-a179-0bb6b2723386.JPG)
+
+WEB pages are stored in the html folder.   
+You can change it as you like.   
 
 # Using IMU Filter
 You can use Kanman and Madgwick filters instead of DMP.   

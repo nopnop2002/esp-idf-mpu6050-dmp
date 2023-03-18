@@ -42,16 +42,19 @@ THE SOFTWARE.
 ===============================================
 */
 
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <freertos/queue.h>
-#include <esp_log.h>
-#include <esp_err.h>
-#include <driver/i2c.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "freertos/message_buffer.h"
+#include "esp_log.h"
+#include "esp_err.h"
+#include "driver/i2c.h"
+#include "cJSON.h"
 
 #include "parameter.h"
 
 extern QueueHandle_t xQueueTrans;
+extern MessageBufferHandle_t xMessageBufferToClient;
 
 static const char *TAG = "MPU";
 
@@ -61,6 +64,9 @@ static const char *TAG = "MPU";
 
 //#include "MPU6050.h" // not necessary if using MotionApps include file
 #include "MPU6050_6Axis_MotionApps20.h"
+
+#define RAD_TO_DEG (180.0/M_PI)
+#define DEG_TO_RAD 0.0174533
 
 MPU6050 mpu;
 
@@ -94,8 +100,10 @@ void getQuaternion() {
 void getEuler() {
 	mpu.dmpGetQuaternion(&q, fifoBuffer);
 	mpu.dmpGetEuler(euler, &q);
+#if 0
 	float rad2deg = 180/M_PI;
-	printf("euler psi:%6.2f theta:%6.2f phi:%6.2f\n", euler[0] * rad2deg, euler[1] * rad2deg, euler[2] * rad2deg);
+#endif
+	printf("euler psi:%6.2f theta:%6.2f phi:%6.2f\n", euler[0] * RAD_TO_DEG, euler[1] * RAD_TO_DEG, euler[2] * RAD_TO_DEG);
 }
 
 // display Euler angles in degrees
@@ -103,13 +111,19 @@ void getYawPitchRoll() {
 	mpu.dmpGetQuaternion(&q, fifoBuffer);
 	mpu.dmpGetGravity(&gravity, &q);
 	mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
+#if 0
 	float _rad2deg = 180/M_PI;
-	float _roll = ypr[2] * _rad2deg;
-	float _pitch = ypr[1] * _rad2deg;
-	float _yaw = ypr[0] * _rad2deg;
-	//printf("ypr roll:%3.1f pitch:%3.1f yaw:%3.1f\n",ypr[2] * _rad2deg, ypr[1] * _rad2deg, ypr[0] * _rad2deg);
-	ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",_roll, _pitch, _yaw);
+#endif
+#if 0
+	float _roll = ypr[2] * RAD_TO_DEG;
+	float _pitch = ypr[1] * RAD_TO_DEG;
+	float _yaw = ypr[0] * RAD_TO_DEG;
+#endif
+	//printf("ypr roll:%3.1f pitch:%3.1f yaw:%3.1f\n",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
+	//ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",_roll, _pitch, _yaw);
+	ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
 
+#if 0
 	POSE_t pose;
 	pose.roll = _roll;
 	pose.pitch = _pitch;
@@ -117,6 +131,7 @@ void getYawPitchRoll() {
 	if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
 		ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
 	}
+#endif
 }
 
 // display real acceleration, adjusted to remove gravity
@@ -177,9 +192,43 @@ void mpu6050(void *pvParameters){
 	mpu.CalibrateGyro(6);
 	mpu.setDMPEnabled(true);
 
+	int counter = 0;
 	while(1){
 		if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) { // Get the Latest packet
 			getYawPitchRoll();
+			float _roll = ypr[2] * RAD_TO_DEG;
+			float _pitch = ypr[1] * RAD_TO_DEG;
+			float _yaw = ypr[0] * RAD_TO_DEG;
+
+			POSE_t pose;
+			pose.roll = _roll;
+			pose.pitch = _pitch;
+			pose.yaw = _yaw;
+			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
+				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
+			}
+
+			counter++;
+			if (counter == 10) {
+				cJSON *request;
+				request = cJSON_CreateObject();
+				cJSON_AddStringToObject(request, "id", "data-request");
+				cJSON_AddNumberToObject(request, "roll", _roll);
+				cJSON_AddNumberToObject(request, "pitch", _pitch);
+				cJSON_AddNumberToObject(request, "yaw", _yaw);
+				char *my_json_string = cJSON_Print(request);
+				ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
+				size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
+				if (xBytesSent != strlen(my_json_string)) {
+					ESP_LOGE(TAG, "xMessageBufferSend fail");
+				}
+				cJSON_Delete(request);
+				cJSON_free(my_json_string);
+				counter = 0;
+			}
+
+
+
 			//getQuaternion();
 			//getEuler();
 			//getRealAccel();
