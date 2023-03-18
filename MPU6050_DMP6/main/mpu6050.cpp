@@ -200,6 +200,7 @@ void mpu6050(void *pvParameters){
 			float _pitch = ypr[1] * RAD_TO_DEG;
 			float _yaw = ypr[0] * RAD_TO_DEG;
 
+			// Send UDP packet
 			POSE_t pose;
 			pose.roll = _roll;
 			pose.pitch = _pitch;
@@ -208,6 +209,7 @@ void mpu6050(void *pvParameters){
 				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
 			}
 
+			// Send WEB request
 			counter++;
 			if (counter == 10) {
 				cJSON *request;
@@ -226,8 +228,6 @@ void mpu6050(void *pvParameters){
 				cJSON_free(my_json_string);
 				counter = 0;
 			}
-
-
 
 			//getQuaternion();
 			//getEuler();
