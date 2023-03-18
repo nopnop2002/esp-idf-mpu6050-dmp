@@ -291,7 +291,6 @@ void mpu6050(void *pvParameters){
 
 	float roll = 0.0, pitch = 0.0, yaw = 0.0;
 	float _roll = 0.0, _pitch = 0.0, _yaw = 0.0;
-	int counter = 0;
 	while(1){
 		// Get scaled value
 		float ax, ay, az;
@@ -351,24 +350,20 @@ void mpu6050(void *pvParameters){
 			}
 
 			// Send WEB request
-            counter++;
-            if (counter == 10) {
-                cJSON *request;
-                request = cJSON_CreateObject();
-                cJSON_AddStringToObject(request, "id", "data-request");
-                cJSON_AddNumberToObject(request, "roll", _roll);
-                cJSON_AddNumberToObject(request, "pitch", _pitch);
-                cJSON_AddNumberToObject(request, "yaw", _yaw);
-                char *my_json_string = cJSON_Print(request);
-                ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
-                size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
-                if (xBytesSent != strlen(my_json_string)) {
-                    ESP_LOGE(TAG, "xMessageBufferSend fail");
-                }
-                cJSON_Delete(request);
-                cJSON_free(my_json_string);
-                counter = 0;
-            }
+			cJSON *request;
+			request = cJSON_CreateObject();
+			cJSON_AddStringToObject(request, "id", "data-request");
+			cJSON_AddNumberToObject(request, "roll", _roll);
+			cJSON_AddNumberToObject(request, "pitch", _pitch);
+			cJSON_AddNumberToObject(request, "yaw", _yaw);
+			char *my_json_string = cJSON_Print(request);
+			ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
+			size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
+			if (xBytesSent != strlen(my_json_string)) {
+				ESP_LOGE(TAG, "xMessageBufferSend fail");
+			}
+			cJSON_Delete(request);
+			cJSON_free(my_json_string);
 
 			vTaskDelay(1);
 			elasped = 0;
