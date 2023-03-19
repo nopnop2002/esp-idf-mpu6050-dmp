@@ -189,7 +189,8 @@
 			function tick() {
 				//box.rotation.x = roll; // in radians
 				box.rotation.x = pitch; // in radians
-				box.rotation.y = yaw; // in radians
+				//box.rotation.y = yaw; // in radians
+				box.rotation.y = yaw * -1.0; // in radians
 				//box.rotation.z = pitch; // in radians
 				box.rotation.z = roll * -1.0; // in radians
 				renderer.render(scene, camera); // rendering
