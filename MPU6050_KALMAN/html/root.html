@@ -177,7 +177,8 @@
 			// create box
 			//const geometry = new THREE.BoxGeometry(400, 400, 400);
 			//const geometry = new THREE.BoxGeometry(400, 100, 400);
-			const geometry = new THREE.BoxGeometry(400, 100, 200);
+			//const geometry = new THREE.BoxGeometry(400, 100, 200);
+			const geometry = new THREE.BoxGeometry(400, 100, 400);
 			const material = new THREE.MeshNormalMaterial();
 			const box = new THREE.Mesh(geometry, material);
 			scene.add(box);
@@ -186,12 +187,11 @@
 
 			// A loop event that runs every frame
 			function tick() {
-				box.rotation.x = roll; // in radians
-				//box.rotation.x = 0; // in radians
+				//box.rotation.x = roll; // in radians
+				box.rotation.x = pitch; // in radians
 				box.rotation.y = yaw; // in radians
-				//box.rotation.y = 0; // in radians
-				box.rotation.z = pitch; // in radians
-				//box.rotation.y += 0.01;
+				//box.rotation.z = pitch; // in radians
+				box.rotation.z = roll * -1.0; // in radians
 				renderer.render(scene, camera); // rendering
 
 				requestAnimationFrame(tick);
