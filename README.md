@@ -53,8 +53,7 @@ Since this sample uses DMP, it does not use a 3-axis magnetic sensor.
 I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6050/examples/IMU_Zero).
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
-cd esp-idf-mpu6050-dmp
-cd IMU_Zero
+cd esp-idf-mpu6050-dmp/IMU_Zero
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
 idf.py flash
