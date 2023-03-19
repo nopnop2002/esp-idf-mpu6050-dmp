@@ -54,7 +54,6 @@ I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp
-git clone https://github.com/Molorius/esp32-websocket components/websocket
 cd IMU_Zero
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
@@ -133,6 +132,7 @@ I used [this](https://canvas-gauges.com/) for gauge display.
 I used [this](https://threejs.org/) for 3D display.   
 You can change it as you like.   
 
+![browser-roll-pitch](https://user-images.githubusercontent.com/6020549/226154931-a63b230a-e970-4d29-be67-945ca037f99b.JPG)
 
 
 # Using IMU Filter
