@@ -1,6 +1,5 @@
 # MPU6050_DMP6
-Get Euler angles from MPU and display them in 3D.   
-
+Get Euler angles from IMU using DMP.   
 
 # Configuration
 
