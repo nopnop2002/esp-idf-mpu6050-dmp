@@ -1,6 +1,5 @@
 # IMU_Zero
-Calibration of your sensor.   
-
+Sensor calibration for using DMP.   
 
 # Configuration
 
