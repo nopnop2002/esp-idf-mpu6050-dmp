@@ -131,8 +131,6 @@ I used [this](https://canvas-gauges.com/) for gauge display.
 I used [this](https://threejs.org/) for 3D display.   
 You can change it as you like.   
 
-![browser-roll-pitch](https://user-images.githubusercontent.com/6020549/226154931-a63b230a-e970-4d29-be67-945ca037f99b.JPG)
-
 
 # Using IMU Filter
 You can use Kalman and Madgwick filters instead of DMP.   
