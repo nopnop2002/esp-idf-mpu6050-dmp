@@ -14,7 +14,7 @@ MPU6000/6050/6500/6555 6DoF MotionTracking device.
 They have an internal processing function called DMP (Digital Motion Processor).   
 But this sample doesn't use DMP, just 6DoF data.   
 
-# Get Euler angles from MPU
+# Get Euler angles from IMU
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_MADGWICK
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
