@@ -72,13 +72,13 @@ The posture of your sensor is displayed.
 
 # Drift comparison using MPU9250
 Value after 10 minutes at rest.   
-- When using DMP
+- When using DMP   
 ```
 I (600093) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
-- When using KALMAN Filter
+- When using KALMAN Filter   
 YAW is pretty unstable.
 ```
 I (600025) MPU: roll:0.008345 pitch=-0.230621 yaw=1.071427
