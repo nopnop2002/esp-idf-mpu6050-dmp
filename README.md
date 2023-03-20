@@ -14,7 +14,7 @@ It's very intuitive and easy to understand.
 
 - Embed the calibration value of the sensor into the source.
 
-- Get Euler angles from MPU.
+- Get Euler angles from IMU.
 
 - Display Euler angles in browser.
 
@@ -101,7 +101,7 @@ vi mpu6050.cpp
 ```
 
 
-# Get Euler angles from MPU
+# Get Euler angles from IMU
 I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6050/examples/MPU6050_DMP6).
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_DMP6
