@@ -9,7 +9,7 @@ MPU9150/9225/9250/9255PU9250 9DoF MotionTracking device.
 They have an internal processing function called DMP (Digital Motion Processor).   
 But this sample doesn't use DMP, just 9DoF data.   
 
-# Get Euler angles from MPU
+# Get Euler angles from IMU
 ```
 cd esp-idf-mpu6050-dmp/MPU9250_KALMAN
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
