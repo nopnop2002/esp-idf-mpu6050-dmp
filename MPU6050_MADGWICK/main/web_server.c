@@ -112,7 +112,7 @@ static void http_server(struct netconn *conn) {
 
 			ESP_LOGD(TAG, "buf=[%s]", buf);
 			// default page
-			if		 (strstr(buf,"GET / ")
+			if (strstr(buf,"GET / ")
 					&& !strstr(buf,"Upgrade: websocket")) {
 				ESP_LOGI(TAG,"Sending /");
 				netconn_write(conn, HTML_HEADER, sizeof(HTML_HEADER)-1,NETCONN_NOCOPY);
@@ -124,7 +124,7 @@ static void http_server(struct netconn *conn) {
 
 			// default page websocket
 			else if(strstr(buf,"GET / ")
-					 && strstr(buf,"Upgrade: websocket")) {
+					&& strstr(buf,"Upgrade: websocket")) {
 				ESP_LOGI(TAG,"Requesting websocket on /");
 				ws_server_add_client(conn,buf,buflen,"/",websocket_callback);
 				netbuf_delete(inbuf);
