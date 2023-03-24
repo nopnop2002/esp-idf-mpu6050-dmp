@@ -59,12 +59,20 @@ Since the HMC5883L is connected as a slave device of MPU6050, it is not recogniz
 
 
 # Wireing
-|MPU6050||ESP32|ESP32-S2/S3|ESP32-C2/C3||
+|MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3||
 |:-:|:-:|:-:|:-:|:-:|:-:|
+|VCC|--|3.3V|3.3V|3.3V||
+|GND|--|GND|GND|GND||
 |SCL|--|GPIO22|GPIO12|GPIO5|(*1)|
 |SDA|--|GPIO21|GPIO11|GPIO4|(*1)|
+
+|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3||
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|VCC_IN|--|N/C|N/C|N/C||
+|3.3V|--|3.3V|3.3V|3.3V||
 |GND|--|GND|GND|GND||
-|VCC|--|3.3V|3.3V|3.3V||
+|SCL|--|GPIO22|GPIO12|GPIO5|(*1)|
+|SDA|--|GPIO21|GPIO11|GPIO4|(*1)|
 
 (*1)You can change it to any pin using menuconfig.   
 
