@@ -31,7 +31,7 @@ MPU9XXX 9DoF MotionTracking device.
 # Caribrate compass
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
-cd esp-idf-mpu6050-dmp/IAK8963_CALIBRATE
+cd esp-idf-mpu6050-dmp/AK8963_CALIBRATE
 idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
 idf.py menuconfig
 idf.py flash
