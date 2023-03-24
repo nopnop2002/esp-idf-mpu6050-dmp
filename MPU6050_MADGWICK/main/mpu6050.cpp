@@ -58,7 +58,7 @@ THE SOFTWARE.
 extern QueueHandle_t xQueueTrans;
 extern MessageBufferHandle_t xMessageBufferToClient;
 
-static const char *TAG = "MPU";
+static const char *TAG = "IMU";
 
 // I2Cdev and MPU6050 must be installed as libraries, or else the .cpp/.h files
 // for both classes must be in the include path of your project
