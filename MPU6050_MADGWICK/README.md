@@ -80,6 +80,6 @@ I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 - When using Madgwick Filter   
 The yaw estimate is useless.   
 ```
-I (600057) MPU: roll:-0.139635 pitch=-0.201925 yaw=-157.518829
-I (600177) MPU: roll:-0.194135 pitch=-0.134018 yaw=-157.696198
+I (600057) IMU: roll:-0.139635 pitch=-0.201925 yaw=-157.518829
+I (600177) IMU: roll:-0.194135 pitch=-0.134018 yaw=-157.696198
 ```
