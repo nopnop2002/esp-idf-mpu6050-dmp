@@ -1,5 +1,5 @@
 # AK8963_CALIBRATE
-MPU9XXX has AK8963 3-axis Electronic Compass inside.   
+AK8963 is connected as slave device of MPU9XXX.   
 You can use this to get the compass offset value for each axis.   
 
 # Software requiment   
