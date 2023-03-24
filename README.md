@@ -132,11 +132,6 @@ I used [this](https://threejs.org/) for 3D display.
 You can change it as you like.   
 
 
-# Using IMU Filter
-You can use Kalman and Madgwick filters instead of DMP.   
-DMP estimates Euler angles in-device, whereas these filters estimate Euler angles purely in software.   
-
-
 
 # View Euler angles using PyTeapot   
 You can view Euler angles using [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation) tool.   
@@ -164,4 +159,9 @@ $ python3 pyteapot.py
 
 The posture of your sensor is displayed.   
 ![pyteapot_2023-03-11_09-11-46](https://user-images.githubusercontent.com/6020549/224452173-2350704d-1fc4-4a12-8324-434c11f62c52.png)
+
+
+# Using IMU Filter
+You can use Kalman and Madgwick filters instead of DMP.   
+DMP estimates Euler angles in-device, whereas these filters estimate Euler angles purely in software.   
 
