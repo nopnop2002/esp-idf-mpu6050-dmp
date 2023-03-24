@@ -9,6 +9,10 @@ MPU9150/9225/9250/9255PU9250 9DoF MotionTracking device.
 They have an internal processing function called DMP (Digital Motion Processor).   
 But this sample doesn't use DMP, just 9DoF data.   
 
+# Get compass offset
+Use [this](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/AK8963_CALIBRATE) to find the compass offset.
+
+
 # Get Euler angles from IMU
 ```
 cd esp-idf-mpu6050-dmp/MPU9250_KALMAN
@@ -18,10 +22,9 @@ idf.py flash
 ```
 
 # Configuration
-
-![config-MPU6050_DMP6-1](https://user-images.githubusercontent.com/6020549/224453334-ad69a635-0767-4d94-8193-c11160b10eb7.jpg)
-![config-MPU6050_DMP6-2](https://user-images.githubusercontent.com/6020549/224453337-8529aa7f-76dd-4b70-9bff-a43888973534.jpg)
-
+Sets the compass offset obtained by calibration.   
+![config-mpu9250-1](https://user-images.githubusercontent.com/6020549/227431656-0a076ccd-7cad-4fd0-a33f-1564cd773b98.jpg)
+![config-mpu9250-2](https://user-images.githubusercontent.com/6020549/227431659-2d08a2f9-bfba-4491-a18f-e9fcdde918fe.jpg)
 
 # View Euler angles with built-in web server   
 ESP32 acts as a web server.   

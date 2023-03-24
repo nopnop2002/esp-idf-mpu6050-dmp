@@ -77,7 +77,6 @@ static const char *TAG = "MPU";
 #define micros() (unsigned long) (esp_timer_get_time())
 #define delay(ms) esp_rom_delay_us(ms*1000)
 
-#define MPU_ADDRESS 0x68
 #define MAG_ADDRESS 0x0C
 
 MPU6050 mpu;
@@ -140,7 +139,8 @@ bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 	if (mag.getDeviceID() != 0x48) {
 		ESP_LOGE(TAG, "*****AK8963 connection lost*****");
 		ESP_LOGE(TAG, "mag.getDeviceID()=0x%x", mag.getDeviceID());
-		I2Cdev::writeByte(MPU_ADDRESS, 0x37, 0x02); // try to connect AK8963
+		// Bypass Enable Configuration
+		mpu.setI2CBypassEnabled(true);
 		vTaskDelay(100);
 		return false;
 	}
@@ -149,7 +149,8 @@ bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 	if (mag.getMode() != 0x06) {
 		ESP_LOGE(TAG, "*****AK8963 illegal data mode*****");
 		ESP_LOGE(TAG, "mag.getMode()=0x%x", mag.getMode());
-		I2Cdev::writeByte(MPU_ADDRESS, 0x37, 0x02); // try to connect AK8963
+		// Bypass Enable Configuration
+		mpu.setI2CBypassEnabled(true);
 		vTaskDelay(100);
 		return false;
 	}
@@ -193,9 +194,9 @@ void updateAK8963() {
 	int16_t mx, my, mz;
 	if (getMagData(&mx, &my, &mz)) {
 		ESP_LOGD(TAG, "mag=%d %d %d", mx, my, mz);
-		//magX = mx;
-		//magY = my;
-		//magZ = mz;
+		mx = mx + CONFIG_MAGX;
+		my = my + CONFIG_MAGY;
+		mz = mz + CONFIG_MAGZ;
 		// adjust sensitivity
 		// from datasheet 8.3.11
 		magX = mx * magCalibration[0];
@@ -281,8 +282,8 @@ void mpu6050(void *pvParameters){
 	// Set Gyro Full Scale Range to ±250deg/s
 	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0);
 
-	// Bypass Enable Configuration. Connect AK8963
-	I2Cdev::writeByte(MPU_ADDRESS, 0x37, 0x02); // connect AK8963
+	// Bypass Enable Configuration
+	mpu.setI2CBypassEnabled(true);
 
 	// Get MAG Device ID
 	uint8_t MagDeviceID = mag.getDeviceID();
@@ -471,6 +472,7 @@ void mpu6050(void *pvParameters){
 			float _roll = roll-initial_roll;
 			float _pitch = pitch-initial_pitch;
 			float _yaw = yaw-initial_yaw;
+			if (_yaw < -180.0) _yaw = _yaw + 360.0;
 			ESP_LOGI(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 
 			POSE_t pose;

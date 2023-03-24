@@ -46,4 +46,22 @@ menu "Application Configuration"
 		help
 			GPIO number (IOxx) of SDA.
 
+	config MAGX
+		int "Compass offset value X"
+		default 0
+		help
+			Compass offset value X.
+
+	config MAGY
+		int "Compass offset value Y"
+		default 0
+		help
+			Compass offset value Y.
+
+	config MAGZ
+		int "Compass offset value Z"
+		default 0
+		help
+			Compass offset value Z.
+
 endmenu
