@@ -26,10 +26,10 @@ ESP-IDF V5 is required when using ESP32-C2.
 MotionTracking device with DMP function.   
 
 ### MPU6000/6050/6500/6555/9150/9225/9250/9255   
-MPU9150/9225/9250/9255 is a multi-chip module (MCM) consisting of two dies integrated into a single LGA package. 
-One die houses the 3-Axis gyroscope and the 3-Axis accelerometer. 
-The other die houses the AK8975 3-Axis magnetometer from Asahi Kasei Microdevices Corporation.
-AK8963 is connected to MPU6050 as a slave device.   
+MPU9150/9225/9250/9255 is a multi-chip module (MCM) consisting of two dies integrated into a single LGA package.   
+One die houses the 3-Axis gyroscope and the 3-Axis accelerometer.   
+The other die houses the AK8975 3-Axis magnetometer from Asahi Kasei Microdevices Corporation.   
+Since the AK8963 is connected as a slave device, it is not recognized as an i2c device.   
 
 
 |Device|Reg#117|sensors|Compass|
@@ -45,11 +45,10 @@ AK8963 is connected to MPU6050 as a slave device.
 
 
 ### GY-87   
-GY-87 is a multi-chip module (MCM) consisting of two dies integrated into a single LGA package. 
-One die houses the 3-Axis gyroscope and the 3-Axis accelerometer. 
-The other die houses the HMC5883L 3-Axis magnetometer from Asahi Kasei Microdevices Corporation.
-HMC5883L is connected to MPU6050 as a slave device.   
-
+GY-87 is a multi-chip module (MCM) consisting of two dies integrated into a single LGA package.   
+One die houses the 3-Axis gyroscope and the 3-Axis accelerometer.   
+The other die houses the HMC5883L 3-Axis magnetometer from Asahi Kasei Microdevices Corporation.   
+Since the HMC5883L is connected as a slave device, it is not recognized as an i2c device.   
 
 # Wireing
 |MPU6050||ESP32|ESP32-S2/S3|ESP32-C2/C3||
