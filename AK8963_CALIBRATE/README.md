@@ -27,8 +27,7 @@ MPU9XXX 9DoF MotionTracking device.
 
 (*1)You can change it to any pin using menuconfig.   
 
-
-# Caribrate compass
+# Compass calibration
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp/AK8963_CALIBRATE
