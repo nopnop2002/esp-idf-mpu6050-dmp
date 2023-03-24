@@ -75,6 +75,6 @@ I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 
 - When using Kalman Filter
 ```
-I (600117) MPU: roll:-0.028039 pitch=-0.056162
-I (600237) MPU: roll:-0.028626 pitch=-0.027323
+I (600117) IMU: roll:-0.028039 pitch=-0.056162
+I (600237) IMU: roll:-0.028626 pitch=-0.027323
 ```
