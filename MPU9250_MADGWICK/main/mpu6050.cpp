@@ -72,7 +72,6 @@ static const char *TAG = "MPU";
 #define RAD_TO_DEG (180.0/M_PI)
 #define DEG_TO_RAD 0.0174533
 
-#define MPU_ADDRESS 0x68
 #define MAG_ADDRESS 0x0C
 
 MPU6050 mpu;
@@ -121,7 +120,8 @@ bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 	if (mag.getDeviceID() != 0x48) {
 		ESP_LOGE(TAG, "*****AK8963 connection lost*****");
 		ESP_LOGE(TAG, "mag.getDeviceID()=0x%x", mag.getDeviceID());
-		I2Cdev::writeByte(MPU_ADDRESS, 0x37, 0x02); // try to connect AK8963
+		// Bypass Enable Configuration
+		mpu.setI2CBypassEnabled(true);
 		vTaskDelay(100);
 		return false;
 	}
@@ -130,7 +130,8 @@ bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 	if (mag.getMode() != 0x06) {
 		ESP_LOGE(TAG, "*****AK8963 illegal data mode*****");
 		ESP_LOGE(TAG, "mag.getMode()=0x%x", mag.getMode());
-		I2Cdev::writeByte(MPU_ADDRESS, 0x37, 0x02); // try to connect AK8963
+		// Bypass Enable Configuration
+		mpu.setI2CBypassEnabled(true);
 		vTaskDelay(100);
 		return false;
 	}
@@ -227,8 +228,8 @@ void mpu6050(void *pvParameters){
 	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0);
 	gyro_sensitivity = 131.0;
 
-	// Bypass Enable Configuration. Connect AK8963
-	I2Cdev::writeByte(MPU_ADDRESS, 0x37, 0x02); // connect AK8963
+	// Bypass Enable Configuration
+	mpu.setI2CBypassEnabled(true);
 
 	// Get MAG Device ID
 	uint8_t MagDeviceID = mag.getDeviceID();
@@ -285,10 +286,6 @@ void mpu6050(void *pvParameters){
 	float initial_pitch = 0.0;
 	float initial_yaw = 0.0;
 
-	// It takes time for the estimated value to stabilize.
-	// It need about 20Sec.
-	int initial_period = 2000;
-
 	float roll = 0.0, pitch = 0.0, yaw = 0.0;
 	float _roll = 0.0, _pitch = 0.0, _yaw = 0.0;
 	while(1){
@@ -301,14 +298,19 @@ void mpu6050(void *pvParameters){
 		float _mx, _my, _mz;
 		if (getMagData(&mx, &my, &mz)) {
 			ESP_LOGD(TAG, "mag=%d %d %d", mx, my, mz);
-			//magX = mx;
-			//magY = my;
-			//magZ = mz;
+			mx = mx + CONFIG_MAGX;
+			my = my + CONFIG_MAGY;
+			mz = mz + CONFIG_MAGZ;
 			// adjust sensitivity
 			// from datasheet 8.3.11
+#if 0
 			_mx = mx * 0.15 * magCalibration[0];
 			_my = my * 0.15 * magCalibration[1];
 			_mz = mz * 0.15 * magCalibration[2];
+#endif
+			_mx = mx * magCalibration[0];
+			_my = my * magCalibration[1];
+			_mz = mz * magCalibration[2];
 			ESP_LOGD(TAG, "mag=%f %f %f", _mx, _my, _mz);
 
 			// Get the elapsed time from the previous
@@ -325,45 +327,51 @@ void mpu6050(void *pvParameters){
 		}
 
 		/* Print Data every 10 times */
-		if (elasped > initial_period) {
+		if (elasped > 10) {
 			// Set the first data
-			if (!initialized) {
+			TickType_t nowTicks = xTaskGetTickCount();
+			if (initialized == false && nowTicks > 6000) {
 				initial_roll = roll;
 				initial_pitch = pitch;
 				initial_yaw = yaw;
 				initialized = true;
-				initial_period = 10;
 			}
 			_roll = roll-initial_roll;
 			_pitch = pitch-initial_pitch;
 			_yaw = yaw-initial_yaw;
+			if (_yaw < -180.0) _yaw = _yaw + 360.0;
 			ESP_LOGD(TAG, "roll=%f pitch=%f yaw=%f", roll, pitch, yaw);
-			ESP_LOGI(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
+			ESP_LOGD(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 
-			// Send UDP packet
-			POSE_t pose;
-			pose.roll = _roll;
-			pose.pitch = _pitch;
-			pose.yaw = _yaw;
-			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
-				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
-			}
+			if (initialized) {
+				ESP_LOGI(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
+				// Send UDP packet
+				POSE_t pose;
+				pose.roll = _roll;
+				pose.pitch = _pitch;
+				pose.yaw = _yaw;
+				if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
+					ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
+				}
 
-			// Send WEB request
-			cJSON *request;
-			request = cJSON_CreateObject();
-			cJSON_AddStringToObject(request, "id", "data-request");
-			cJSON_AddNumberToObject(request, "roll", _roll);
-			cJSON_AddNumberToObject(request, "pitch", _pitch);
-			cJSON_AddNumberToObject(request, "yaw", _yaw);
-			char *my_json_string = cJSON_Print(request);
-			ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
-			size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
-			if (xBytesSent != strlen(my_json_string)) {
-				ESP_LOGE(TAG, "xMessageBufferSend fail");
+				// Send WEB request
+				cJSON *request;
+				request = cJSON_CreateObject();
+				cJSON_AddStringToObject(request, "id", "data-request");
+				cJSON_AddNumberToObject(request, "roll", _roll);
+				cJSON_AddNumberToObject(request, "pitch", _pitch);
+				cJSON_AddNumberToObject(request, "yaw", _yaw);
+				char *my_json_string = cJSON_Print(request);
+				ESP_LOGD(TAG, "my_json_string\n%s",my_json_string);
+				size_t xBytesSent = xMessageBufferSend(xMessageBufferToClient, my_json_string, strlen(my_json_string), 100);
+				if (xBytesSent != strlen(my_json_string)) {
+					ESP_LOGE(TAG, "xMessageBufferSend fail");
+				}
+				cJSON_Delete(request);
+				cJSON_free(my_json_string);
+			} else {
+				ESP_LOGI(TAG, "unstable roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 			}
-			cJSON_Delete(request);
-			cJSON_free(my_json_string);
 
 			vTaskDelay(1);
 			elasped = 0;
