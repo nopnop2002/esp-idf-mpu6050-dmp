@@ -44,9 +44,18 @@ Since the AK8963 is connected as a slave device, it is not recognized as an i2c 
 |MPU9255|0x73|Gyro/Accel/Compass|AK8963|
 
 
+### GY-86   
+GY-86 consists of three chips, MPU6050, HMC5883L and MS5611.   
+The HMC5883L is 3-Axis magnetometer from Honeywell.   
+The MS5611 is Barometric Pressure Sensor.   
+Since the HMC5883L is connected as a slave device of MPU6050, it is not recognized as an i2c device.   
+
+
 ### GY-87   
-GY-87 consists of three chips, MPU6050, HMC5883 and BMP180.   
-Since the HMC5883L is connected as a slave device, it is not recognized as an i2c device.   
+GY-87 consists of three chips, MPU6050, HMC5883L and BMP180.   
+The HMC5883L is 3-Axis magnetometer from Honeywell.   
+The BMP180 is barometric pressure sensor from Bosch Sensortec.   
+Since the HMC5883L is connected as a slave device of MPU6050, it is not recognized as an i2c device.   
 
 
 # Wireing
