@@ -1,6 +1,6 @@
 # AK8963_CALIBRATE
 MPU9XXX has AK8963 3-axis Electronic Compass inside.   
-This finds the compass offset value for each axis.   
+You can use this to get the compass offset value for each axis.   
 
 # Software requiment   
 ESP-IDF V4.4/V5.0.   
