@@ -24,9 +24,11 @@ ESP-IDF V5 is required when using ESP32-C2.
 
 # Hardware requirements
 MotionTracking device with DMP function.   
-MPU6000/6050/6500/6555/9150/9225/9250/9255 are abailable.   
-MPU9150/9225/9250/9255PU9250 is a package that integrates a 3-axis magnetic sensor (AK8963).   
-Since this sample uses DMP, it does not use a 3-axis magnetic sensor.   
+
+- MPU6000/6050/6500/6555/9150/9225/9250/9255 are abailable.   
+ MPU9150/9225/9250/9255PU9250 is a package that integrates a 3-axis magnetic sensor (AK8963).   
+ AK8963 is connected to MPU6050 as a slave device.   
+
 
 |Device|Reg#117|sensors|Compass|
 |:-:|:-:|:-:|:-:|
@@ -38,6 +40,12 @@ Since this sample uses DMP, it does not use a 3-axis magnetic sensor.
 |MPU9225|0x73|Gyro/Accel/Compass|AK8963|
 |MPU9250|0x71|Gyro/Accel/Compass|AK8963|
 |MPU9255|0x73|Gyro/Accel/Compass|AK8963|
+
+
+- GY-87 is abailable.   
+ GY-87 is a package that integrates a 3-axis magnetic sensor (HMC5883L).   
+ HMC5883L is connected to MPU6050 as a slave device.
+
 
 # Wireing
 |MPU6050||ESP32|ESP32-S2/S3|ESP32-C2/C3||
