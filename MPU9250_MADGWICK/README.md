@@ -88,6 +88,6 @@ I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 It takes at least ___60 seconds___ for the estimate of YAW to stabilize.   
 Slight YAW drift will occur.   
 ```
-I (600063) MPU: roll:0.036059 pitch=-0.122939 yaw=-0.337929
-I (600203) MPU: roll:0.035848 pitch=-0.115790 yaw=-0.367256
+I (600063) IMU: roll:0.036059 pitch=-0.122939 yaw=-0.337929
+I (600203) IMU: roll:0.035848 pitch=-0.115790 yaw=-0.367256
 ```
