@@ -84,7 +84,7 @@ I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 - When using KALMAN Filter   
 YAW is pretty unstable.
 ```
-I (600025) MPU: roll:0.008345 pitch=-0.230621 yaw=1.071427
-I (600145) MPU: roll:0.071426 pitch=0.014303 yaw=-0.710934
+I (600025) IMU: roll:0.008345 pitch=-0.230621 yaw=1.071427
+I (600145) IMU: roll:0.071426 pitch=0.014303 yaw=-0.710934
 ```
 
