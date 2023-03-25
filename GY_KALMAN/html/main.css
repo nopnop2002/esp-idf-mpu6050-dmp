@@ -1,0 +1,19 @@
+/*
+Your favorite style is defined here.
+*/
+#canvas1{
+		position: fixed;		
+		left: 10px;
+		padding: 0px;
+}
+#canvas2{
+		position: fixed;		
+		left: 230px;
+		padding: 0px;
+}
+#canvas3{
+		position: fixed;		
+		left: 450px;
+		padding: 0px;
+}
+
