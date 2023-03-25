@@ -11,8 +11,7 @@ They have an internal processing function called DMP (Digital Motion Processor).
 But this sample doesn't use DMP, just 9DoF data.   
 
 # Get compass offset
-Use [this](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/AK8963_CALIBRATE) to find the compass offset.
-
+Use [this](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/HMC5883L_CALIBRATE) to find the compass offset.
 
 # Get Euler angles from IMU
 ```
