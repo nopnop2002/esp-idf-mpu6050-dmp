@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<title>Compass Calibrate</title>
+</head>
+
+<body>
+	<h1 id="header"></h1>
+
+	<div id="myDiv1" class="float_border"></div>
+	<div id="myDiv2" class="float_border"></div>
+
+	<div id="ClearValue" class="no_float">
+		<button onclick="ClearValuePush()">ClearValue</button>
+	</div>
+
+	<div id="xaxis1" class="no_float">
+		<span id = "label">xmin</span>
+		<span id = "xmin_val">0000</span>
+		<span id = "label">xmax</span>
+		<span id = "xmax_val">9999</span>
+		<span id = "label">center</span>
+		<span id = "xcenter_val">0000</span>
+		<span id = "label">offset</span>
+		<span id = "xoffset_val">0000</span>
+	</div>
+
+	<div id="yaxis" class="no_float">
+		<span id = "label">ymin</span>
+		<span id = "ymin_val">0000</span>
+		<span id = "label">ymax</span>
+		<span id = "ymax_val">9999</span>
+		<span id = "label">center</span>
+		<span id = "ycenter_val">0000</span>
+		<span id = "label">offset</span>
+		<span id = "yoffset_val">0000</span>
+	</div>
+
+	<div id="zaxis" class="no_float">
+		<span id = "label">zmin</span>
+		<span id = "zmin_val">0000</span>
+		<span id = "label">zmax</span>
+		<span id = "zmax_val">9999</span>
+		<span id = "label">center</span>
+		<span id = "zcenter_val">0000</span>
+		<span id = "label">offset</span>
+		<span id = "zoffset_val">0000</span>
+	</div>
+
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
+
