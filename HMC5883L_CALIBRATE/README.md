@@ -1,5 +1,5 @@
 # HMC5883L_CALIBRATE
-HMC5883L is connected as slave device of MPU9XXX.   
+HMC5883L is connected as slave device of GY-86/87.   
 You can use this to get the compass offset value for each axis.   
 
 # Software requiment   
