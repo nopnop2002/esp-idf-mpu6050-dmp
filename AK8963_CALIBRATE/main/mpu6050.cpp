@@ -220,7 +220,12 @@ void mpu6050(void *pvParameters){
 			_mx = mx * magCalibration[0];
 			_my = my * magCalibration[1];
 			_mz = mz * magCalibration[2];
-			ESP_LOGI(TAG, "mag=%f %f %f", _mx, _my, _mz);
+			ESP_LOGD(TAG, "mag=%f %f %f", _mx, _my, _mz);
+			
+			float __mx = _mx * 0.6;
+			float __my = _my * 0.6;
+			float __mz = _mz * 0.6;
+			ESP_LOGI(TAG, "mag[uT]=%f %f %f", __mx, __my, __mz);
 
 			// Send WEB request
 			cJSON *request;
