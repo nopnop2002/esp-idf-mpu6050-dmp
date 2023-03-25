@@ -2,9 +2,8 @@
 # in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.5)
 
-set(EXTRA_COMPONENT_DIRS ../components/I2Cdev 
-                         ../components/MPU6050 
-                         ../components/AK8963 
+set(EXTRA_COMPONENT_DIRS ../components/I2Cdev
+                         ../components/MPU6050
                          ../components/HMC5883L
                          ../components/websocket)
 
