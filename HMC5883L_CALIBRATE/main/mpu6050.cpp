@@ -110,6 +110,11 @@ void mpu6050(void *pvParameters){
 	mpu.setI2CBypassEnabled(true);
 
 	// Initialize HMC5883L
+	// The number of samples averaged per measured output is 8.
+	// Data Output Rate is 15Hz.
+	// Normal measurement configuration.
+	// -1.3Ga-->+1.3Ga 1090 counts / Gauss
+	// Single-Measurement Mode.
 	mag.initialize();
 
 	// Verify the I2C connection
@@ -147,6 +152,16 @@ void mpu6050(void *pvParameters){
 			my = my + CONFIG_MAGY;
 			mz = mz + CONFIG_MAGZ;
 			ESP_LOGI(TAG, "mag=%d %d %d", mx, my, mz);
+
+			float _mx = mx / 1090.0; //G
+			float _my = my / 1090.0; //G
+			float _mz = mz / 1090.0; //G
+			ESP_LOGI(TAG, "mag[G]=%f %f %f", _mx, _my, _mz);
+
+			float __mx = _mx / 0.01; //uT
+			float __my = _my / 0.01; //uT
+			float __mz = _mz / 0.01; //uT
+			ESP_LOGI(TAG, "mag[uT]=%f %f %f", __mx, __my, __mz);
 
 			// Send WEB request
 			cJSON *request;
