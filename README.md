@@ -25,6 +25,9 @@ ESP-IDF V5 is required when using ESP32-C2.
 # Hardware requirements
 MotionTracking device with DMP function.   
 
+From the left MPU9250 MPU6500 MPU6050 GY-87   
+![Hardware](https://user-images.githubusercontent.com/6020549/227761892-5c533f1e-2dc5-4164-8754-7bd6b0063336.JPG)
+
 ### MPU6000/6050/6500/6555/9150/9225/9250/9255   
 MPU9150/9225/9250/9255 is a multi-chip module (MCM) consisting of two dies integrated into a single LGA/QFN package.   
 One die houses the 3-Axis gyroscope and the 3-Axis accelerometer.   
