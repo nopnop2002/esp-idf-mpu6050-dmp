@@ -41,6 +41,7 @@ Since the AK8963 is connected as a slave device, it is not recognized as an i2c 
 |MPU6050|0x68|Gyro/Accel||
 |MPU6500|0x70|Gyro/Accel||
 |MPU6555|0x7C|Gyro/Accel||
+|MPU6886|0x19|Gyro/Accel||
 |MPU9150|0x68|Gyro/Accel/Compass|AK8963|
 |MPU9225|0x73|Gyro/Accel/Compass|AK8963|
 |MPU9250|0x71|Gyro/Accel/Compass|AK8963|
@@ -60,6 +61,11 @@ The HMC5883L is 3-Axis magnetometer from Honeywell.
 The BMP180 is barometric pressure sensor from Bosch Sensortec.   
 Since the HMC5883L is connected as a slave device of MPU6050, it is not recognized as an i2c device.   
 
+### M5 Product   
+Some M5 products are equipped with an IMU.   
+M5Stack GRAY/Fire/Faces/M5GO is equipped with MPU9250 or MPU6886.   
+M5Core2 is equipped with MPU9250.   
+ATOM Matrix is equipped with MPU6886.   
 
 # Wireing
 |MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3||
