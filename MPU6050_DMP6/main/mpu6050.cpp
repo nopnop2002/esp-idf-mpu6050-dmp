@@ -142,7 +142,7 @@ void mpu6050(void *pvParameters){
 	// Initialize mpu6050
 	mpu.initialize();
 
-    // Get Device ID
+	// Get Device ID
 	uint8_t buffer[1];
 	I2Cdev::readByte(MPU6050_ADDRESS_AD0_LOW, MPU6050_RA_WHO_AM_I, buffer);
 	ESP_LOGI(TAG, "getDeviceID=0x%x", buffer[0]);
