@@ -112,10 +112,10 @@ void getYawPitchRoll() {
 	float _roll = ypr[2] * RAD_TO_DEG;
 	float _pitch = ypr[1] * RAD_TO_DEG;
 	float _yaw = ypr[0] * RAD_TO_DEG;
-	ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",_roll, _pitch, _yaw);
+	ESP_LOGI(TAG, "roll:%f pitch:%f yaw:%f",_roll, _pitch, _yaw);
 #endif
 	//printf("ypr roll:%3.1f pitch:%3.1f yaw:%3.1f\n",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
-	ESP_LOGI(pcTaskGetName(NULL), "roll:%f pitch:%f yaw:%f",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
+	ESP_LOGI(TAG, "roll:%f pitch:%f yaw:%f",ypr[2] * RAD_TO_DEG, ypr[1] * RAD_TO_DEG, ypr[0] * RAD_TO_DEG);
 }
 
 // display real acceleration, adjusted to remove gravity
@@ -142,19 +142,14 @@ void mpu6050(void *pvParameters){
 	// Initialize mpu6050
 	mpu.initialize();
 
-#if 0
-	// Get Device ID
-	uint8_t DeviceID = mpu.getDeviceID();
-	ESP_LOGI(TAG, "DeviceID=0x%x", DeviceID);
-	if (DeviceID != 0x34) {
-		ESP_LOGE(TAG, "MPU6050 not found");
-		vTaskDelete(NULL);
-	}
-#endif
+    // Get Device ID
+	uint8_t buffer[1];
+	I2Cdev::readByte(MPU6050_ADDRESS_AD0_LOW, MPU6050_RA_WHO_AM_I, buffer);
+	ESP_LOGI(TAG, "getDeviceID=0x%x", buffer[0]);
 
 	// Initialize DMP
 	devStatus = mpu.dmpInitialize();
-	ESP_LOGI(pcTaskGetName(NULL), "devStatus=%d", devStatus);
+	ESP_LOGI(TAG, "devStatus=%d", devStatus);
 	if (devStatus != 0) {
 		ESP_LOGE(TAG, "DMP Initialization failed [%d]", devStatus);
 		while(1) {
@@ -189,7 +184,7 @@ void mpu6050(void *pvParameters){
 			pose.pitch = _pitch;
 			pose.yaw = _yaw;
 			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
-				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
+				ESP_LOGE(TAG, "xQueueSend fail");
 			}
 
 			// Send WEB request
