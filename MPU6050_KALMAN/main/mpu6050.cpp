@@ -257,7 +257,7 @@ void mpu6050(void *pvParameters){
 			pose.pitch = _pitch;
 			pose.yaw = 0.0;
 			if (xQueueSend(xQueueTrans, &pose, 100) != pdPASS ) {
-				ESP_LOGE(pcTaskGetName(NULL), "xQueueSend fail");
+				ESP_LOGE(TAG, "xQueueSend fail");
 			}
 
 			// Send WEB request
