@@ -248,16 +248,6 @@ void mpu6050(void *pvParameters){
 	// Initialize mpu6050
 	mpu.initialize();
 
-#if 0
-	// Get Device ID
-	uint8_t DeviceID = mpu.getDeviceID();
-	ESP_LOGI(TAG, "DeviceID=0x%x", DeviceID);
-	if (DeviceID != 0x34) {
-		ESP_LOGE(TAG, "MPU6050 not found");
-		vTaskDelete(NULL);
-	}
-#endif
-
 	// Get the sample rate
 	ESP_LOGI(TAG, "getRate()=%d", mpu.getRate());
 	// Set the sample rate to 8kHz

@@ -65,8 +65,6 @@ void client_task(void* pvParameters) {
 				double pitch = cJSON_GetObjectItem(root,"pitch")->valuedouble;
 				double yaw = cJSON_GetObjectItem(root,"yaw")->valuedouble;
 				ESP_LOGD(TAG,"roll=%f pitch=%f yaw=%f", roll, pitch, yaw);
-				if (roll > 20.0) roll = 20.0;
-				if (pitch > 20.0) pitch = 20.0;
 
 				sprintf(outBuffer,"DATA%c%f%c%f%c%f", DEL, roll, DEL, pitch, DEL, yaw);
 				ESP_LOGD(TAG, "outBuffer=[%s]", outBuffer);
