@@ -35,7 +35,7 @@ or
 http://esp32.local/
 ```
 
-![browser-roll-pitch](https://user-images.githubusercontent.com/6020549/226146249-ed1d49c1-2967-4cbd-817d-c86215a71411.JPG)
+![browser-roll-pitch](https://user-images.githubusercontent.com/6020549/232367111-1a4675b7-b53e-4fdc-b6ba-b6278de133c0.JPG)
 
 # View Euler angles using PyTeapot   
 You can view Euler angles using [this](https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation) tool.   
