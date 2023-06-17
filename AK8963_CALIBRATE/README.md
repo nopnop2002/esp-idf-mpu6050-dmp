@@ -5,7 +5,7 @@ You can use this to get the compass offset value for each axis.
 
 # Software requiment   
 ESP-IDF V4.4/V5.0.   
-ESP-IDF V5 is required when using ESP32-C2.   
+ESP-IDF V5.0 is required when using ESP32-C2.   
 
 
 # Hardware requirements
