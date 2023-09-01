@@ -1,5 +1,13 @@
 menu "Application Configuration"
 
+	config GPIO_RANGE_MAX
+		int
+		default 33 if IDF_TARGET_ESP32
+		default 46 if IDF_TARGET_ESP32S2
+		default 48 if IDF_TARGET_ESP32S3
+		default 18 if IDF_TARGET_ESP32C2
+		default 19 if IDF_TARGET_ESP32C3
+        default 30 if IDF_TARGET_ESP32C6
 
 	config ESP_WIFI_SSID
 		string "WiFi SSID"
@@ -19,21 +27,12 @@ menu "Application Configuration"
 		help
 			Set the Maximum retry to avoid station reconnecting to the AP unlimited when the AP is really inexistent.
 
-
-	config GPIO_RANGE_MAX
-		int
-		default 33 if IDF_TARGET_ESP32
-		default 46 if IDF_TARGET_ESP32S2
-		default 48 if IDF_TARGET_ESP32S3
-		default 18 if IDF_TARGET_ESP32C2
-		default 19 if IDF_TARGET_ESP32C3
-		
 	config GPIO_SCL
 		int "SCL GPIO number"
 		range 0 GPIO_RANGE_MAX
 		default 22 if IDF_TARGET_ESP32
 		default 12 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  5 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
+		default  5 # C3 and others
 		help
 			GPIO number (IOxx) to I2C SCL.
 
@@ -42,7 +41,7 @@ menu "Application Configuration"
 		range 0 GPIO_RANGE_MAX
 		default 21 if IDF_TARGET_ESP32
 		default 11 if IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3
-		default  4 if IDF_TARGET_ESP32C3 || IDF_TARGET_ESP32C2
+		default  4 # C3 and others
 		help
 			GPIO number (IOxx) of SDA.
 
