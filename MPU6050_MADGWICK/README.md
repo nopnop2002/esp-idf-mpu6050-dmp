@@ -17,7 +17,7 @@ But this sample doesn't use DMP, just 6DoF data.
 # Get Euler angles from IMU
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_MADGWICK
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
