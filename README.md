@@ -71,14 +71,14 @@ __MPU6886 does not support DMP.__
 MPU6050_KALMAN/MPU6050_MADGWICK can be used in MPU6886.   
 
 # Wireing
-|MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3||
+|MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|3.3V|3.3V|3.3V||
 |GND|--|GND|GND|GND||
 |SCL|--|GPIO22|GPIO12|GPIO5|(*1)|
 |SDA|--|GPIO21|GPIO11|GPIO4|(*1)|
 
-|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3||
+|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC_IN|--|N/C|N/C|N/C||
 |3.3V|--|3.3V|3.3V|3.3V||
