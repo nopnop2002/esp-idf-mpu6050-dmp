@@ -20,7 +20,7 @@ Use [this](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/AK8963_CA
 # Get Euler angles from IMU
 ```
 cd esp-idf-mpu6050-dmp/MPU9250_MADGWICK
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
