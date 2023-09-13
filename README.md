@@ -19,8 +19,9 @@ It's very intuitive and easy to understand.
 - Display Euler angles in browser.
 
 # Software requiment
-ESP-IDF V4.4/V5.0.   
+ESP-IDF V4.4/V5.x.   
 ESP-IDF V5.0 is required when using ESP32-C2.   
+ESP-IDF V5.1 is required when using ESP32-C6.   
 
 # Hardware requirements
 MotionTracking device with DMP function.   
@@ -93,7 +94,7 @@ I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp/IMU_Zero
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
@@ -144,7 +145,7 @@ vi mpu6050.cpp
 I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6050/examples/MPU6050_DMP6).
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_DMP6
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
