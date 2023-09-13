@@ -4,8 +4,9 @@ So scanning for i2c devices will not find AK8963.
 You can use this to get the compass offset value for each axis.   
 
 # Software requiment   
-ESP-IDF V4.4/V5.0.   
+ESP-IDF V4.4/V5.x.   
 ESP-IDF V5.0 is required when using ESP32-C2.   
+ESP-IDF V5.1 is required when using ESP32-C6.   
 
 
 # Hardware requirements
@@ -32,7 +33,7 @@ MPU9XXX 9DoF MotionTracking device.
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp/AK8963_CALIBRATE
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3}
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
