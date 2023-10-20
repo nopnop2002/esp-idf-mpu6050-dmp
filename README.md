@@ -156,7 +156,6 @@ More details on configuration is [here](https://github.com/nopnop2002/esp-idf-mp
 ESP32 acts as a web server.   
 I used [this](https://github.com/Molorius/esp32-websocket) component.   
 This component can communicate directly with the browser.   
-It's a great job.   
 Enter the following in the address bar of your web browser.   
 ```
 http:://{IP of ESP32}/
