@@ -94,7 +94,7 @@ void app_main(void)
 	ws_server_start();
 
 	// Start web server
-	xTaskCreate(&server_task, "SERVER", 1024*2, (void *)cparam0, 5, NULL);
+	xTaskCreate(&server_task, "SERVER", 1024*3, (void *)cparam0, 5, NULL);
 
 	// Start web client
 	xTaskCreate(&client_task, "CLIENT", 1024*3, (void *)0x011, 5, NULL);
@@ -103,7 +103,7 @@ void app_main(void)
 	xTaskCreate(&mpu6050, "IMU", 1024*8, NULL, 5, NULL);
 
 	// Start udp task
-	xTaskCreate(&udp_trans, "UDP", 1024*2, NULL, 5, NULL);
+	xTaskCreate(&udp_trans, "UDP", 1024*3, NULL, 5, NULL);
 
 	vTaskDelay(100);
 }

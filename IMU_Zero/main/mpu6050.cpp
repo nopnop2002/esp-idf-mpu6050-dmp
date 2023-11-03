@@ -117,8 +117,10 @@ void Initialize() {
 	accelgyro.initialize();
 
 	// verify connection
+#if 0
 	printf("Testing device connections...");
 	printf(accelgyro.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
+#endif
 	printf("PID tuning Each Dot = 100 readings\n");
 	/*A tidbit on how PID (PI actually) tuning works. 
 	When we change the offset in the MPU6050 we can get instant results. This allows us to use Proportional and 
