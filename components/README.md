@@ -16,4 +16,4 @@ I used [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino) I2Cdev 
 However, I2Cdev has been rewritten for ESP-IDF.   
 
 # websocket   
-I used [this](https://github.com/Molorius/esp32-websocket) component.   
+I used [this](https://github.com/Molorius/esp32-websocket) ESP-IDF WebSocket Component.   
