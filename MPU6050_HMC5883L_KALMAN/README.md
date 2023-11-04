@@ -34,7 +34,7 @@ idf.py flash
 ```
 
 # Configuration
-
+Sets the compass offset obtained by calibration.   
 ![config-MPU6050-HMC5883L-1](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/6a58f047-52ff-406f-8f07-3c5be3384938)
 ![config-MPU6050-HMC5883L-2](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/f6909d38-0304-47b6-bf1f-048e69b4a81e)
 
