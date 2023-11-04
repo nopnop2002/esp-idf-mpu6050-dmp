@@ -34,8 +34,8 @@ idf.py flash
 
 ### Configuration   
 To find the offset value, set the compass offset to 0.   
-![hmc5883l-1](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/e024f298-78a6-4eb9-b083-2cb08c2b96d8)
-![hmc5883l-2](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/4a6b682d-21c1-4b7a-a4d8-d9e35cf8c30d)
+![config-HMC5883L-1](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/da3af174-60c0-42e7-9704-66bf509f95eb)
+![config-HMC5883L-2](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/4d5b1a4c-e36b-4591-a37d-86d5a55d90ca)
 
 ### Execute calibration   
 ESP32 acts as a web server.   
