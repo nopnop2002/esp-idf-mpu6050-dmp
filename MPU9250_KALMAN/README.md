@@ -82,7 +82,7 @@ I (600193) IMU: roll:-0.035195 pitch:0.062826 yaw:-0.405707
 ```
 
 - When using KALMAN Filter   
-A very small YAW drift will occur.   
+Slight YAW drift will occur.   
 ```
 I (600025) IMU: roll:0.008345 pitch=-0.230621 yaw=1.071427
 I (600145) IMU: roll:0.071426 pitch=0.014303 yaw=-0.710934
