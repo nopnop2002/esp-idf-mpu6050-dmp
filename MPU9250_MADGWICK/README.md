@@ -1,7 +1,7 @@
 # MPU9250_MADGWICK
 This demo estimates roll, pitch and yaw angles in software without using a DMP.   
 Estimate roll, pitch and yaw using the Madgwick Filter used in ROS.   
-I used [this](https://github.com/arduino-libraries/MadgwickAHRS) Madgwick Filter.   
+I based [this](https://github.com/arduino-libraries/MadgwickAHRS) Madgwick Filter.   
 I used [this](https://github.com/arduino-libraries/MadgwickAHRS/blob/master/examples/Visualize101/Visualize101.ino) as a reference.   
 
 # Change from original library
