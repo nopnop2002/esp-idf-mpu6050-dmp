@@ -52,12 +52,9 @@ http://esp32.local/
 As you move the IMU it plots the X, Y and Z values.   
 X, Y, Z offset are displayed.   
 
-![hmc5883l-11](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/f7eeaa91-a717-46a7-be92-779c401f5fde)
-![hmc5883l-12](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/28e569ce-c981-4468-aeef-ddb2b1e8cbcc)
+![hmc5883l-1](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/1182eb65-7e8f-44f7-92ec-cff05cf40a57)
 
 ### Execute calibration again   
 If you set the offset you got from the calibration and run it again, the circle position will change.   
 
-![hmc5883l-11](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/f7eeaa91-a717-46a7-be92-779c401f5fde)
-![hmc5883l-12](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/28e569ce-c981-4468-aeef-ddb2b1e8cbcc)
-
+![hmc5883l-2](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/ab691224-b41b-4282-be30-233d554f1491)
