@@ -207,10 +207,10 @@ DMP estimates Euler angles in-device, whereas these filters estimate Euler angle
 - MPU6050_KALMAN   
  Estimation using MPU6050 and KALMAN filter.
 - MPU6050_MADGWICK   
- Estimation using MPU6050 and KALMAN filter.
+ Estimation using MPU6050 and MADGWICK filter.
 - MPU9250_KALMAN   
  Estimation using MPU9250 and KALMAN filter.
 - MPU9250_MADGWICK   
- Estimation using MPU9250 and KALMAN filter.
+ Estimation using MPU9250 and MADGWICK filter.
 - MPU6050_HMC5883L_KALMAN   
  Estimation using MPU6050 + HMC5883L and KALMAN filter.
