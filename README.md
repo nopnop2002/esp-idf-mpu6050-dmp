@@ -204,3 +204,13 @@ The posture of your sensor is displayed.
 You can use Kalman and Madgwick filters instead of DMP.   
 DMP estimates Euler angles in-device, whereas these filters estimate Euler angles purely in software.   
 
+- MPU6050_KALMAN   
+ Estimation using MPU6050 and KALMAN filter.
+- MPU6050_MADGWICK   
+ Estimation using MPU6050 and KALMAN filter.
+- MPU9250_KALMAN   
+ Estimation using MPU9250 and KALMAN filter.
+- MPU9250_MADGWICK   
+ Estimation using MPU9250 and KALMAN filter.
+- MPU6050_HMC5883L_KALMAN
+ Estimation using MPU6050 + HMC5883L and KALMAN filter.
