@@ -2,6 +2,7 @@
 HMC5883L is connected as slave device of MPU6050.   
 So scanning for i2c devices will not find HMC5883L.   
 You can use this to get the compass offset value for each axis.   
+I used [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino) I2Cdev library collection.   
 
 # Software requiment   
 ESP-IDF V4.4/V5.x.   
@@ -41,7 +42,6 @@ To find the offset value, set the compass offset to 0.
 ESP32 acts as a web server.   
 I used [this](https://github.com/Molorius/esp32-websocket) component.   
 This component can communicate directly with the browser.   
-It's a great job.   
 Enter the following in the address bar of your web browser.   
 ```
 http:://{IP of ESP32}/
