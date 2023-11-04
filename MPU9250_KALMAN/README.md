@@ -1,7 +1,7 @@
 # MPU9250_KALMAN
 This demo estimates roll, pitch and yaw angles in software without using a DMP.   
 Estimate roll, pitch and yaw using the very famous KalmanFilter.   
-I used [this](https://github.com/TKJElectronics/KalmanFilter) library.   
+I used [this](https://github.com/TKJElectronics/KalmanFilter) Kalman Filter.   
 I used [this](https://github.com/TKJElectronics/Example-Sketch-for-IMU-including-Kalman-filter/tree/master/IMU/MPU6050_HMC5883L) as a reference.   
 
 # Hardware requirements
