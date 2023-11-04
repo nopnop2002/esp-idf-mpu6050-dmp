@@ -91,8 +91,6 @@ int16_t raw_gx, raw_gy, raw_gz;
 double accX, accY, accZ;
 double gyroX, gyroY, gyroZ;
 double magX, magY, magZ;
-float toGauss = 10.*4912./32760.0;
-float toTesla = 0.15;
 
 // Roll and pitch are calculated using the accelerometer while yaw is calculated using the magnetometer
 double roll, pitch, yaw;
