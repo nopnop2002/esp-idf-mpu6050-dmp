@@ -1,0 +1,63 @@
+# HMC5883L_CALIBRATE
+HMC5883L is connected as slave device of MPU6050.   
+So scanning for i2c devices will not find HMC5883L.   
+You can use this to get the compass offset value for each axis.   
+
+# Software requiment   
+ESP-IDF V4.4/V5.x.   
+ESP-IDF V5.0 is required when using ESP32-C2.   
+ESP-IDF V5.1 is required when using ESP32-C6.   
+
+
+# Hardware requirements
+GY86/GY87 9DoF MotionTracking device.   
+
+# Wireing
+|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|VCC_IN|--|N/C|N/C|N/C||
+|3.3V|--|3.3V|3.3V|3.3V||
+|GND|--|GND|GND|GND||
+|SCL|--|GPIO22|GPIO12|GPIO5|(*1)|
+|SDA|--|GPIO21|GPIO11|GPIO4|(*1)|
+
+(*1)You can change it to any pin using menuconfig.   
+
+# Compass calibration
+```
+git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
+cd esp-idf-mpu6050-dmp/HMC5883L_CALIBRATE
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
+idf.py menuconfig
+idf.py flash
+```
+
+### Configuration   
+To find the offset value, set the compass offset to 0.   
+![hmc5883l-1](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/e024f298-78a6-4eb9-b083-2cb08c2b96d8)
+![hmc5883l-2](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/4a6b682d-21c1-4b7a-a4d8-d9e35cf8c30d)
+
+### Execute calibration   
+ESP32 acts as a web server.   
+I used [this](https://github.com/Molorius/esp32-websocket) component.   
+This component can communicate directly with the browser.   
+It's a great job.   
+Enter the following in the address bar of your web browser.   
+```
+http:://{IP of ESP32}/
+or
+http://esp32.local/
+```
+
+As you move the IMU it plots the X, Y and Z values.   
+X, Y, Z offset are displayed.   
+
+![hmc5883l-11](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/f7eeaa91-a717-46a7-be92-779c401f5fde)
+![hmc5883l-12](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/28e569ce-c981-4468-aeef-ddb2b1e8cbcc)
+
+### Execute calibration again   
+If you set the offset you got from the calibration and run it again, the circle position will change.   
+
+![hmc5883l-11](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/f7eeaa91-a717-46a7-be92-779c401f5fde)
+![hmc5883l-12](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/assets/6020549/28e569ce-c981-4468-aeef-ddb2b1e8cbcc)
+

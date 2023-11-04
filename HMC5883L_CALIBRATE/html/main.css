@@ -1,0 +1,16 @@
+/*
+Your favorite style is defined here.
+*/
+
+.float_noborder{
+	float:	left;
+}
+
+.float_border{
+	float:	left;
+	border: 1px solid #333;
+}
+
+.no_float{
+	clear: both;
+}
