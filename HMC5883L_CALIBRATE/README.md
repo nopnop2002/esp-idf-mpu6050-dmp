@@ -2,7 +2,7 @@
 HMC5883L is connected as slave device of MPU6050.   
 So scanning for i2c devices will not find HMC5883L.   
 You can use this to get the compass offset value for each axis.   
-I used [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino) I2Cdev library collection.   
+I used [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino) I2Cdev library collection by Jeff Rowberg.   
 
 # Software requiment   
 ESP-IDF V4.4/V5.x.   
