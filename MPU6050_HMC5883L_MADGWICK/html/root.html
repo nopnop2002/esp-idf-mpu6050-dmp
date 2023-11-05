@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="//cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"></script>
+	<script src="https://unpkg.com/three@0.147.0/build/three.min.js"></script>
+	<title>Euler Meter</title>
+</head>
+
+<body>
+	<h1 id="header"></h1>
+
+	<div>
+	<canvas id="canvas0"></canvas>
+	</div>
+
+	<div>
+	<canvas id="canvas1"></canvas>
+	<canvas id="canvas2"></canvas>
+	<canvas id="canvas3"></canvas>
+	</div>
+
+	<script>
+		// wait for the page to load
+		window.addEventListener('DOMContentLoaded', init);
+
+		var gauge1 = new RadialGauge({
+			renderTo: 'canvas1',
+			width: 200,
+			height: 200,
+			units: "Deg",
+			minValue: -90,
+			maxValue: 90,
+			majorTicks: [
+				"-90", "-60", "-30", "0", "30", "60" , "90"
+			],
+			minorTicks: 3,
+			ticksAngle: 180,
+			startAngle: 90,
+			highlights: [
+				{ from: -90, to: 0, color: "rgba(0, 0, 255, .3)" },
+				{ from: 0, to: 90, color: "rgba(255, 0, 0, .75)" }
+			],
+			strokeTicks: true,
+			colorMajorTicks: "#ddd",
+			colorMinorTicks: "#ddd",
+			colorTitle: "#eee",
+			colorUnits: "#ccc",
+			colorNumbers: "#eee",
+			//colorPlate: "#fff",
+			colorPlate: "#222",
+			borderShadowWidth: 0,
+			borders: true,
+			colorBorderOuter: "#333",
+			colorBorderOuterEnd: "#111",
+			//colorBorderMiddle: "#222",
+			//colorBorderMiddleEnd: "#111",
+			colorBorderInner: "#111",
+			colorBorderInnerEnd: "#333",
+			needleType: "arrow",
+			needleWidth: 2,
+			needleCircleSize: 7,
+			needleCircleOuter: true,
+			needleCircleInner: false,
+			animationDuration: 500,
+			animationRule: "linear"
+		}).draw();
+
+		var gauge2 = new RadialGauge({
+			renderTo: 'canvas2',
+			width: 200,
+			height: 200,
+			units: "Deg",
+			minValue: -90,
+			maxValue: 90,
+			majorTicks: [
+				"-90", "-60", "-30", "0", "30", "60" , "90"
+			],
+			minorTicks: 3,
+			ticksAngle: 180,
+			startAngle: 90,
+			highlights: [
+				{ from: -90, to: 0, color: "rgba(0, 0, 255, .3)" },
+				{ from: 0, to: 90, color: "rgba(255, 0, 0, .75)" }
+			],
+			strokeTicks: true,
+			colorMajorTicks: "#ddd",
+			colorMinorTicks: "#ddd",
+			colorTitle: "#eee",
+			colorUnits: "#ccc",
+			colorNumbers: "#eee",
+			//colorPlate: "#fff",
+			colorPlate: "#222",
+			borderShadowWidth: 0,
+			borders: true,
+			colorBorderOuter: "#333",
+			colorBorderOuterEnd: "#111",
+			//colorBorderMiddle: "#222",
+			//colorBorderMiddleEnd: "#111",
+			colorBorderInner: "#111",
+			colorBorderInnerEnd: "#333",
+			needleType: "arrow",
+			needleWidth: 2,
+			needleCircleSize: 7,
+			needleCircleOuter: true,
+			needleCircleInner: false,
+			animationDuration: 500,
+			animationRule: "linear"
+		}).draw();
+
+		var gauge3 = new RadialGauge({
+			renderTo: 'canvas3',
+			width: 200,
+			height: 200,
+			units: "Deg",
+			minValue: 0,
+			maxValue: 360,
+			majorTicks: [
+				"0", "45", "90", "135", "180", "225", "270", "225" ,"0"
+			],
+			minorTicks: 3,
+			ticksAngle: 360,
+			startAngle: 180,
+			highlights: false,
+			strokeTicks: true,
+			colorMajorTicks: "#ddd",
+			colorMinorTicks: "#ddd",
+			colorTitle: "#eee",
+			colorUnits: "#ccc",
+			colorNumbers: "#eee",
+			//colorPlate: "#fff",
+			colorPlate: "#222",
+			borderShadowWidth: 0,
+			borders: true,
+			colorBorderOuter: "#333",
+			colorBorderOuterEnd: "#111",
+			//colorBorderMiddle: "#222",
+			//colorBorderMiddleEnd: "#111",
+			colorBorderInner: "#111",
+			colorBorderInnerEnd: "#333",
+			needleType: "arrow",
+			needleWidth: 2,
+			needleCircleSize: 7,
+			needleCircleOuter: true,
+			needleCircleInner: false,
+			animationDuration: 500,
+			animationRule: "linear"
+		}).draw();
+
+		document.getElementById("canvas1").style.display = "none";
+		document.getElementById("canvas2").style.display = "none";
+		document.getElementById("canvas3").style.display = "none";
+
+		function init() {
+
+			// specify size
+			//const width = 960;
+			//const height = 540;
+			const width = 640;
+			const height = 360;
+
+			// create renderer
+			const renderer = new THREE.WebGLRenderer({
+				canvas: document.querySelector('#canvas0')
+			});
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize(width, height);
+
+			// create scene
+			const scene = new THREE.Scene();
+
+			// create camera
+			const camera = new THREE.PerspectiveCamera(45, width / height);
+			camera.position.set(0, 0, +1000);
+
+			// create box
+			//const geometry = new THREE.BoxGeometry(400, 400, 400);
+			//const geometry = new THREE.BoxGeometry(400, 100, 400);
+			//const geometry = new THREE.BoxGeometry(400, 100, 200);
+			const geometry = new THREE.BoxGeometry(400, 100, 400);
+			const material = new THREE.MeshNormalMaterial();
+			const box = new THREE.Mesh(geometry, material);
+			scene.add(box);
+
+			tick();
+
+			// A loop event that runs every frame
+			function tick() {
+				//box.rotation.x = roll; // in radians
+				box.rotation.x = pitch; // in radians
+				//box.rotation.y = yaw; // in radians
+				box.rotation.y = yaw * -1.0; // in radians
+				//box.rotation.z = pitch; // in radians
+				box.rotation.z = roll * -1.0; // in radians
+				renderer.render(scene, camera); // rendering
+
+				requestAnimationFrame(tick);
+			} // tick
+		} // init
+
+
+	</script>
+
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
+
