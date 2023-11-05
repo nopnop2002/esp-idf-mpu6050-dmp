@@ -58,7 +58,7 @@ Since the HMC5883L is connected as a slave device of MPU6050, it is not recogniz
 ### GY-87   
 GY-87 consists of three chips, MPU6050, HMC5883L and BMP180.   
 The HMC5883L is 3-Axis magnetometer from Honeywell.   
-The BMP180 is barometric pressure sensor from Bosch Sensortec.   
+The BMP180 is Barometric Pressure Sensor from Bosch Sensortec.   
 Since the HMC5883L is connected as a slave device of MPU6050, it is not recognized as an i2c device.   
 
 ### M5 Product   
