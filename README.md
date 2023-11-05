@@ -51,7 +51,7 @@ Since the AK8963 is connected as a slave device, it is not recognized as an i2c 
 ### GY-86   
 GY-86 consists of three chips, MPU6050, HMC5883L and MS5611.   
 The HMC5883L is 3-Axis magnetometer from Honeywell.   
-The MS5611 is Barometric Pressure Sensor.   
+The MS5611 is Barometric Pressure Sensor from TE Connectivity.   
 Since the HMC5883L is connected as a slave device of MPU6050, it is not recognized as an i2c device.   
 
 
