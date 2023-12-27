@@ -71,6 +71,11 @@ ATOM Matrix is equipped with MPU6886.
 __MPU6886 does not support DMP.__   
 MPU6050_KALMAN/MPU6050_MADGWICK can be used in MPU6886.   
 
+About M5Stick   
+M5Stick has a regular version and an MPU9250 version.   
+The regular version does not have an IMU.   
+MPU9250 version supports DMP.   
+
 # Wireing
 |MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
 |:-:|:-:|:-:|:-:|:-:|:-:|
