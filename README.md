@@ -63,7 +63,7 @@ Since the HMC5883L is connected as a slave device of MPU6050, it is not recogniz
 
 ### M5 Product   
 Some M5 products have an IMU built in.   
-M5Stack GRAY/Fire/Faces/M5GO is equipped with MPU9250 or MPU6886.   
+M5Stack Gray/Fire/Faces/M5GO is equipped with MPU9250 or MPU6886.   
 M5Core2 is equipped with MPU9250.   
 M5StickC is equipped with SH200Q or MPU6886.   
 M5StickC Plus is equipped with MPU6886.   
@@ -75,6 +75,8 @@ About M5Stick
 M5Stick has a regular version and an MPU9250 version.   
 The regular version does not have an IMU.   
 MPU9250 version supports DMP.   
+
+You can check the built-in IMU using IMU_Detect.   
 
 # Wireing
 |MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
