@@ -7,7 +7,7 @@ menu "Application Configuration"
 		default 48 if IDF_TARGET_ESP32S3
 		default 18 if IDF_TARGET_ESP32C2
 		default 19 if IDF_TARGET_ESP32C3
-        default 30 if IDF_TARGET_ESP32C6
+		default 30 if IDF_TARGET_ESP32C6
 
 	config ESP_WIFI_SSID
 		string "WiFi SSID"

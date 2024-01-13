@@ -46,6 +46,9 @@ void start_mdns(void)
 	ESP_ERROR_CHECK( mdns_hostname_set(MDNS_HOSTNAME) );
 	ESP_LOGI(TAG, "mdns hostname set to: [%s]", MDNS_HOSTNAME);
 
+	//initialize service
+	ESP_ERROR_CHECK( mdns_service_add(NULL, "_http", "_tcp", 80, NULL, 0) );
+
 #if 0
 	//set default mDNS instance name
 	ESP_ERROR_CHECK( mdns_instance_name_set("ESP32 with mDNS") );
