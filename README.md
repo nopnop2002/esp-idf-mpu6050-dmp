@@ -66,8 +66,8 @@ Some M5 products have an IMU built in.
 M5Stack Gray/Fire/Faces/M5GO is equipped with MPU9250 or MPU6886.   
 M5Core2 is equipped with MPU9250.   
 M5StickC is equipped with SH200Q or MPU6886.   
-M5StickC Plus is equipped with MPU6886.   
-ATOM Matrix is equipped with MPU6886.   
+M5StickC Plus/Plus2 is equipped with MPU6886.   
+ATOM Matrix/ATOM S3 is equipped with MPU6886.   
 __MPU6886 does not support DMP.__   
 MPU6050_KALMAN/MPU6050_MADGWICK can be used in MPU6886.   
 
