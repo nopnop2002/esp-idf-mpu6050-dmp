@@ -85,19 +85,9 @@ Kalman kalmanX; // Create the Kalman instances
 Kalman kalmanY;
 Kalman kalmanZ;
 
-/* IMU Data */
-int16_t raw_ax, raw_ay, raw_az;
-int16_t raw_gx, raw_gy, raw_gz;
-double accX, accY, accZ;
-double gyroX, gyroY, gyroZ;
-double magX, magY, magZ;
-
-// Roll and pitch are calculated using the accelerometer while yaw is calculated using the magnetometer
-double roll, pitch, yaw;
-
-double gyroXangle, gyroYangle, gyroZangle; // Angle calculate using the gyro only
-double compAngleX, compAngleY, compAngleZ; // Calculated angle using a complementary filter
-double kalAngleX, kalAngleY, kalAngleZ; // Calculated angle using a Kalman filter
+// Accel & Gyro scale factor
+float accel_sensitivity;
+float gyro_sensitivity;
 
 // MAG Data Sensitivity adjustment data
 // Sensitivity adjustment data for each axis is stored to fuse ROM on shipment.
@@ -176,68 +166,80 @@ bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 	return false;
 }
 
-void updateMPU6050() {
-	// Read raw data from imu. Units don't care.
-	mpu.getMotion6(&raw_ax, &raw_ay, &raw_az, &raw_gx, &raw_gy, &raw_gz);
-	accX = raw_ax;
-	accY = raw_ay;
-	accZ = raw_az;
-	gyroX = raw_gx;
-	gyroY = raw_gy;
-	gyroZ = raw_gz;
-}
-
-void updateAK8963() {
+void _getMagData(double *magX, double *magY, double *magZ) {
 	// Read raw data from mag. Units don't care.
-	int16_t mx, my, mz;
-	if (getMagData(&mx, &my, &mz)) {
-		ESP_LOGD(TAG, "mag=%d %d %d", mx, my, mz);
-		mx = mx + CONFIG_MAGX;
-		my = my + CONFIG_MAGY;
-		mz = mz + CONFIG_MAGZ;
+	int16_t _mx, _my, _mz;
+	if (getMagData(&_mx, &_my, &_mz)) {
+		ESP_LOGD(TAG, "mag=%d %d %d", _mx, _my, _mz);
+		_mx = _mx + CONFIG_MAGX;
+		_my = _my + CONFIG_MAGY;
+		_mz = _mz + CONFIG_MAGZ;
 		// adjust sensitivity
 		// from datasheet 8.3.11
-		magX = mx * magCalibration[0];
-		magY = my * magCalibration[1];
-		magZ = mz * magCalibration[2];
-		ESP_LOGD(TAG, "mag=%f %f %f", magX, magY, magZ);
+		*magX = _mx * magCalibration[0];
+		*magY = _my * magCalibration[1];
+		*magZ = _mz * magCalibration[2];
+		ESP_LOGD(TAG, "mag=%f %f %f", *magX, *magY, *magZ);
 	}
 }
 
-void updatePitchRoll() {
-	// Source: http://www.freescale.com/files/sensors/doc/app_note/AN3461.pdf eq. 25 and eq. 26
-	// atan2 outputs the value of -π to π (radians) - see http://en.wikipedia.org/wiki/Atan2
-	// It is then converted from radians to degrees
-#ifdef RESTRICT_PITCH // Eq. 25 and 26
-	roll = atan2(accY, accZ) * RAD_TO_DEG;
-	pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
-#else // Eq. 28 and 29
-	roll = atan(accY / sqrt(accX * accX + accZ * accZ)) * RAD_TO_DEG;
-	pitch = atan2(-accX, accZ) * RAD_TO_DEG;
+// Get scaled value
+void _getMotion6(double *_ax, double *_ay, double *_az, double *_gx, double *_gy, double *_gz) {
+	int16_t ax,ay,az;
+	int16_t gx,gy,gz;
+	// read raw accel/gyro measurements from device
+	// The accelerometer output is a 16-bit signed integer relative value.
+	// The gyroscope output is a relative value in degrees per second (dps).
+	mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+
+	// Convert relative to absolute
+#if 1
+	*_ax = (double)ax / accel_sensitivity;
+	*_ay = (double)ay / accel_sensitivity;
+	*_az = (double)az / accel_sensitivity;
+#else
+	*_ax = (double)ax;
+	*_ay = (double)ay;
+	*_az = (double)az;
+#endif
+
+	// Convert relative to absolute
+#if 1
+	*_gx = (double)gx / gyro_sensitivity;
+	*_gy = (double)gy / gyro_sensitivity;
+	*_gz = (double)gz / gyro_sensitivity;
+#else
+	*_gx = (double)gx;
+	*_gy = (double)gy;
+	*_gz = (double)gz;
 #endif
 }
 
-void updateYaw() { // See: http://www.freescale.com/files/sensors/doc/app_note/AN4248.pdf
-	magX *= -1; // Invert axis - this it done here, as it should be done after the calibration
-	magZ *= -1;
-
-#if 0
-	magX *= magGain[0];
-	magY *= magGain[1];
-	magZ *= magGain[2];
-
-	magX -= magOffset[0];
-	magY -= magOffset[1];
-	magZ -= magOffset[2];
+void getRollPitch(double accX, double accY, double accZ, double *roll, double *pitch) {
+	// atan2 outputs the value of - to	(radians) - see http://en.wikipedia.org/wiki/Atan2
+	// It is then converted from radians to degrees
+#ifdef RESTRICT_PITCH // Eq. 25 and 26
+	*roll = atan2(accY, accZ) * RAD_TO_DEG;
+	*pitch = atan(-accX / sqrt(accY * accY + accZ * accZ)) * RAD_TO_DEG;
+#else // Eq. 28 and 29
+	*roll = atan(accY / sqrt(accX * accX + accZ * accZ)) * RAD_TO_DEG;
+	*pitch = atan2(-accX, accZ) * RAD_TO_DEG;
 #endif
+}
+
+// See: http://www.freescale.com/files/sensors/doc/app_note/AN4248.pdf
+void updateYaw(double magX, double magY, double magZ, double kalAngleX, double kalAngleY, double *yaw) {
+	double _magX = magX * -1.0; // Invert axis - this it done here, as it should be done after the calibration
+	double _magY = magY;
+	double _magZ = magZ * -1.0;
 
 	double rollAngle = kalAngleX * DEG_TO_RAD;
 	double pitchAngle = kalAngleY * DEG_TO_RAD;
 
-	//double Bfy = magZ * sin(rollAngle) - magY * cos(rollAngle);
-	double Bfy = magY * cos(rollAngle) - magZ * sin(rollAngle);
-	double Bfx = magX * cos(pitchAngle) + magY * sin(pitchAngle) * sin(rollAngle) + magZ * sin(pitchAngle) * cos(rollAngle);
-	yaw = atan2(-Bfy, Bfx) * RAD_TO_DEG;
+	//double Bfy = _magZ * sin(rollAngle) - _magY * cos(rollAngle);
+	double Bfy = _magY * cos(rollAngle) - _magZ * sin(rollAngle);
+	double Bfx = _magX * cos(pitchAngle) + _magY * sin(pitchAngle) * sin(rollAngle) + _magZ * sin(pitchAngle) * cos(rollAngle);
+	*yaw = atan2(-Bfy, Bfx) * RAD_TO_DEG;
 
 	//yaw *= -1;
 }
@@ -245,6 +247,10 @@ void updateYaw() { // See: http://www.freescale.com/files/sensors/doc/app_note/A
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
 	mpu.initialize();
+
+	// Get DeviceID
+	uint8_t devid = mpu.getDeviceID();
+	ESP_LOGI(TAG, "devid=0x%x", devid);
 
 	// Get the sample rate
 	ESP_LOGI(TAG, "getRate()=%d", mpu.getRate());
@@ -262,13 +268,15 @@ void mpu6050(void *pvParameters){
 
 	// Get Accelerometer Scale Range
 	ESP_LOGI(TAG, "getFullScaleAccelRange()=%d", mpu.getFullScaleAccelRange());
-	// Set Accelerometer Full Scale Range to ±2g
-	if (mpu.getFullScaleAccelRange() != 0) mpu.setFullScaleAccelRange(0);
+	// Set Accelerometer Full Scale Range to  2g
+	if (mpu.getFullScaleAccelRange() != 0) mpu.setFullScaleAccelRange(0); // -2 --> +2[g]
+	accel_sensitivity = 16384.0; // g
 
 	// Get Gyro Scale Range
 	ESP_LOGI(TAG, "getFullScaleGyroRange()=%d", mpu.getFullScaleGyroRange());
-	// Set Gyro Full Scale Range to ±250deg/s
-	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0);
+	// Set Gyro Full Scale Range to  250deg/s
+	if (mpu.getFullScaleGyroRange() != 0) mpu.setFullScaleGyroRange(0); // -250 --> +250[Deg/Sec]
+	gyro_sensitivity = 131.0; // Deg/Sec
 
 	// Bypass Enable Configuration
 	mpu.setI2CBypassEnabled(true);
@@ -321,53 +329,49 @@ void mpu6050(void *pvParameters){
 	mag.setMode(0x16);
 	//mag.setMode(0x06);
 
+	// Set Kalman and gyro starting angle
+	double ax, ay, az;
+	double gx, gy, gz;
+	double mx, my, mz;
+	double roll, pitch, yaw; // Roll and pitch are calculated using the accelerometer
+	double kalAngleX, kalAngleY, kalAngleZ; // Calculated angle using a Kalman filter
 
-	/* Set Kalman and gyro starting angle */
-	updateMPU6050();
-	updateAK8963();
-	updatePitchRoll();
-	updateYaw();
-
-	kalmanX.setAngle(roll); // First set roll starting angle
-	gyroXangle = roll;
-	compAngleX = roll;
-
-	kalmanY.setAngle(pitch); // Then pitch
-	gyroYangle = pitch;
-	compAngleY = pitch;
-
-	kalmanZ.setAngle(yaw); // And finally yaw
-	gyroZangle = yaw;
-	compAngleZ = yaw;
-
-	int elasped = 0;
+	_getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+	getRollPitch(ax, ay, az, &roll, &pitch);
+	kalAngleX = roll;
+	kalAngleY = pitch;
+	_getMagData(&mx, &my, &mz);
+	updateYaw(mx, my, mz, kalAngleX, kalAngleY, &yaw);
+	kalAngleZ = yaw;
+	kalmanX.setAngle(roll); // Set starting angle
+	kalmanY.setAngle(pitch);
+	kalmanZ.setAngle(yaw);
 	uint32_t timer = micros();
 
+	int elasped = 0;
 	bool initialized = false;
-	double initial_roll = 0.0;
-	double initial_pitch = 0.0;
-	double initial_yaw = 0.0;
+	double initial_kalAngleX = 0.0;
+	double initial_kalAngleY = 0.0;
+	double initial_kalAngleZ = 0.0;
 
 	while(1){
-		/* Update all the IMU values */
-		updateMPU6050();
-		updateAK8963();
+		_getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+		//printf("%f %f %f - %f %f %f\n", ax, ay, az, gx, gy, gz);
+		getRollPitch(ax, ay, az, &roll, &pitch);
+		_getMagData(&mx, &my, &mz);
 
 		double dt = (double)(micros() - timer) / 1000000; // Calculate delta time
 		timer = micros();
 
 		/* Roll and pitch estimation */
-		updatePitchRoll();
-		double gyroXrate = gyroX / 131.0; // Convert to deg/s
-		double gyroYrate = gyroY / 131.0; // Convert to deg/s
+		double gyroXrate = gx;
+		double gyroYrate = gy;
 
 #ifdef RESTRICT_PITCH
 		// This fixes the transition problem when the accelerometer angle jumps between -180 and 180 degrees
 		if ((roll < -90 && kalAngleX > 90) || (roll > 90 && kalAngleX < -90)) {
 			kalmanX.setAngle(roll);
-			compAngleX = roll;
 			kalAngleX = roll;
-			gyroXangle = roll;
 		} else
 			kalAngleX = kalmanX.getAngle(roll, gyroXrate, dt); // Calculate the angle using a Kalman filter
 
@@ -378,9 +382,7 @@ void mpu6050(void *pvParameters){
 		// This fixes the transition problem when the accelerometer angle jumps between -180 and 180 degrees
 		if ((pitch < -90 && kalAngleY > 90) || (pitch > 90 && kalAngleY < -90)) {
 			kalmanY.setAngle(pitch);
-			compAngleY = pitch;
 			kalAngleY = pitch;
-			gyroYangle = pitch;
 		} else
 			kalAngleY = kalmanY.getAngle(pitch, gyroYrate, dt); // Calculate the angle using a Kalman filter
 
@@ -390,77 +392,50 @@ void mpu6050(void *pvParameters){
 #endif
 
 		/* Yaw estimation */
-		updateYaw();
-		double gyroZrate = gyroZ / 131.0; // Convert to deg/s
+		updateYaw(mx, my, mz, kalAngleX, kalAngleY, &yaw);
+		double gyroZrate = gz;
 		// This fixes the transition problem when the yaw angle jumps between -180 and 180 degrees
 		if ((yaw < -90 && kalAngleZ > 90) || (yaw > 90 && kalAngleZ < -90)) {
 			kalmanZ.setAngle(yaw);
-			compAngleZ = yaw;
 			kalAngleZ = yaw;
-			gyroZangle = yaw;
 		} else 
 			kalAngleZ = kalmanZ.getAngle(yaw, gyroZrate, dt); // Calculate the angle using a Kalman filter
 
 
-		/* Estimate angles using gyro only */
-		gyroXangle += gyroXrate * dt; // Calculate gyro angle without any filter
-		gyroYangle += gyroYrate * dt;
-		gyroZangle += gyroZrate * dt;
-		//gyroXangle += kalmanX.getRate() * dt; // Calculate gyro angle using the unbiased rate from the Kalman filter
-		//gyroYangle += kalmanY.getRate() * dt;
-		//gyroZangle += kalmanZ.getRate() * dt;
-
-		/* Estimate angles using complimentary filter */
-		compAngleX = 0.93 * (compAngleX + gyroXrate * dt) + 0.07 * roll; // Calculate the angle using a Complimentary filter
-		compAngleY = 0.93 * (compAngleY + gyroYrate * dt) + 0.07 * pitch;
-		compAngleZ = 0.93 * (compAngleZ + gyroZrate * dt) + 0.07 * yaw;
-
-		// Reset the gyro angles when they has drifted too much
-		if (gyroXangle < -180 || gyroXangle > 180) gyroXangle = kalAngleX;
-		if (gyroYangle < -180 || gyroYangle > 180) gyroYangle = kalAngleY;
-		if (gyroZangle < -180 || gyroZangle > 180) gyroZangle = kalAngleZ;
-
-		
 		/* Print Data every 10 times */
 		if (elasped > 10) {
 			// Set the first data
 			if (!initialized) {
-				initial_roll = roll;
-				initial_pitch = pitch;
-				initial_yaw = yaw;
+				initial_kalAngleX = kalAngleX;
+				initial_kalAngleY = kalAngleY;
+				initial_kalAngleZ = kalAngleZ;
 				initialized = true;
 			}
 
 #if 0
 			printf("roll:%f", roll); printf(" ");
-			printf("initial_roll:%f", initial_roll); printf(" ");
-			printf("roll-initial_roll:%f", roll-initial_roll); printf(" ");
-			printf("gyroXangle:%f", gyroXangle); printf(" ");
-			printf("compAngleX:%f", compAngleX); printf(" ");
 			printf("kalAngleX:%f", kalAngleX); printf(" ");
+			printf("initial_kalAngleX:%f", initial_kalAngleX); printf(" ");
+			printf("kalAngleX-initial_kalAngleX:%f", kalAngleX-initial_kalAngleX); printf(" ");
 			printf("\n");
 
-			printf("pitch: %f", pitch); printf(" ");
-			printf("initial_pitch: %f", initial_pitch); printf(" ");
-			printf("pitch-initial_pitch: %f", pitch-initial_pitch); printf(" ");
-			printf("gyroYangle:%f", gyroYangle); printf(" ");
-			printf("compAngleY:%f", compAngleY); printf(" ");
-			printf("kalAngleY:%f", kalAngleY); printf("\t");
+			printf("pitch:%f", pitch); printf(" ");
+			printf("kalAngleY:%f", kalAngleY); printf(" ");
+			printf("initial_kalAngleY: %f", initial_kalAngleY); printf(" ");
+			printf("kalAngleY-initial_kalAngleY: %f", kalAngleY-initial_kalAngleY); printf(" ");
 			printf("\n");
 
-			printf("yaw:%f", yaw); printf("\t");
-			printf("initial_yaw: %f", initial_yaw); printf(" ");
-			printf("gyroZangle:%f", gyroZangle); printf("\t");
-			printf("compAngleZ:%f", compAngleZ); printf("\t");
-			printf("kalAngleZ:%f", kalAngleZ); printf("\t");
+			printf("yaw:%f", yaw); printf(" ");
+			printf("kalAngleZ:%f", kalAngleZ); printf(" ");
+			printf("initial_kalAngleZ: %f", initial_kalAngleZ); printf(" ");
+			printf("kalAngleZ-initial_kalAngleZ: %f", kalAngleZ-initial_kalAngleZ); printf(" ");
 			printf("\n");
 #endif
 
 			// Send UDP packet
-			float _roll = roll-initial_roll;
-			float _pitch = pitch-initial_pitch;
-			float _yaw = yaw-initial_yaw;
-			if (_yaw < -180.0) _yaw = _yaw + 360.0;
+			float _roll = kalAngleX-initial_kalAngleX;
+			float _pitch = kalAngleY-initial_kalAngleY;
+			float _yaw = kalAngleZ-initial_kalAngleZ;
 			ESP_LOGI(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 
 			POSE_t pose;

@@ -98,7 +98,7 @@ void _getMotion6(float *_ax, float *_ay, float *_az, float *_gx, float *_gy, flo
 	*_az = (float)az;
 #endif
 
-	// Convert relative degree per second to absolute radian per second
+	// Convert relative to absolute
 #if 1
 	*_gx = (float)gx / gyro_sensitivity;
 	*_gy = (float)gy / gyro_sensitivity;

@@ -178,7 +178,7 @@ void _getMotion6(float *_ax, float *_ay, float *_az, float *_gx, float *_gy, flo
 	*_az = (float)az;
 #endif
 
-	// Convert relative degree per second to absolute radian per second
+	// Convert relative to absolute
 #if 1
 	*_gx = ((float)gx / gyro_sensitivity);
 	*_gy = ((float)gy / gyro_sensitivity);
@@ -339,7 +339,6 @@ void mpu6050(void *pvParameters){
 			_roll = roll-initial_roll;
 			_pitch = pitch-initial_pitch;
 			_yaw = yaw-initial_yaw;
-			if (_yaw < -180.0) _yaw = _yaw + 360.0;
 			ESP_LOGD(TAG, "roll=%f pitch=%f yaw=%f", roll, pitch, yaw);
 			ESP_LOGD(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 
