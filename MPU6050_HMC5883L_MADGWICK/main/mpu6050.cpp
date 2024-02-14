@@ -223,7 +223,7 @@ void mpu6050(void *pvParameters){
 	float initial_pitch = 0.0;
 
 	float roll = 0.0, pitch = 0.0, yaw = 0.0;
-	float _roll = 0.0, _pitch = 0.0, _yaw = 0.0;
+	float _roll = 0.0, _pitch = 0.0;
 	while(1){
 		// Get scaled value
 		float ax, ay, az;

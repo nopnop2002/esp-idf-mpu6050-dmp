@@ -19,6 +19,13 @@ static const char *MDNS_HOSTNAME = "ESP32";
 QueueHandle_t xQueueTrans;
 
 extern "C" {
+	void start_wifi(void);
+	void start_mdns(void);
+	void start_i2c(void);
+	int ws_server_start(void);
+	void udp_trans(void *pvParameters);
+	void server_task(void *pvParameters);
+	void client_task(void *pvParameters);
 	void app_main(void);
 }
 
@@ -27,13 +34,6 @@ void mpu6050(void *pvParameters);
 #ifdef __cplusplus
 extern "C" {
 #endif
-void start_wifi(void);
-void start_mdns(void);
-void start_i2c(void);
-int ws_server_start(void);
-void udp_trans(void *pvParameters);
-void server_task(void *pvParameters);
-void client_task(void *pvParameters);
 #ifdef __cplusplus
 }
 #endif

@@ -352,7 +352,6 @@ void mpu6050(void *pvParameters){
 	bool initialized = false;
 	double initial_kalAngleX = 0.0;
 	double initial_kalAngleY = 0.0;
-	double initial_kalAngleZ = 0.0;
 
 	while(1){
 		_getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
@@ -401,14 +400,12 @@ void mpu6050(void *pvParameters){
 		} else 
 			kalAngleZ = kalmanZ.getAngle(yaw, gyroZrate, dt); // Calculate the angle using a Kalman filter
 
-
 		/* Print Data every 10 times */
 		if (elasped > 10) {
 			// Set the first data
 			if (!initialized) {
 				initial_kalAngleX = kalAngleX;
 				initial_kalAngleY = kalAngleY;
-				initial_kalAngleZ = kalAngleZ;
 				initialized = true;
 			}
 
@@ -427,15 +424,13 @@ void mpu6050(void *pvParameters){
 
 			printf("yaw:%f", yaw); printf(" ");
 			printf("kalAngleZ:%f", kalAngleZ); printf(" ");
-			printf("initial_kalAngleZ: %f", initial_kalAngleZ); printf(" ");
-			printf("kalAngleZ-initial_kalAngleZ: %f", kalAngleZ-initial_kalAngleZ); printf(" ");
 			printf("\n");
 #endif
 
 			// Send UDP packet
 			float _roll = kalAngleX-initial_kalAngleX;
 			float _pitch = kalAngleY-initial_kalAngleY;
-			float _yaw = kalAngleZ-initial_kalAngleZ;
+			float _yaw = kalAngleZ;
 			ESP_LOGI(TAG, "roll:%f pitch=%f yaw=%f", _roll, _pitch, _yaw);
 
 			POSE_t pose;
