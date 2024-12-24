@@ -228,13 +228,14 @@ The posture of your sensor is displayed.
 
 
 ### Socket interface to pyteapot.py
-```
 Yaw angle should be betweem two ```y```.   
 Pitch angle should be between two ```p```.   
 Roll angles should be between two ```r```.   
+```
 //yaw = 168.8099
 //pitch = 12.7914
 //roll = -11.8401
+# Euler angles only
 y168.8099yp12.7914pr-11.8401r
 
 ```
