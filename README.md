@@ -194,6 +194,8 @@ This is a great application.
 
 ### Installation for Linux
 ```
+$ python3 --version
+Python 3.11.2
 $ sudo apt install python3-pip python3-setuptools
 $ python3 -m pip install -U pip
 $ python3 -m pip install pygame
@@ -213,7 +215,6 @@ Open Git Bash and run:
 ```
 $ python --version
 Python 3.11.9
-
 $ python -m pip install -U pip
 $ python -m pip install pygame
 $ python -m pip install PyOpenGL PyOpenGL_accelerate
