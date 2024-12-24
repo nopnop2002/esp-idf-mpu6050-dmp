@@ -224,7 +224,7 @@ $ python pyteapot.py
 ```
 
 The posture of your sensor is displayed.   
-![PyTeapot-Windows](https://github.com/user-attachments/assets/d84480a6-4d5f-4a97-add7-130e7eed006d)
+![PyTeapot-Windows](https://github.com/user-attachments/assets/2b0a1a70-40cb-47e5-8f51-eb4fe3adb1ab)
 
 
 ### String passed over Wifi to pyteapot.py
