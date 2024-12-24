@@ -227,7 +227,7 @@ The posture of your sensor is displayed.
 ![PyTeapot-Windows](https://github.com/user-attachments/assets/d84480a6-4d5f-4a97-add7-130e7eed006d)
 
 
-### Socket interface to pyteapot.py
+### String passed over Wifi to pyteapot.py
 Yaw angle should be betweem two ```y```.   
 Pitch angle should be between two ```p```.   
 Roll angles should be between two ```r```.   
