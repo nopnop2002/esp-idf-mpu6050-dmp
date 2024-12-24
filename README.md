@@ -226,6 +226,19 @@ $ python pyteapot.py
 The posture of your sensor is displayed.   
 ![PyTeapot-Windows](https://github.com/user-attachments/assets/d84480a6-4d5f-4a97-add7-130e7eed006d)
 
+
+### Socket interface to pyteapot.py
+```
+Yaw angle should be betweem two ```y```.   
+Pitch angle should be between two ```p```.   
+Roll angles should be between two ```r```.   
+//yaw = 168.8099
+//pitch = 12.7914
+//roll = -11.8401
+y168.8099yp12.7914pr-11.8401r
+
+```
+
 # Using IMU Filter
 You can use Kalman and Madgwick filters instead of DMP.   
 DMP estimates Euler angles in-device, whereas these filters estimate Euler angles purely in software.   
