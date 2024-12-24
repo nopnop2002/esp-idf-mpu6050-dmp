@@ -192,7 +192,7 @@ This is a great application.
 +-------------+         +-------------+         +-------------+
 ```
 
-### Installation
+### Installation for Linux
 ```
 $ sudo apt install python3-pip python3-setuptools
 $ python3 -m pip install -U pip
@@ -206,6 +206,22 @@ $ python3 pyteapot.py
 The posture of your sensor is displayed.   
 ![pyteapot_2023-03-11_09-11-46](https://user-images.githubusercontent.com/6020549/224452173-2350704d-1fc4-4a12-8324-434c11f62c52.png)
 
+### Installation for Windows   
+Open Git Bash and run:   
+```
+$ python --version
+Python 3.11.9
+
+$ python -m pip install -U pip
+$ python -m pip install pygame
+$ python -m pip install PyOpenGL PyOpenGL_accelerate
+$ git clone https://github.com/thecountoftuscany/PyTeapot-Quaternion-Euler-cube-rotation
+$ cd PyTeapot-Quaternion-Euler-cube-rotation
+$ python pyteapot.py
+```
+
+The posture of your sensor is displayed.   
+![PyTeapot-Windows](https://github.com/user-attachments/assets/d84480a6-4d5f-4a97-add7-130e7eed006d)
 
 # Using IMU Filter
 You can use Kalman and Madgwick filters instead of DMP.   
