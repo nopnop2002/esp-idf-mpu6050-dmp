@@ -290,7 +290,7 @@ options:
 ![Image](https://github.com/user-attachments/assets/0ec982c4-3353-4cb8-9c39-ecd785ca9729)
 
 ### How to use   
-https://github.com/nopnop2002/esp-idf-mpu6050-dmp/blob/main/panda3d/README.md   
+See [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/blob/main/panda3d/README.md)   
 
 # Using IMU Filter
 You can use Kalman and Madgwick filters instead of DMP.   
