@@ -268,16 +268,16 @@ options:
   --model {jet,biplain,707,fa18}
 ```
 
-- using jet model
+- using jet model   
 	![Image](https://github.com/user-attachments/assets/6d81eec0-5b80-4e5f-ae97-689742253f9a)
 
-- using biplain mode
+- using biplain mode   
 	![Image](https://github.com/user-attachments/assets/a37359f2-51f9-439b-88d7-a57bf165265f)
 
-- using 707 mode
+- using 707 mode   
 	![Image](https://github.com/user-attachments/assets/a058972d-3708-47f0-b6a0-36f7fbe25c08)
 
-- using fa18 mode
+- using fa18 mode   
 	![Image](https://github.com/user-attachments/assets/0ed14905-319f-423c-9d79-d5ca66b34f54)
 
 - Using your favorite model   
