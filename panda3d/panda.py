@@ -20,37 +20,12 @@ import argparse
 
 class HelloWorld(ShowBase):
 
-	def get_quaternion_from_euler(self, roll, pitch, yaw):
-		"""
-		Convert an Euler angle to a quaternion.
-		 
-		Input
-		  :param roll: The roll (rotation around x-axis) angle in radians.
-		  :param pitch: The pitch (rotation around y-axis) angle in radians.
-		  :param yaw: The yaw (rotation around z-axis) angle in radians.
-
-		Output
-		  :return qx, qy, qz, qw: The orientation in quaternion [x,y,z,w] format
-		"""
-		qx = np.sin(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) - np.cos(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
-		qy = np.cos(roll/2) * np.sin(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.cos(pitch/2) * np.sin(yaw/2)
-		qz = np.cos(roll/2) * np.cos(pitch/2) * np.sin(yaw/2) - np.sin(roll/2) * np.sin(pitch/2) * np.cos(yaw/2)
-		qw = np.cos(roll/2) * np.cos(pitch/2) * np.cos(yaw/2) + np.sin(roll/2) * np.sin(pitch/2) * np.sin(yaw/2)
-
-		return [qx, qy, qz, qw]
-
 	def __init__(self):
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 		self.sock.bind(('', 5005))
 
 		ShowBase.__init__(self)
-
-		if (args.background):
-			self.scene = self.loader.loadModel("models/environment")
-			self.scene.reparentTo(self.render)
-			self.scene.setScale(1, 1, 1)
-			self.scene.setPos(0, 0, 0)
 
 		if (args.model == 'jet'):
 			self.model = self.loader.loadModel("pandagallery/jet")
@@ -86,19 +61,14 @@ class HelloWorld(ShowBase):
 		pitch = float(line.split('p')[1])
 		roll = float(line.split('r')[1])
 		print("yaw={} pitch={} roll={}".format(yaw, pitch, roll))
-
-		quat = self.get_quaternion_from_euler(math.radians(roll), math.radians(pitch), math.radians(yaw))
-		#print("quat={}".format(quat))
-		self.model.setQuat( Quat( quat[0], quat[1], quat[2], quat[3] ) )
+		self.model.setHpr(yaw, pitch, roll)
 		
 		return Task.cont
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
-	parser.add_argument('--background', action='store_true', help='show background');
 	parser.add_argument('--model', choices=['jet', 'biplain', '707', 'fa18'], default='jet')
 	args = parser.parse_args()
-	print("args.background={}".format(args.background))
 	print("args.model={}".format(args.model))
 
 	app = HelloWorld()
