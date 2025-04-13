@@ -280,6 +280,12 @@ options:
 - using fa18 mode   
 	![Image](https://github.com/user-attachments/assets/0ed14905-319f-423c-9d79-d5ca66b34f54)
 
+- Move the camera forward and backward   
+	Hold down the right button and move the mouse.   
+
+- Move the camera up, down, left and right   
+	Hold down the left button and move the mouse.   
+
 - Using your favorite model   
 	You can download your favorite model [here](https://www.alice.org/pandagallery/).   
 	I used these [model](https://www.alice.org/pandagallery/Vehicles/index.html).   
