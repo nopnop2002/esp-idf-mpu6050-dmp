@@ -26,6 +26,25 @@ options:
   --model {jet,biplain,707,fa18}
 ```
 
+### Installation for Windows
+Install Git for Windows from [here](https://gitforwindows.org/).   
+Install Python Releases for Windows from [here](https://www.python.org/downloads/windows/).   
+Open Git Bash and run:   
+```
+$ python --version
+Python 3.11.9
+$ python -m pip install -U pip
+$ python -m pip install panda3d
+$ cd esp-idf-mpu6050-dmp/panda3d
+$ python panda.py --help
+usage: panda.py [-h] [--model {jet,biplain,707,fa18}]
+
+options:
+  -h, --help            show this help message and exit
+  --model {jet,biplain,707,fa18}
+```
+
+
 - using jet model   
 	![Image](https://github.com/user-attachments/assets/6d81eec0-5b80-4e5f-ae97-689742253f9a)
 
