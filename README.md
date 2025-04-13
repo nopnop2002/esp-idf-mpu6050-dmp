@@ -282,6 +282,7 @@ options:
 
 - Using your favorite model   
 	You can download your favorite model [here](https://www.alice.org/pandagallery/).   
+	I used these [model](https://www.alice.org/pandagallery/Vehicles/index.html).   
 	Download the panda version and unzip the downloaded zip file.   
 	Unzipping the zip file will create an egg file.   
 	Here you specify the full path to the egg file, without the extension.   
