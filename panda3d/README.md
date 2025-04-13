@@ -10,33 +10,8 @@ It works as a UDP display server.
 +-------------+         +-------------+         +-------------+
 ```
 
-### Installation for Linux
 ```
-$ python3 --version
-Python 3.11.2
-$ sudo apt install python3-pip python3-setuptools
-$ python3 -m pip install -U pip
-$ python3 -m pip install panda3d
-$ esp-idf-mpu6050-dmp/panda3d
 $ python3 panda.py --help
-usage: panda.py [-h] [--model {jet,biplain,707,fa18}]
-
-options:
-  -h, --help            show this help message and exit
-  --model {jet,biplain,707,fa18}
-```
-
-### Installation for Windows
-Install Git for Windows from [here](https://gitforwindows.org/).   
-Install Python Releases for Windows from [here](https://www.python.org/downloads/windows/).   
-Open Git Bash and run:   
-```
-$ python --version
-Python 3.11.9
-$ python -m pip install -U pip
-$ python -m pip install panda3d
-$ cd esp-idf-mpu6050-dmp/panda3d
-$ python panda.py --help
 usage: panda.py [-h] [--model {jet,biplain,707,fa18}]
 
 options:
