@@ -267,8 +267,8 @@ options:
   -h, --help            show this help message and exit
   --model {jet,biplain,707,fa18}
 ```
-- How to use   
-	https://github.com/nopnop2002/esp-idf-mpu6050-dmp/blob/main/panda3d/README.md   
+### How to use   
+https://github.com/nopnop2002/esp-idf-mpu6050-dmp/blob/main/panda3d/README.md   
 
 # Using IMU Filter
 You can use Kalman and Madgwick filters instead of DMP.   
