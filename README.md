@@ -268,6 +268,27 @@ options:
   -h, --help            show this help message and exit
   --model {jet,biplain,707,fa18}
 ```
+![Image](https://github.com/user-attachments/assets/6d81eec0-5b80-4e5f-ae97-689742253f9a)   
+
+### Installation for Windows
+Install Git for Windows from [here](https://gitforwindows.org/).   
+Install Python Releases for Windows from [here](https://www.python.org/downloads/windows/).   
+Open Git Bash and run:   
+```
+$ python --version
+Python 3.11.9
+$ python -m pip install -U pip
+$ python -m pip install panda3d
+$ esp-idf-mpu6050-dmp/panda3d
+$ python panda.py --help
+usage: panda.py [-h] [--model {jet,biplain,707,fa18}]
+
+options:
+  -h, --help            show this help message and exit
+  --model {jet,biplain,707,fa18}
+```
+![Image](https://github.com/user-attachments/assets/0ec982c4-3353-4cb8-9c39-ecd785ca9729)
+
 ### How to use   
 https://github.com/nopnop2002/esp-idf-mpu6050-dmp/blob/main/panda3d/README.md   
 
