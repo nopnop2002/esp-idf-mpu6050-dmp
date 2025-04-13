@@ -38,6 +38,24 @@ options:
 - using fa18 mode   
 	![Image](https://github.com/user-attachments/assets/0ed14905-319f-423c-9d79-d5ca66b34f54)
 
+- using jet model   
+	![Image](https://github.com/user-attachments/assets/6d81eec0-5b80-4e5f-ae97-689742253f9a)
+
+- using biplain mode   
+	![Image](https://github.com/user-attachments/assets/a37359f2-51f9-439b-88d7-a57bf165265f)
+
+- using 707 mode   
+	![Image](https://github.com/user-attachments/assets/a058972d-3708-47f0-b6a0-36f7fbe25c08)
+
+- using fa18 mode   
+	![Image](https://github.com/user-attachments/assets/0ed14905-319f-423c-9d79-d5ca66b34f54)
+
+- Move the camera forward and backward   
+	Hold down the right button and move the mouse.   
+
+- Move the camera up, down, left and right   
+	Hold down the left button and move the mouse.   
+
 - Using your favorite model   
 	You can download your favorite model [here](https://www.alice.org/pandagallery/).   
 	I used these [model](https://www.alice.org/pandagallery/Vehicles/index.html).   
