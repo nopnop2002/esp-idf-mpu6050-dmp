@@ -43,6 +43,8 @@ options:
 
 - Move the camera up, down, left and right   
 	Hold down the left button and move the mouse.   
+	![Image](https://github.com/user-attachments/assets/9558a7db-7402-470e-acf0-299d3e36464e)
+	![Image](https://github.com/user-attachments/assets/41420480-9f9b-4189-834e-7fe033e3a43e)
 
 - Using your favorite model   
 	You can download your favorite model [here](https://www.alice.org/pandagallery/).   
