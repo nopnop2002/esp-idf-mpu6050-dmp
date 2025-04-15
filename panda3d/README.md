@@ -47,4 +47,4 @@ options:
 	Unzipping the zip file will create an egg file.   
 	Here you specify the full path to the egg file, without the extension.   
 	```self.model = self.loader.loadModel("path_to_model_file")```    
-
+	![Image](https://github.com/user-attachments/assets/f9c824cb-b2ea-4038-bca0-4fa11d94db9f)
