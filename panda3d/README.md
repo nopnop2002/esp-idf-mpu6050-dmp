@@ -48,4 +48,4 @@ options:
 	Here you specify the full path to the egg file, without the extension.   
 	```self.model = self.loader.loadModel("path_to_model_file")```    
 	![Image](https://github.com/user-attachments/assets/19088d8c-32c2-48f3-83a3-79adb364203a)
-	![Image](https://github.com/user-attachments/assets/95d7e2d9-4213-41ea-a61e-1fb8671ce515)
+	![Image](https://github.com/user-attachments/assets/8b4a49e3-9954-4c6c-83aa-2d6636d9f629)
