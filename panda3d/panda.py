@@ -51,17 +51,16 @@ class HelloWorld(ShowBase):
 		#print("MotionTask self.yaw={}".format(self.yaw));
 		result = select.select([self.sock],[],[],1)
 		#print(result[0], type(result[0]), len(result[0]))
-		if (len(result[0]) == 0): return
-
-		line = result[0][0].recv(1024)
-		if (type(line) is bytes):
-			line=line.decode('utf-8')
-		#print("line={}".format(line))
-		yaw = float(line.split('y')[1])
-		pitch = float(line.split('p')[1])
-		roll = float(line.split('r')[1])
-		print("yaw={} pitch={} roll={}".format(yaw, pitch, roll))
-		self.model.setHpr(yaw, pitch, roll)
+		if (len(result[0]) != 0):
+			line = result[0][0].recv(1024)
+			if (type(line) is bytes):
+				line=line.decode('utf-8')
+			#print("line={}".format(line))
+			yaw = float(line.split('y')[1])
+			pitch = float(line.split('p')[1])
+			roll = float(line.split('r')[1])
+			print("yaw={} pitch={} roll={}".format(yaw, pitch, roll))
+			self.model.setHpr(yaw, pitch, roll)
 		
 		return Task.cont
 
