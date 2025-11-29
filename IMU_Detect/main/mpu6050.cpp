@@ -46,7 +46,6 @@ THE SOFTWARE.
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "esp_err.h"
-#include "driver/i2c.h"
 
 static const char *TAG = "IMU";
 

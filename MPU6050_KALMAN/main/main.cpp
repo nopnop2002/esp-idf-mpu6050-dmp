@@ -5,7 +5,7 @@
 #include "freertos/message_buffer.h"
 #include "esp_log.h"
 #include "mdns.h"
-#include "driver/i2c.h"
+#include "I2Cdev.h"
 
 #include "parameter.h"
 
@@ -22,21 +22,20 @@ extern "C" {
 	void app_main(void);
 }
 
-void mpu6050(void *pvParameters);
-
 #ifdef __cplusplus
 extern "C" {
 #endif
-void start_wifi(void);
-void start_mdns(void);
-void start_i2c(void);
-int ws_server_start(void);
-void udp_trans(void *pvParameters);
-void server_task(void *pvParameters);
-void client_task(void *pvParameters);
+	void start_wifi(void);
+	void start_mdns(void);
+	int ws_server_start(void);
+	void udp_trans(void *pvParameters);
+	void server_task(void *pvParameters);
+	void client_task(void *pvParameters);
 #ifdef __cplusplus
 }
 #endif
+
+void mpu6050(void *pvParameters);
 
 void start_mdns(void)
 {
@@ -55,19 +54,6 @@ void start_mdns(void)
 #endif
 }
 
-void start_i2c(void) {
-	i2c_config_t conf;
-	conf.mode = I2C_MODE_MASTER;
-	conf.sda_io_num = (gpio_num_t)CONFIG_GPIO_SDA;
-	conf.scl_io_num = (gpio_num_t)CONFIG_GPIO_SCL;
-	conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-	conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
-	conf.master.clk_speed = 400000;
-	conf.clk_flags = 0;
-	ESP_ERROR_CHECK(i2c_param_config(I2C_NUM_0, &conf));
-	ESP_ERROR_CHECK(i2c_driver_install(I2C_NUM_0, I2C_MODE_MASTER, 0, 0, 0));
-}
-
 void app_main(void)
 {
 	// Initialize WiFi
@@ -77,7 +63,7 @@ void app_main(void)
 	start_mdns();
 
 	// Initialize i2c
-	start_i2c();
+	I2Cdev::initialize(400000);
 
 	// Create Queue
 	xQueueTrans = xQueueCreate(10, sizeof(POSE_t));
