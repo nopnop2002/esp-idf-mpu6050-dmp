@@ -43,7 +43,7 @@ class I2Cdev {
     public:
         I2Cdev();
 
-        static void initialize();
+        static void initialize(int clkSpeed);
         static void enable(bool isEnabled);
 
         static int8_t readBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
