@@ -93,9 +93,7 @@ THE SOFTWARE.
 
 class AK8963 {
     public:
-#if 0
         AK8963();
-#endif
         AK8963(uint8_t address=AK8963_DEFAULT_ADDRESS);
 
         void initialize();
