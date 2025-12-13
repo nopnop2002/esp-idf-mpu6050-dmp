@@ -34,14 +34,12 @@ THE SOFTWARE.
 
 #include "HMC5883L.h"
 
-#if 0
 /** Default constructor, uses default I2C address.
  * @see HMC5883L_DEFAULT_ADDRESS
  */
 HMC5883L::HMC5883L() {
     devAddr = HMC5883L_DEFAULT_ADDRESS;
 }
-#endif
 
 /** Specific address constructor.
  * @param address I2C address

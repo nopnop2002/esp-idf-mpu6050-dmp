@@ -102,9 +102,7 @@ THE SOFTWARE.
 
 class HMC5883L {
     public:
-#if 0
         HMC5883L();
-#endif
         HMC5883L(uint8_t address);
         
         void initialize();
