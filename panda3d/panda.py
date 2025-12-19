@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 #-*- encoding: utf-8 -*
 #
-# https://www.kkaneko.jp/db/python3d/trypanda3d.html#S10
+# I used this as reference.
+# https://www.kkaneko.jp/cc/3d/panda3dintro.html
+#
+# We need this library.
 # python3 -m pip install panda3d
 #
 # pandagallery
