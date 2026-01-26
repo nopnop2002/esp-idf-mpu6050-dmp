@@ -1,5 +1,5 @@
 # MPU6050_MADGWICK
-This demo estimates roll, pitch and yaw angles in software without using a DMP.   
+This demo estimates roll and pitch angles in software without using a DMP.   
 Estimate roll and pitch using the Madgwick Filter used in ROS.   
 Since the MPU6050 does not have a magnetic sensor, yaw cannot be estimated.   
 I based [this](https://github.com/arduino-libraries/MadgwickAHRS) Madgwick Filter.   
