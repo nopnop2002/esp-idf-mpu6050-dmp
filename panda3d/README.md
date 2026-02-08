@@ -41,7 +41,7 @@ options:
 	![Image](https://github.com/user-attachments/assets/41420480-9f9b-4189-834e-7fe033e3a43e)
 
 - Using your favorite model   
-	You can download your favorite model [here](https://www.alice.org/pandagallery/).   
+	You can download your favorite model [here](http://alice.org/pandagallery/).   
 	I used these [model](https://www.alice.org/pandagallery/Vehicles/index.html).   
 	Download the panda version and unzip the downloaded zip file.   
 	Unzipping the zip file will create an egg file.   
