@@ -280,6 +280,7 @@ $ python --version
 Python 3.11.9
 $ python -m pip install -U pip
 $ python -m pip install panda3d
+$ python -m pip install numpy
 $ cd esp-idf-mpu6050-dmp/panda3d
 $ python panda.py --help
 usage: panda.py [-h] [--model {jet,biplain,707,fa18}]
