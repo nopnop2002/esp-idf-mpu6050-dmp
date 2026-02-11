@@ -45,6 +45,6 @@ options:
 	I used these [model](http://alice.org/pandagallery/Vehicles/index.html).   
 	Download the panda version and unzip the downloaded zip file.   
 	Unzipping the zip file will create an egg file.   
-	Here you specify the full path to the egg file, without the extension.   
+	Here you specify the full path to the egg file.   
 	```self.model = self.loader.loadModel("path_to_model_file")```    
 	![Image](https://github.com/user-attachments/assets/19088d8c-32c2-48f3-83a3-79adb364203a)
