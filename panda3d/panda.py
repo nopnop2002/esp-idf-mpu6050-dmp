@@ -31,22 +31,32 @@ class HelloWorld(ShowBase):
 		ShowBase.__init__(self)
 
 		if (args.model == 'jet'):
-			self.model = self.loader.loadModel("pandagallery/jet")
+			self.model = self.loader.loadModel("pandagallery/jet/jet.egg")
+			#tex = loader.loadTexture("pandagallery/jet/maps/jet_Material_#6_CL.tif")
+			tex = loader.loadTexture("pandagallery/jet/maps/wings_Material_#4_CL.tif")
+			self.model.setTexture(tex, 1)
 			self.model.setPos(0, 500, 0)
 		elif (args.model == 'biplain'):
-			self.model = self.loader.loadModel("pandagallery/Biplane")
+			self.model = self.loader.loadModel("pandagallery/Biplane/Biplane.egg")
+			tex = loader.loadTexture("pandagallery/Biplane/maps/TextureMap.tif")
+			self.model.setTexture(tex, 1)
 			self.model.setPos(0, 200, 0)
 		elif (args.model == '707'):
-			self.model = self.loader.loadModel("pandagallery/Boeing707")
+			self.model = self.loader.loadModel("pandagallery/Boeing707/Boeing707.egg")
+			tex = loader.loadTexture("pandagallery/Boeing707/maps/TextureMap.tif")
+			self.model.setTexture(tex, 1)
 			self.model.setPos(0, 200, 0)
 		elif (args.model == 'fa18'):
-			self.model = self.loader.loadModel("pandagallery/NavyJet")
+			self.model = self.loader.loadModel("pandagallery/NavyJet/NavyJet.egg")
+			tex = loader.loadTexture("pandagallery/NavyJet/maps/TextureMap.tif")
+			self.model.setTexture(tex, 1)
 			self.model.setPos(0, 200, 0)
 		self.model.reparentTo(self.render)
 		# model color
-		self.model.setColorScale(0.0, 0.0, 0.0, 1.0)
+		#self.model.setColorScale(0.0, 0.0, 0.0, 1.0)
 		self.model.setScale(1, 1, 1)
 		self.model.setQuat( Quat( 0, 1, 1, 1 ) )
+
 		self.taskMgr.add(self.MotionTask, "MotionTask")
 
 

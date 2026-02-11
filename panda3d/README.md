@@ -21,24 +21,24 @@ options:
 
 
 - using jet model   
-	![Image](https://github.com/user-attachments/assets/6d81eec0-5b80-4e5f-ae97-689742253f9a)
+	![Image](https://github.com/user-attachments/assets/cb9f1408-b372-4e55-84f6-1191f068cd1a)
 
 - using biplain mode   
-	![Image](https://github.com/user-attachments/assets/a37359f2-51f9-439b-88d7-a57bf165265f)
+	![Image](https://github.com/user-attachments/assets/dea38ac9-726a-441d-8861-ce71a415f1e4)
 
 - using 707 mode   
-	![Image](https://github.com/user-attachments/assets/a058972d-3708-47f0-b6a0-36f7fbe25c08)
+	![Image](https://github.com/user-attachments/assets/d0984d71-ac14-4579-8915-19d0e55e6659)
 
 - using fa18 mode   
-	![Image](https://github.com/user-attachments/assets/0ed14905-319f-423c-9d79-d5ca66b34f54)
+	![Image](https://github.com/user-attachments/assets/c8a53720-0ddc-4b2b-b729-6cfd8fbbe2ea)
 
 - Move the camera forward and backward   
 	Hold down the right button and move the mouse.   
 
 - Move the camera up, down, left and right   
 	Hold down the left button and move the mouse.   
-	![Image](https://github.com/user-attachments/assets/9558a7db-7402-470e-acf0-299d3e36464e)
-	![Image](https://github.com/user-attachments/assets/41420480-9f9b-4189-834e-7fe033e3a43e)
+	![Image](https://github.com/user-attachments/assets/3e3c6c96-ecad-41f9-a9dd-e76caacc6f0d)
+	![Image](https://github.com/user-attachments/assets/68f521bd-f37a-439d-af5f-ced5cf1fadae)
 
 - Using your favorite model   
 	You can download your favorite model [here](http://alice.org/pandagallery/).   
@@ -48,4 +48,3 @@ options:
 	Here you specify the full path to the egg file, without the extension.   
 	```self.model = self.loader.loadModel("path_to_model_file")```    
 	![Image](https://github.com/user-attachments/assets/19088d8c-32c2-48f3-83a3-79adb364203a)
-	![Image](https://github.com/user-attachments/assets/8b4a49e3-9954-4c6c-83aa-2d6636d9f629)
