@@ -44,7 +44,11 @@ options:
 	You can download your favorite model [here](http://alice.org/pandagallery/).   
 	I used these [model](http://alice.org/pandagallery/Vehicles/index.html).   
 	Download the panda version and unzip the downloaded zip file.   
-	Unzipping the zip file will create an egg file.   
-	Here you specify the full path to the egg file.   
-	```self.model = self.loader.loadModel("path_to_model_file")```    
-	![Image](https://github.com/user-attachments/assets/19088d8c-32c2-48f3-83a3-79adb364203a)
+	Unzipping the zip file will create an model file and texture file.   
+	Here you specify the full path to the model file and texture file.   
+	```
+	self.model = self.loader.loadModel("path_to_model_file")
+	tex = loader.loadTexture("path_to_texture_file")
+	self.model.setTexture(tex, 1)
+	```    
+	![Image](https://github.com/user-attachments/assets/46c9d3bb-25f9-46da-a56a-ef8b3de212cf)
