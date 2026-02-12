@@ -13,12 +13,8 @@ from direct.showbase.ShowBase import ShowBase
 from direct.showbase.Loader import Loader
 from panda3d.core import Quat
 from direct.task import Task
-import sys
-import numpy as np
-import time
 import socket
 import select
-import math
 import argparse
 
 class HelloWorld(ShowBase):
