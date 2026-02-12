@@ -20,7 +20,7 @@ You can view like this.
 
 - Display Euler angles in browser.
 
-# Software requiment
+# Software requirements
 ESP-IDF V5.0 or later.   
 ESP-IDF V4.4 release branch reached EOL in July 2024.   
 ESP-IDF V5.1 is required when using ESP32-C6.   

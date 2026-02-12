@@ -4,7 +4,7 @@ So scanning for i2c devices will not find HMC5883L.
 You can use this to get the compass offset value for each axis.   
 I used [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino) I2Cdev library collection by Jeff Rowberg.   
 
-# Software requiment   
+# Software requirements
 ESP-IDF V4.4/V5.x.   
 ESP-IDF V5.0 is required when using ESP32-C2.   
 ESP-IDF V5.1 is required when using ESP32-C6.   
