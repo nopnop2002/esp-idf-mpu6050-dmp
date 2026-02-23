@@ -149,7 +149,11 @@ double TimeToSec() {
 
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
-	mpu.initialize();
+	mpu.initialize(400000);
+
+	// Get Device Row ID
+	uint8_t rowid = mpu.getDeviceRowID();
+	ESP_LOGI(TAG, "getDeviceRowID=0x%x", rowid);
 
 	// Get the sample rate
 	ESP_LOGI(TAG, "getRate()=%d", mpu.getRate());
@@ -186,7 +190,7 @@ void mpu6050(void *pvParameters){
 	// Normal measurement configuration.
 	// -1.3Ga-->+1.3Ga 1090 counts / Gauss
 	// Single-Measurement Mode.
-	mag.initialize();
+	mag.initialize(400000);
 
 	// Verify the I2C connection
 	if (!mag.testConnection()) {
@@ -295,7 +299,7 @@ void mpu6050(void *pvParameters){
 				cJSON_Delete(request);
 				cJSON_free(my_json_string);
 			} else {
-				ESP_LOGI(TAG, "unstable roll:%f pitch=%f yaw=%f", _roll, _pitch, yaw);
+				ESP_LOGW(TAG, "unstable roll:%f pitch=%f yaw=%f", _roll, _pitch, yaw);
 			}
 
 			vTaskDelay(1);
