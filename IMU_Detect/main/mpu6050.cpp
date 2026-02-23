@@ -57,58 +57,31 @@ static const char *TAG = "IMU";
 
 MPU6050 mpu;
 
-bool i2c_scan(uint16_t target) {
-	bool result = false;
-	esp_err_t res;
-	printf("     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f\n");
-	printf("00:         ");
-	for (uint8_t i = 3; i < 0x78; i++) {
-		i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-		i2c_master_start(cmd);
-		i2c_master_write_byte(cmd, (i << 1) | I2C_MASTER_WRITE, 1 /* expect ack */);
-		i2c_master_stop(cmd);
-
-		res = i2c_master_cmd_begin(I2C_NUM_0, cmd, 10 / portTICK_PERIOD_MS);
-		if (i % 16 == 0)
-			printf("\n%.2x:", i);
-		if (res == 0) {
-			printf(" %.2x", i);
-			if (i == target) result = true;
-		} else {
-			printf(" --");
-		}
-		i2c_cmd_link_delete(cmd);
-	}
-	printf("\n\n");
-	return result;
-}
-
-
 void mpu6050(void *pvParameters){
-	bool ret = i2c_scan(MPU6050_ADDRESS_AD0_LOW);
+	// Scan I2C slave device
+	bool ret = I2Cdev::scanDevice(MPU6050_ADDRESS_AD0_LOW);
 	if (ret == false) {
 		ESP_LOGE(TAG, "InvenSense device not found");
 		vTaskDelete(NULL);
 	}
 
 	// Initialize mpu6050
-	mpu.initialize();
+	mpu.initialize(400000);
 
-	// Get Device ID
-	uint8_t buffer[1];
-	I2Cdev::readByte(MPU6050_ADDRESS_AD0_LOW, MPU6050_RA_WHO_AM_I, buffer);
-	ESP_LOGI(TAG, "getDeviceID=0x%x", buffer[0]);
-	if (buffer[0] == 0x19) {
+	// Get Device Row ID
+	uint8_t rowid = mpu.getDeviceRowID();
+	ESP_LOGI(TAG, "getDeviceRowID=0x%x", rowid);
+	if (rowid == 0x19) {
 		ESP_LOGI(TAG, "Your IMU is MPU6886");
-	} else if (buffer[0] == 0x68) {
+	} else if (rowid == 0x68) {
 		ESP_LOGI(TAG, "Your IMU is MPU6000/MPU6050/MPU9150");
-	} else if (buffer[0] == 0x70) {
+	} else if (rowid == 0x70) {
 		ESP_LOGI(TAG, "Your IMU is MPU6500");
-	} else if (buffer[0] == 0x71) {
+	} else if (rowid == 0x71) {
 		ESP_LOGI(TAG, "Your IMU is MPU9250");
-	} else if (buffer[0] == 0x73) {
+	} else if (rowid == 0x73) {
 		ESP_LOGI(TAG, "Your IMU is MPU9225/MPU9255");
-	} else if (buffer[0] == 0x7C) {
+	} else if (rowid == 0x7C) {
 		ESP_LOGI(TAG, "Your IMU is MPU6550");
 	} else {
 		ESP_LOGE(TAG, "Your IMU is Unknown IMU");
