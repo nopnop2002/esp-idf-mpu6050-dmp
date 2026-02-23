@@ -129,11 +129,11 @@ void getRollPitch(double accX, double accY, double accZ, double *roll, double *p
 
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
-	mpu.initialize();
+	mpu.initialize(400000);
 
-	// Get DeviceID
-	uint8_t devid = mpu.getDeviceID();
-	ESP_LOGI(TAG, "devid=0x%x", devid);
+	// Get Device Row ID
+	uint8_t rowid = mpu.getDeviceRowID();
+	ESP_LOGI(TAG, "getDeviceRowID=0x%x", rowid);
 
 	// Get the sample rate
 	ESP_LOGI(TAG, "getRate()=%d", mpu.getRate());

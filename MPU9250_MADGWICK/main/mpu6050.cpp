@@ -87,29 +87,19 @@ uint8_t MagAdjustmentValue[3];
 float magCalibration[3];
 
 bool getMagRaw(int16_t *mx, int16_t *my, int16_t *mz) {
-	uint8_t rawData[7];
-	for (int i=0;i<7;i++) {
-		uint8_t reg = i + 0x03;
-		uint8_t _raw;
-		I2Cdev::readByte(MAG_ADDRESS, reg, &_raw);
-		rawData[i] = _raw;
-		ESP_LOGD(TAG, "read_mag(0x%d)=%x", reg, rawData[i]);
-	}
+	int16_t _mx;
+	int16_t _my;
+	int16_t _mz;
+	mag.getHeading(&_mx, &_my, &_mz);
 
-	if(rawData[6] & 0x08) {
+	if (mag.getOverflowStatus()) {
 		ESP_LOGE(TAG, "*****magnetic sensor overflow*****");
 		return false;
 	}
 
-#if 0
-	*mx = ((int16_t)rawData[0] << 8) | rawData[1];
-	*my = ((int16_t)rawData[2] << 8) | rawData[3];
-	*mz = ((int16_t)rawData[4] << 8) | rawData[5];
-#else
-	*mx = ((int16_t)rawData[1] << 8) | rawData[0];
-	*my = ((int16_t)rawData[3] << 8) | rawData[2];
-	*mz = ((int16_t)rawData[5] << 8) | rawData[4];
-#endif
+	*mx = _mx;
+	*my = _my;
+	*mz = _mz;
 	ESP_LOGD(TAG, "mx=0x%x my=0x%x mz=0x%x", *mx, *my, *mz);
 	return true;
 }
@@ -199,7 +189,11 @@ double TimeToSec() {
 
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
-	mpu.initialize();
+	mpu.initialize(400000);
+
+	// Get Device Row ID
+	uint8_t rowid = mpu.getDeviceRowID();
+	ESP_LOGI(TAG, "getDeviceRowID=0x%x", rowid);
 
 	// Get the sample rate
 	ESP_LOGI(TAG, "getRate()=%d", mpu.getRate());
@@ -229,6 +223,9 @@ void mpu6050(void *pvParameters){
 
 	// Bypass Enable Configuration
 	mpu.setI2CBypassEnabled(true);
+
+	// Initialize ak8963
+	mag.initialize(400000);
 
 	// Get MAG Device ID
 	uint8_t MagDeviceID = mag.getDeviceID();
@@ -365,7 +362,7 @@ void mpu6050(void *pvParameters){
 				cJSON_Delete(request);
 				cJSON_free(my_json_string);
 			} else {
-				ESP_LOGI(TAG, "unstable roll:%f pitch=%f yaw=%f", _roll, _pitch, yaw);
+				ESP_LOGW(TAG, "unstable roll:%f pitch=%f yaw=%f", _roll, _pitch, yaw);
 			}
 
 			vTaskDelay(1);
