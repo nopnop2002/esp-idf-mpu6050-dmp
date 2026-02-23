@@ -1,5 +1,8 @@
 #include <math.h>
 #include <cstring>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_rom_sys.h"
 #include "esp_timer.h"
 
 #undef pgm_read_byte

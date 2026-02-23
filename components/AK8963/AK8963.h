@@ -94,9 +94,9 @@ THE SOFTWARE.
 class AK8963 {
     public:
         AK8963();
-        AK8963(uint8_t address=AK8963_DEFAULT_ADDRESS);
+        AK8963(uint16_t address=AK8963_DEFAULT_ADDRESS);
 
-        void initialize();
+        void initialize(uint32_t clkSpeed);
         bool testConnection();
 
         // WIA register
@@ -143,7 +143,8 @@ class AK8963 {
         void setAdjustmentZ(uint8_t z);
 
     private:
-        uint8_t devAddr;
+        uint8_t devAddr; // I2C device address
+        i2c_master_dev_handle_t devHandle; // I2C device handle
         uint8_t buffer[6];
         uint8_t mode;
 };

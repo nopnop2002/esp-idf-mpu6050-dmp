@@ -35,7 +35,7 @@ THE SOFTWARE.
 #ifndef _I2CDEV_H_
 #define _I2CDEV_H_
 
-#include <driver/i2c.h>
+#include "driver/i2c_master.h"
 
 #define I2CDEV_DEFAULT_READ_TIMEOUT 1000
 
@@ -43,31 +43,32 @@ class I2Cdev {
     public:
         I2Cdev();
 
-        static void initialize(int clkSpeed);
-        static void enable(bool isEnabled);
+        static void initialize();
+        static i2c_master_dev_handle_t addDevice(uint16_t devAddr, uint32_t clkSpeed);
+        static bool scanDevice(uint16_t target);
 
-        static int8_t readBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readBitW(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readByte(uint8_t devAddr, uint8_t regAddr, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readWord(uint8_t devAddr, uint8_t regAddr, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
-        static int8_t readWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readBit(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitNum, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readBitW(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitNum, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readBits(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readBitsW(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readByte(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readWord(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readBytes(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t length, uint8_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
+        static int8_t readWords(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t length, uint16_t *data, uint16_t timeout=I2Cdev::readTimeout, void *wireObj=0);
 
-        static bool writeBit(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint8_t data, void *wireObj=0);
-        static bool writeBitW(uint8_t devAddr, uint8_t regAddr, uint8_t bitNum, uint16_t data, void *wireObj=0);
-        static bool writeBits(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data, void *wireObj=0);
-        static bool writeBitsW(uint8_t devAddr, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t data, void *wireObj=0);
-        static bool writeByte(uint8_t devAddr, uint8_t regAddr, uint8_t data, void *wireObj=0);
-        static bool writeWord(uint8_t devAddr, uint8_t regAddr, uint16_t data, void *wireObj=0);
-        static bool writeBytes(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t *data, void *wireObj=0);
-        static bool writeWords(uint8_t devAddr, uint8_t regAddr, uint8_t length, uint16_t *data, void *wireObj=0);
+        static bool writeBit(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitNum, uint8_t data, void *wireObj=0);
+        static bool writeBitW(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitNum, uint16_t data, void *wireObj=0);
+        static bool writeBits(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint8_t data, void *wireObj=0);
+        static bool writeBitsW(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t bitStart, uint8_t length, uint16_t data, void *wireObj=0);
+        static bool writeByte(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t data, void *wireObj=0);
+        static bool writeWord(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint16_t data, void *wireObj=0);
+        static bool writeBytes(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t length, uint8_t *data, void *wireObj=0);
+        static bool writeWords(i2c_master_dev_handle_t devHandle, uint8_t regAddr, uint8_t length, uint16_t *data, void *wireObj=0);
 
         static uint16_t readTimeout;
 
     //private:
-        static void SelectRegister(uint8_t dev, uint8_t reg);
+        //static void SelectRegister(uint8_t dev, uint8_t reg);
         //static I2C_TransferReturn_TypeDef transfer(I2C_TransferSeq_TypeDef *seq, uint16_t timeout=I2Cdev::readTimeout);
 };
 

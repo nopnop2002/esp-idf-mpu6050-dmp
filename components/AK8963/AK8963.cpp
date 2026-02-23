@@ -45,14 +45,15 @@ AK8963::AK8963() {
  * @see AK8963_DEFAULT_ADDRESS
  * @see AK8963_ADDRESS_00
  */
-AK8963::AK8963(uint8_t address) {
+AK8963::AK8963(uint16_t address) {
     devAddr = address;
 }
 
 /** Power on and prepare for general usage.
  * No specific pre-configuration is necessary for this device.
  */
-void AK8963::initialize() {
+void AK8963::initialize(uint32_t clkSpeed) {
+    devHandle = I2Cdev::addDevice(devAddr, clkSpeed);
 }
 
 /** Verify the I2C connection.
@@ -60,7 +61,7 @@ void AK8963::initialize() {
  * @return True if connection is valid, false otherwise
  */
 bool AK8963::testConnection() {
-    if (I2Cdev::readByte(devAddr, AK8963_RA_WIA, buffer) == 1) {
+    if (I2Cdev::readByte(devHandle, AK8963_RA_WIA, buffer) == 1) {
         return (buffer[0] == 0x48);
     }
     return false;
@@ -69,93 +70,93 @@ bool AK8963::testConnection() {
 // WIA register
 
 uint8_t AK8963::getDeviceID() {
-    I2Cdev::readByte(devAddr, AK8963_RA_WIA, buffer);
+    I2Cdev::readByte(devHandle, AK8963_RA_WIA, buffer);
     return buffer[0];
 }
 
 // INFO register
 
 uint8_t AK8963::getInfo() {
-    I2Cdev::readByte(devAddr, AK8963_RA_INFO, buffer);
+    I2Cdev::readByte(devHandle, AK8963_RA_INFO, buffer);
     return buffer[0];
 }
 
 // ST1 register
 
 bool AK8963::getDataReady() {
-    I2Cdev::readBit(devAddr, AK8963_RA_ST1, AK8963_ST1_DRDY_BIT, buffer);
+    I2Cdev::readBit(devHandle, AK8963_RA_ST1, AK8963_ST1_DRDY_BIT, buffer);
     return buffer[0];
 }
 
 bool AK8963::getDataOverrun() {
-    I2Cdev::readBit(devAddr, AK8963_RA_ST1, AK8963_ST1_DOR_BIT, buffer);
+    I2Cdev::readBit(devHandle, AK8963_RA_ST1, AK8963_ST1_DOR_BIT, buffer);
     return buffer[0];
 }
 
 // H* registers
 void AK8963::getHeading(int16_t *x, int16_t *y, int16_t *z) {
-    I2Cdev::readBytes(devAddr, AK8963_RA_HXL, 6, buffer);
+    I2Cdev::readBytes(devHandle, AK8963_RA_HXL, 6, buffer);
     *x = (((int16_t)buffer[1]) << 8) | buffer[0];
     *y = (((int16_t)buffer[3]) << 8) | buffer[2];
     *z = (((int16_t)buffer[5]) << 8) | buffer[4];
 }
 int16_t AK8963::getHeadingX() {
-    I2Cdev::readBytes(devAddr, AK8963_RA_HXL, 2, buffer);
+    I2Cdev::readBytes(devHandle, AK8963_RA_HXL, 2, buffer);
     return (((int16_t)buffer[1]) << 8) | buffer[0];
 }
 int16_t AK8963::getHeadingY() {
-    I2Cdev::readBytes(devAddr, AK8963_RA_HYL, 2, buffer);
+    I2Cdev::readBytes(devHandle, AK8963_RA_HYL, 2, buffer);
     return (((int16_t)buffer[1]) << 8) | buffer[0];
 }
 int16_t AK8963::getHeadingZ() {
-    I2Cdev::readBytes(devAddr, AK8963_RA_HZL, 2, buffer);
+    I2Cdev::readBytes(devHandle, AK8963_RA_HZL, 2, buffer);
     return (((int16_t)buffer[1]) << 8) | buffer[0];
 }
 
 // ST2 register
 bool AK8963::getOverflowStatus() {
-    I2Cdev::readBit(devAddr, AK8963_RA_ST2, AK8963_ST2_HOFL_BIT, buffer);
+    I2Cdev::readBit(devHandle, AK8963_RA_ST2, AK8963_ST2_HOFL_BIT, buffer);
     return buffer[0];
 }
 bool AK8963::getOutputBit() {
-    I2Cdev::readBit(devAddr, AK8963_RA_ST2, AK8963_ST2_BITM_BIT, buffer);
+    I2Cdev::readBit(devHandle, AK8963_RA_ST2, AK8963_ST2_BITM_BIT, buffer);
     return buffer[0];
 }
 
 // CNTL1 register
 uint8_t AK8963::getMode() {
-    I2Cdev::readBits(devAddr, AK8963_RA_CNTL1, AK8963_CNTL1_MODE_BIT, AK8963_CNTL1_MODE_LENGTH, buffer);
+    I2Cdev::readBits(devHandle, AK8963_RA_CNTL1, AK8963_CNTL1_MODE_BIT, AK8963_CNTL1_MODE_LENGTH, buffer);
     return buffer[0];
 }
 void AK8963::setMode(uint8_t mode) {
-    I2Cdev::writeBits(devAddr, AK8963_RA_CNTL1, AK8963_CNTL1_MODE_BIT, AK8963_CNTL1_MODE_LENGTH, mode);
+    I2Cdev::writeBits(devHandle, AK8963_RA_CNTL1, AK8963_CNTL1_MODE_BIT, AK8963_CNTL1_MODE_LENGTH, mode);
 }
 uint8_t AK8963::getResolution() {
-    I2Cdev::readBit(devAddr, AK8963_RA_CNTL1, AK8963_CNTL1_RES_BIT, buffer);
+    I2Cdev::readBit(devHandle, AK8963_RA_CNTL1, AK8963_CNTL1_RES_BIT, buffer);
     return buffer[0];
 }
 void AK8963::setResolution(uint8_t res) {
-    I2Cdev::writeBit(devAddr, AK8963_RA_CNTL1, AK8963_CNTL1_RES_BIT, res);
+    I2Cdev::writeBit(devHandle, AK8963_RA_CNTL1, AK8963_CNTL1_RES_BIT, res);
 }
 
 // CNTL2 register
 void AK8963::reset() {
-    I2Cdev::writeByte(devAddr, AK8963_RA_CNTL2, AK8963_CNTL2_RESET);
+    I2Cdev::writeByte(devHandle, AK8963_RA_CNTL2, AK8963_CNTL2_RESET);
 }
 
 // ASTC register
 void AK8963::setSelfTest(bool enabled) {
-    I2Cdev::writeBit(devAddr, AK8963_RA_ASTC, AK8963_ASTC_SELF_BIT, enabled);
+    I2Cdev::writeBit(devHandle, AK8963_RA_ASTC, AK8963_ASTC_SELF_BIT, enabled);
 }
 
 // I2CDIS
 void AK8963::disableI2C() {
-    I2Cdev::writeByte(devAddr, AK8963_RA_I2CDIS, AK8963_I2CDIS_DISABLE);
+    I2Cdev::writeByte(devHandle, AK8963_RA_I2CDIS, AK8963_I2CDIS_DISABLE);
 }
 
 // ASA* registers
 void AK8963::getAdjustment(int8_t *x, int8_t *y, int8_t *z) {
-    I2Cdev::readBytes(devAddr, AK8963_RA_ASAX, 3, buffer);
+    I2Cdev::readBytes(devHandle, AK8963_RA_ASAX, 3, buffer);
     *x = buffer[0];
     *y = buffer[1];
     *z = buffer[2];
@@ -164,26 +165,26 @@ void AK8963::setAdjustment(int8_t x, int8_t y, int8_t z) {
     buffer[0] = x;
     buffer[1] = y;
     buffer[2] = z;
-    I2Cdev::writeBytes(devAddr, AK8963_RA_ASAX, 3, buffer);
+    I2Cdev::writeBytes(devHandle, AK8963_RA_ASAX, 3, buffer);
 }
 uint8_t AK8963::getAdjustmentX() {
-    I2Cdev::readByte(devAddr, AK8963_RA_ASAX, buffer);
+    I2Cdev::readByte(devHandle, AK8963_RA_ASAX, buffer);
     return buffer[0];
 }
 void AK8963::setAdjustmentX(uint8_t x) {
-    I2Cdev::writeByte(devAddr, AK8963_RA_ASAX, x);
+    I2Cdev::writeByte(devHandle, AK8963_RA_ASAX, x);
 }
 uint8_t AK8963::getAdjustmentY() {
-    I2Cdev::readByte(devAddr, AK8963_RA_ASAY, buffer);
+    I2Cdev::readByte(devHandle, AK8963_RA_ASAY, buffer);
     return buffer[0];
 }
 void AK8963::setAdjustmentY(uint8_t y) {
-    I2Cdev::writeByte(devAddr, AK8963_RA_ASAY, y);
+    I2Cdev::writeByte(devHandle, AK8963_RA_ASAY, y);
 }
 uint8_t AK8963::getAdjustmentZ() {
-    I2Cdev::readByte(devAddr, AK8963_RA_ASAZ, buffer);
+    I2Cdev::readByte(devHandle, AK8963_RA_ASAZ, buffer);
     return buffer[0];
 }
 void AK8963::setAdjustmentZ(uint8_t z) {
-    I2Cdev::writeByte(devAddr, AK8963_RA_ASAZ, z);
+    I2Cdev::writeByte(devHandle, AK8963_RA_ASAZ, z);
 }

@@ -442,9 +442,9 @@ THE SOFTWARE.
 
 class MPU6050_Base {
     public:
-        MPU6050_Base(uint8_t address=MPU6050_DEFAULT_ADDRESS, void *wireObj=0);
+        MPU6050_Base(uint16_t address=MPU6050_DEFAULT_ADDRESS, void *wireObj=0);
 
-        void initialize();
+        void initialize(uint32_t clkSpeed);
         bool testConnection();
 
         // AUX_VDDIO register
@@ -729,6 +729,7 @@ class MPU6050_Base {
 
         // WHO_AM_I register
         uint8_t getDeviceID();
+        uint8_t getDeviceRowID();
         void setDeviceID(uint8_t id);
         
         // ======== UNDOCUMENTED/DMP REGISTERS/METHODS ========
@@ -838,7 +839,8 @@ class MPU6050_Base {
 		int16_t * GetActiveOffsets();
 
     protected:
-        uint8_t devAddr;
+        uint16_t devAddr; // I2C device address
+        i2c_master_dev_handle_t devHandle; // I2C device handle
         void *wireObj;
         uint8_t buffer[14];
         uint32_t fifoTimeout = MPU6050_FIFO_DEFAULT_TIMEOUT;

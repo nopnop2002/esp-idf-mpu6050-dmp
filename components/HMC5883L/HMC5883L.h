@@ -103,9 +103,9 @@ THE SOFTWARE.
 class HMC5883L {
     public:
         HMC5883L();
-        HMC5883L(uint8_t address);
+        HMC5883L(uint16_t address);
         
-        void initialize();
+        void initialize(uint32_t clkSpeed);
         bool testConnection();
 
         // CONFIG_A register
@@ -140,7 +140,8 @@ class HMC5883L {
         uint8_t getIDC();
 
     private:
-        uint8_t devAddr;
+        uint16_t devAddr; // I2C device address
+        i2c_master_dev_handle_t devHandle; // I2C device handle
         uint8_t buffer[6];
         uint8_t mode;
 };
