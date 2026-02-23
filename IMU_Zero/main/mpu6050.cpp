@@ -113,10 +113,10 @@ void GetSmoothed()
 void Initialize() {
 	// initialize device
 	printf("Initializing I2C devices...\n");
-	accelgyro.initialize();
+	accelgyro.initialize(400000);
 
-	// verify connection
 #if 0
+	// verify connection
 	printf("Testing device connections...");
 	printf(accelgyro.testConnection() ? "MPU6050 connection successful\n" : "MPU6050 connection failed\n");
 #endif

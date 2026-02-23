@@ -139,12 +139,11 @@ void getWorldAccel() {
 
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
-	mpu.initialize();
+	mpu.initialize(400000);
 
-	// Get Device ID
-	uint8_t buffer[1];
-	I2Cdev::readByte(MPU6050_ADDRESS_AD0_LOW, MPU6050_RA_WHO_AM_I, buffer);
-	ESP_LOGI(TAG, "getDeviceID=0x%x", buffer[0]);
+	// Get Device Row ID
+	uint8_t rowid = mpu.getDeviceRowID();
+	ESP_LOGI(TAG, "getDeviceRowID=0x%x", rowid);
 
 	// Initialize DMP
 	devStatus = mpu.dmpInitialize();
