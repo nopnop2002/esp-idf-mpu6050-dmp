@@ -103,7 +103,7 @@ bool getMagData(int16_t *mx, int16_t *my, int16_t *mz) {
 
 void mpu6050(void *pvParameters){
 	// Initialize mpu6050
-	mpu.initialize();
+	mpu.initialize(400000);
 
 	// Bypass Enable Configuration
 	mpu.setI2CBypassEnabled(true);
@@ -114,7 +114,7 @@ void mpu6050(void *pvParameters){
 	// Normal measurement configuration.
 	// -1.3Ga-->+1.3Ga 1090 counts / Gauss
 	// Single-Measurement Mode.
-	mag.initialize();
+	mag.initialize(400000);
 
 	// Verify the I2C connection
 	if (!mag.testConnection()) {
