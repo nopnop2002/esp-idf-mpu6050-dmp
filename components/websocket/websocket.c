@@ -20,8 +20,10 @@ This program is free software: you can redistribute it and/or modify
 #include "websocket.h"
 #include "lwip/tcp.h" // for the netconn structure
 #include "esp_system.h" // for esp_random
+#include "esp_log.h"
 #include "mbedtls/base64.h"
-#include "mbedtls/sha1.h"
+//#include "mbedtls/sha1.h"
+#include "mbedtls/md.h"
 #include <string.h>
 
 ws_client_t ws_connect_client(struct netconn* conn,
@@ -310,7 +312,11 @@ char* ws_hash_handshake(char* handshake,uint8_t len) {
 
   memcpy(key,handshake,len);
   strlcpy(&key[len],hash,sizeof(key));
-  mbedtls_sha1((unsigned char*)key,len+hash_len-1,sha1sum);
+  //mbedtls_sha1((unsigned char*)key,len+hash_len-1,sha1sum);
+  const mbedtls_md_info_t *md_info = mbedtls_md_info_from_type(MBEDTLS_MD_SHA1);
+  mbedtls_md(md_info, (unsigned char*)key, len+hash_len-1, sha1sum);
+  ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, key, len+hash_len-1, ESP_LOG_DEBUG);
+  ESP_LOG_BUFFER_HEXDUMP(__FUNCTION__, sha1sum, 20, ESP_LOG_DEBUG);
   mbedtls_base64_encode(NULL, 0, &ret_len, sha1sum, 20);
   if(!mbedtls_base64_encode((unsigned char*)ret,32,&ret_len,sha1sum,20)) {
     ret[ret_len] = '\0';
