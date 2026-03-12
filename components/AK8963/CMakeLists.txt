@@ -1,4 +1,6 @@
-idf_component_register(SRCS "AK8963.cpp"
-                      INCLUDE_DIRS "."
-                      PRIV_REQUIRES driver
-                      REQUIRES I2Cdev)
+idf_component_register(
+	SRCS "AK8963.cpp"
+	INCLUDE_DIRS "."
+	PRIV_REQUIRES driver esp_driver_i2c
+	REQUIRES I2Cdev
+)
