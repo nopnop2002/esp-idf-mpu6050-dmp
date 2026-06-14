@@ -12,7 +12,7 @@ They have an internal processing function called DMP (Digital Motion Processor).
 But this sample doesn't use DMP, just 9DoF data.   
 
 # Wireing
-|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|GY-86/87||ESP32|ESP32-S2/S3|ESP32-Cx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC_IN|--|N/C|N/C|N/C||
 |3.3V|--|3.3V|3.3V|3.3V||
@@ -29,7 +29,6 @@ Use [this](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/HMC5883L_
 # Get Euler angles from IMU
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_HMC5883L_MADGWICK
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
