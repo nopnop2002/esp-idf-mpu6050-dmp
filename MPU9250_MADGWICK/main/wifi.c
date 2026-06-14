@@ -125,12 +125,12 @@ esp_err_t wifi_init_sta(void)
 
 void wifi_status(void *pvParameters)
 {
-	ESP_LOGI(pcTaskGetName(0), "Start");
+	ESP_LOGI(pcTaskGetName(NULL), "Start");
 
 	wifi_ap_record_t ap_info;
 	while(1) {
 		esp_err_t ret = esp_wifi_sta_get_ap_info(&ap_info);
-		ESP_LOGI(pcTaskGetName(0), "esp_wifi_sta_get_ap_info=%d", ret);
+		ESP_LOGI(pcTaskGetName(NULL), "esp_wifi_sta_get_ap_info=%d", ret);
 		if (ret != ESP_OK) break;
 		vTaskDelay(1000);
 	}
