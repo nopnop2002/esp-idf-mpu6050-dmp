@@ -21,7 +21,7 @@ MPU9XXX 9DoF MotionTracking device.
 |MPU9255|0x73|Gyro/Accel/Compass|AK8963|
 
 # Wireing
-|MPU9XXX||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|MPU9XXX||ESP32|ESP32-S2/S3|ESP32-Cx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|3.3V|3.3V|3.3V||
 |GND|--|GND|GND|GND||
@@ -34,7 +34,6 @@ MPU9XXX 9DoF MotionTracking device.
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp/AK8963_CALIBRATE
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
