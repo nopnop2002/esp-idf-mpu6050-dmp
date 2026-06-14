@@ -67,6 +67,7 @@ static const char *TAG = "IMU";
 #define RAD_TO_DEG (180.0/M_PI)
 #define DEG_TO_RAD 0.0174533
 
+// Create the IMU instances
 MPU6050 mpu;
 
 // MPU control/status vars
