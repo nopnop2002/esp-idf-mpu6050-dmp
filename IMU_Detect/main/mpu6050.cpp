@@ -55,6 +55,7 @@ static const char *TAG = "IMU";
 
 #include "MPU6050_6Axis_MotionApps20.h"
 
+// Create the IMU instances
 MPU6050 mpu;
 
 void mpu6050(void *pvParameters){
