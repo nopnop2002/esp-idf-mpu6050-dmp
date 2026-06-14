@@ -54,6 +54,7 @@ THE SOFTWARE.
 #include "MPU6050.h" // not necessary if using MotionApps include file
 //#include "MPU6050_6Axis_MotionApps20.h"
 
+// Create the IMU instances
 MPU6050 accelgyro;
 
 const char LBRACKET = '[';
