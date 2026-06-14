@@ -11,12 +11,11 @@
 
 #include "websocket_server.h"
 
+QueueHandle_t xQueueTrans;
 MessageBufferHandle_t xMessageBufferToClient;
 
 static const char *TAG = "MAIN";
 static const char *MDNS_HOSTNAME = "ESP32";
-
-QueueHandle_t xQueueTrans;
 
 extern "C" {
 	void start_wifi(void);

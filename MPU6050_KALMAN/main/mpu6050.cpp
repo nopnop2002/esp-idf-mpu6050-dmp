@@ -71,11 +71,10 @@ static const char *TAG = "IMU";
 #define RAD_TO_DEG (180.0/M_PI)
 #define DEG_TO_RAD 0.0174533
 
-// Arduino macro
-#define micros() (unsigned long) (esp_timer_get_time())
-#define delay(ms) esp_rom_delay_us(ms*1000)
-
+// Create the IMU instances
 MPU6050 mpu;
+
+// Create the Kalman instances
 Kalman kalmanX; // Create the Kalman instances
 Kalman kalmanY;
 
