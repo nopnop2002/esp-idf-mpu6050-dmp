@@ -152,7 +152,6 @@ vi mpu6050.cpp
 I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6050/examples/MPU6050_DMP6).
 ```
 cd esp-idf-mpu6050-dmp/MPU6050_DMP6
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
