@@ -69,18 +69,15 @@ static const char *TAG = "IMU";
 #include "Kalman.h"
 
 #define RESTRICT_PITCH // Comment out to restrict roll to ±90deg instead
-#define RAD_TO_DEG (180.0/PI)
+#define RAD_TO_DEG (180.0/M_PI)
 #define DEG_TO_RAD 0.0174533
 
-// Arduino macro
-#define micros() (unsigned long) (esp_timer_get_time())
-#define delay(ms) esp_rom_delay_us(ms*1000)
-
-#define MAG_ADDRESS 0x0C
-
+// Create the IMU instances
 MPU6050 mpu;
 HMC5883L mag(HMC5883L_DEFAULT_ADDRESS);
-Kalman kalmanX; // Create the Kalman instances
+
+// Create the Kalman instances
+Kalman kalmanX;
 Kalman kalmanY;
 Kalman kalmanZ;
 
