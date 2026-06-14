@@ -80,14 +80,14 @@ MPU9250 version supports DMP.
 You can check the built-in IMU using IMU_Detect.   
 
 # Wireing
-|MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|MPU6xxx/9xxx||ESP32|ESP32-S2/S3|ESP32-Cx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC|--|3.3V|3.3V|3.3V||
 |GND|--|GND|GND|GND||
 |SCL|--|GPIO22|GPIO12|GPIO5|(*1)|
 |SDA|--|GPIO21|GPIO11|GPIO4|(*1)|
 
-|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|GY-86/87||ESP32|ESP32-S2/S3|ESP32-Cx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC_IN|--|N/C|N/C|N/C||
 |3.3V|--|3.3V|3.3V|3.3V||
@@ -102,7 +102,6 @@ I based on [this](https://github.com/jrowberg/i2cdevlib/tree/master/Arduino/MPU6
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp/IMU_Zero
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
