@@ -68,8 +68,7 @@ static const char *TAG = "IMU";
 #define RAD_TO_DEG (180.0/M_PI)
 #define DEG_TO_RAD 0.0174533
 
-#define MAG_ADDRESS 0x0C
-
+// Create the IMU instances
 MPU6050 mpu;
 HMC5883L mag(HMC5883L_DEFAULT_ADDRESS);
 

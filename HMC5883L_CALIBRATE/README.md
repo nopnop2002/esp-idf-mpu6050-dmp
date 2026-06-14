@@ -14,7 +14,7 @@ ESP-IDF V5.1 is required when using ESP32-C6.
 GY86/GY87 9DoF MotionTracking device.   
 
 # Wireing
-|GY-86/87||ESP32|ESP32-S2/S3|ESP32-C2/C3/C6||
+|GY-86/87||ESP32|ESP32-S2/S3|ESP32-Cx||
 |:-:|:-:|:-:|:-:|:-:|:-:|
 |VCC_IN|--|N/C|N/C|N/C||
 |3.3V|--|3.3V|3.3V|3.3V||
@@ -28,7 +28,6 @@ GY86/GY87 9DoF MotionTracking device.
 ```
 git clone https://github.com/nopnop2002/esp-idf-mpu6050-dmp
 cd esp-idf-mpu6050-dmp/HMC5883L_CALIBRATE
-idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
 idf.py menuconfig
 idf.py flash
 ```
