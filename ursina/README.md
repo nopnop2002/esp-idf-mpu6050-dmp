@@ -50,7 +50,7 @@ heightmap_1
 sky_default
 ```
 
-- using brick texture   
+- using brick texture  (default texture)   
 	<img width="720" height="480" alt="Image" src="https://github.com/user-attachments/assets/c6526beb-fa37-4f78-9919-a569d3c6165c" />
 
 - using white_cube texture   
