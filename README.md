@@ -289,7 +289,12 @@ options:
 ![Image](https://github.com/user-attachments/assets/7f2fbdf4-97d9-40c3-87db-9f8386741220)
 
 ### How to use   
-See [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/blob/main/panda3d/README.md)   
+See [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/panda3d)   
+
+# Drone simulator using pysimverse
+You can pilot the drone using the ESP32.   
+See [here](https://github.com/nopnop2002/esp-idf-mpu6050-dmp/tree/main/pysimverse)   
+<img width="1244" height="677" alt="Image" src="https://github.com/user-attachments/assets/b1297dbc-e92b-4c18-9f93-2ca9d04a883c" />
 
 # Using IMU Filter
 You can use Kalman and Madgwick filters instead of DMP.   
