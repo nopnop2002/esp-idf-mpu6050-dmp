@@ -43,3 +43,5 @@ You control the drone by tilting the IMU.
 
 Press the Esc key or the q key to land the drone.   
 
+# python API
+https://github.com/Otr437/PYTHON_DRONE_SIMVERSE   
