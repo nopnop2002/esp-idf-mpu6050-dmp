@@ -2,7 +2,7 @@
 #-*- encoding: utf-8 -*
 #
 # I used this as reference.
-# https://www.kkaneko.jp/cc/3d/panda3dintro.html
+# https://www.kkaneko.jp/db/panda/panda3dintro.html
 #
 # We need this library.
 # python3 -m pip install panda3d
