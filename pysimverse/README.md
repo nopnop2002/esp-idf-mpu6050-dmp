@@ -39,6 +39,8 @@ When the script starts, the drone takes off.
 <img width="1244" height="677" alt="Image" src="https://github.com/user-attachments/assets/b1297dbc-e92b-4c18-9f93-2ca9d04a883c" />
 
 You control the drone by tilting the IMU.   
+Pitch-down is a forward movement.   
+Pitch-up is a backward movement.   
 <img width="1244" height="677" alt="Image" src="https://github.com/user-attachments/assets/c049b19a-9d8d-4b09-a729-c067b5be28d7" />
 
 Press the Esc key or the q key to land the drone.   
