@@ -79,9 +79,9 @@ while running:
 		drone.rotate(delta_yaw)
 		last_yaw = yaw
 	if pitch < -1:
-		drone.move_backward(dist)
-	if pitch > 1:
 		drone.move_forward(dist)
+	if pitch > 1:
+		drone.move_backward(dist)
 	if roll < -1:
 		drone.move_left(dist)
 	if roll > 1:
