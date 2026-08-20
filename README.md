@@ -33,7 +33,7 @@ From the left MPU9250 MPU6500 MPU6050 GY-87
 ### MPU6000/6050/6500/6555/9150/9225/9250/9255   
 MPU9150/9225/9250/9255 is a multi-chip module (MCM) consisting of two dies integrated into a single LGA/QFN package.   
 One die houses the 3-Axis gyroscope and the 3-Axis accelerometer.   
-The other die houses the AK8975 3-Axis magnetometer from Asahi Kasei Microdevices Corporation.   
+The other die houses the AK8963 3-Axis magnetometer from Asahi Kasei Microdevices Corporation.   
 Since the AK8963 is connected as a slave device, it is not recognized as an i2c device.   
 
 
